@@ -42,13 +42,13 @@ export default function CountriesPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Send Money to <span className="text-gradient">200+ Countries</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Send Money to <span className="text-cny-gold">200+ Countries</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+                        <p className="text-xl md:text-2xl text-white/90 mb-8">
                             Fast, secure international money transfers to your loved ones worldwide
                         </p>
                     </div>
@@ -91,7 +91,7 @@ export default function CountriesPage() {
                                             {corridor.fromName}
                                         </span>
                                     </div>
-                                    <span className="text-primary-600 font-bold mx-2">→</span>
+                                    <span className="text-cny-red-primary font-bold mx-2">→</span>
                                     <div className="flex items-center space-x-3 flex-1">
                                         <span className="text-3xl">{corridor.toFlag}</span>
                                         <span className="font-medium text-gray-900 dark:text-white truncate">

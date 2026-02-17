@@ -97,7 +97,7 @@ const TrustIndicators = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2 }}
                                 href="https://app.remitone.com"
-                                className="inline-flex items-center gap-2 text-base font-semibold text-white bg-gradient-orange px-6 py-3 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
+                                className="inline-flex items-center gap-2 text-base font-semibold text-black bg-cny-gold-gradient px-6 py-3 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
                             >
                                 Start Transferring
                             </motion.a>
@@ -116,10 +116,10 @@ const TrustIndicators = () => {
                                         duration: 0.4,
                                         ease: [0.16, 1, 0.3, 1],
                                     }}
-                                    className="bg-dark-400 border border-dark-300 rounded-xl p-6 hover:border-orange-500/30 transition-all card-hover"
+                                    className="bg-dark-400 border border-dark-300 rounded-xl p-6 hover:border-[#FFD700]/30 transition-all card-hover"
                                 >
-                                    <div className="w-12 h-12 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4">
-                                        <feature.icon className="w-6 h-6 text-orange-500" />
+                                    <div className="w-12 h-12 rounded-lg bg-[#FFD700]/10 flex items-center justify-center mb-4">
+                                        <feature.icon className="w-6 h-6 text-[#FFD700]" />
                                     </div>
                                     <h3 className="text-base font-semibold text-white mb-2">
                                         {feature.title}

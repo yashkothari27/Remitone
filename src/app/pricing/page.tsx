@@ -18,13 +18,13 @@ export default function PricingPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Transparent <span className="text-gradient">Pricing</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Transparent <span className="text-cny-gold">Pricing</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+                        <p className="text-xl md:text-2xl text-white/90 mb-8">
                             No hidden fees. No surprises. Just honest, competitive rates.
                         </p>
                     </div>
@@ -36,8 +36,8 @@ export default function PricingPage() {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                         <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center">
-                                <DollarSign className="w-8 h-8 text-white" />
+                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
+                                <DollarSign className="w-8 h-8 text-black" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Low Fees</h3>
                             <p className="text-gray-600 dark:text-gray-400">
@@ -45,8 +45,8 @@ export default function PricingPage() {
                             </p>
                         </div>
                         <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-accent rounded-2xl flex items-center justify-center">
-                                <TrendingDown className="w-8 h-8 text-white" />
+                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
+                                <TrendingDown className="w-8 h-8 text-black" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Best Rates</h3>
                             <p className="text-gray-600 dark:text-gray-400">
@@ -54,8 +54,8 @@ export default function PricingPage() {
                             </p>
                         </div>
                         <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center">
-                                <Calculator className="w-8 h-8 text-white" />
+                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
+                                <Calculator className="w-8 h-8 text-black" />
                             </div>
                             <h3 className="text-xl font-semibold mb-2">Easy Calculation</h3>
                             <p className="text-gray-600 dark:text-gray-400">
@@ -143,7 +143,7 @@ export default function PricingPage() {
                                         <span>1 USD = 83.12 INR</span>
                                     </div>
                                     <div className="border-t border-gray-300 dark:border-gray-600 my-4"></div>
-                                    <div className="flex justify-between text-xl font-bold text-primary-600">
+                                    <div className="flex justify-between text-xl font-bold text-cny-red-primary">
                                         <span>Recipient gets</span>
                                         <span>₹82,712.63 INR</span>
                                     </div>
@@ -175,7 +175,7 @@ export default function PricingPage() {
                         </div>
                         <a
                             href={REMITONE_PLATFORM_URL}
-                            className="inline-flex items-center gap-2 bg-gradient-primary text-white px-7 py-3.5 rounded-xl font-semibold hover:shadow-glow transition-all"
+                            className="inline-flex items-center gap-2 bg-cny-gold-gradient text-black px-7 py-3.5 rounded-xl font-semibold hover:shadow-glow transition-all"
                         >
                             Start Sending Money
                             <ArrowRight className="w-5 h-5" />

@@ -42,13 +42,13 @@ export default function ContactPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Get in <span className="text-gradient">Touch</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Get in <span className="text-cny-gold">Touch</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl md:text-2xl text-white/90">
                             We&apos;re here to help with any questions or concerns
                         </p>
                     </div>
@@ -62,16 +62,16 @@ export default function ContactPage() {
                         {contactInfo.map((info) => (
                             <div
                                 key={info.title}
-                                className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center"
+                                className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center border border-transparent hover:border-cny-gold-secondary transition-all"
                             >
-                                <div className="w-12 h-12 mx-auto mb-4 bg-gradient-primary rounded-xl flex items-center justify-center">
-                                    <info.icon className="w-6 h-6 text-white" />
+                                <div className="w-12 h-12 mx-auto mb-4 bg-cny-gold-gradient rounded-xl flex items-center justify-center">
+                                    <info.icon className="w-6 h-6 text-black" />
                                 </div>
                                 <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
                                 {info.link ? (
                                     <a
                                         href={info.link}
-                                        className="text-primary-600 hover:text-primary-700 transition-colors"
+                                        className="text-cny-gold-accent hover:text-cny-gold-primary transition-colors font-medium"
                                     >
                                         {info.content}
                                     </a>

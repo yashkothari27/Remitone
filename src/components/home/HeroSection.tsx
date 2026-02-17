@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-[80vh] flex items-center overflow-hidden pt-[72px] bg-gradient-hero">
+        <section className="relative min-h-[80vh] flex items-center overflow-hidden pt-[72px] bg-cny-red">
             {/* Background overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
 
@@ -20,8 +20,8 @@ const HeroSection = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="badge badge-orange mb-6 inline-flex">
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                        <div className="badge badge-gold mb-6 inline-flex">
+                            <span className="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
                             Trusted by millions worldwide
                         </div>
                     </motion.div>
@@ -34,9 +34,9 @@ const HeroSection = () => {
                         className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] mb-6 text-white"
                     >
                         Send Money{' '}
-                        <span className="text-gradient">Worldwide,</span>
+                        <span className="text-cny-gold">Worldwide,</span>
                         <br />
-                        <span className="text-gradient">Instantly</span>
+                        <span className="text-cny-gold">Instantly</span>
                     </motion.h1>
 
                     {/* Subheadline */}
@@ -59,7 +59,7 @@ const HeroSection = () => {
                     >
                         <a
                             href="https://app.remitone.com"
-                            className="inline-flex items-center gap-2 text-base font-semibold text-white bg-gradient-orange px-8 py-4 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
+                            className="inline-flex items-center gap-2 text-base font-semibold text-black bg-cny-gold-gradient px-8 py-4 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
                         >
                             Get Started
                             <ArrowRight className="w-5 h-5" />

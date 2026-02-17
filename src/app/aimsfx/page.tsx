@@ -15,13 +15,13 @@ export default function AIMSFXPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
                         <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            <span className="text-gradient">AIMSFX</span>
+                            <span className="text-cny-gold">AIMSFX</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl md:text-2xl text-white/90">
                             Our Trusted Partner for Foreign Exchange Services
                         </p>
                     </div>
@@ -113,7 +113,7 @@ export default function AIMSFXPage() {
                                 href="https://aimsfx.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 bg-gradient-primary text-white px-7 py-3.5 rounded-xl font-semibold hover:shadow-glow transition-all"
+                                className="inline-flex items-center gap-2 bg-cny-gold-gradient text-black px-7 py-3.5 rounded-xl font-semibold hover:shadow-glow transition-all"
                             >
                                 Visit AIMSFX Website
                                 <ExternalLink className="w-5 h-5" />

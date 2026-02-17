@@ -52,8 +52,8 @@ const Header = () => {
                 <div className="flex items-center justify-between h-[72px]">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="w-9 h-9 bg-gradient-orange rounded-lg flex items-center justify-center group-hover:shadow-glow transition-shadow">
-                            <span className="text-white font-bold text-lg leading-none">R</span>
+                        <div className="w-9 h-9 bg-cny-gold-gradient rounded-lg flex items-center justify-center group-hover:shadow-glow transition-shadow">
+                            <span className="text-black font-bold text-lg leading-none">R</span>
                         </div>
                         <span className="text-xl font-bold text-white tracking-tight">
                             Remitone
@@ -100,7 +100,7 @@ const Header = () => {
                         </a>
                         <a
                             href={REMITONE_PLATFORM_URL}
-                            className="inline-flex items-center gap-2 text-[0.9rem] font-semibold text-white bg-gradient-orange px-6 py-2.5 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
+                            className="inline-flex items-center gap-2 text-[0.9rem] font-semibold text-black bg-cny-gold-gradient px-6 py-2.5 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
                         >
                             REGISTER
                         </a>
@@ -164,7 +164,7 @@ const Header = () => {
                                 </a>
                                 <a
                                     href={REMITONE_PLATFORM_URL}
-                                    className="block w-full text-center py-2.5 px-4 text-white font-semibold bg-gradient-orange rounded-lg hover:shadow-glow transition-all"
+                                    className="block w-full text-center py-2.5 px-4 text-black font-semibold bg-cny-gold-gradient rounded-lg hover:shadow-glow transition-all"
                                 >
                                     REGISTER
                                 </a>

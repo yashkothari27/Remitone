@@ -13,6 +13,13 @@
   /* Border and dividers */
   --border-subtle: #2A2A2A;
   --border-accent: #E8652D;
+
+  /* Chinese New Year Theme */
+  --cny-red-primary: #8B0000;
+  --cny-red-secondary: #4A0000;
+  --cny-gold-primary: #FFD700;
+  --cny-gold-secondary: #FDB931;
+  --cny-gold-accent: #B8860B;
 }
 
 @theme inline {
@@ -60,6 +67,39 @@
   --animate-slide-up: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-float: float 6s ease-in-out infinite;
   --animate-scale-up: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* CNY Theme Colors */
+  --color-cny-red-primary: var(--cny-red-primary);
+  --color-cny-red-secondary: var(--cny-red-secondary);
+  --color-cny-gold-primary: var(--cny-gold-primary);
+  --color-cny-gold-secondary: var(--cny-gold-secondary);
+  --color-cny-gold-accent: var(--cny-gold-accent);
+
+  /* Override Primary/Accent with CNY Theme */
+  --color-primary-50: #FFF5F5;
+  --color-primary-100: #FFE3E3;
+  --color-primary-200: #FFC9C9;
+  --color-primary-300: #FFA8A8;
+  --color-primary-400: #FF6B6B;
+  --color-primary-500: #8B0000;
+  /* Red Primary */
+  --color-primary-600: #700000;
+  --color-primary-700: #550000;
+  --color-primary-800: #3A0000;
+  --color-primary-900: #1F0000;
+
+  --color-accent-50: #FFFAEB;
+  --color-accent-100: #FFF0C2;
+  --color-accent-200: #FFE699;
+  --color-accent-300: #FFD700;
+  /* Gold */
+  --color-accent-400: #E6C200;
+  --color-accent-500: #B8860B;
+  /* Gold Accent */
+  --color-accent-600: #996F00;
+  --color-accent-700: #7A5900;
+  --color-accent-800: #5C4200;
+  --color-accent-900: #3D2C00;
 }
 
 @keyframes fadeIn {
@@ -186,11 +226,46 @@ h6 {
     linear-gradient(to bottom, #000000, #0D0D0D);
 }
 
+.bg-cny-red {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
+    repeating-radial-gradient(circle at 50% 100%,
+      rgba(139, 0, 0, 0.1) 0,
+      rgba(139, 0, 0, 0.1) 10px,
+      transparent 10px,
+      transparent 20px),
+    linear-gradient(to bottom, #8B0000, #4A0000);
+}
+
+.text-cny-gold {
+  background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.border-cny-gold {
+  border-color: #FDB931;
+}
+
+.bg-cny-gold-gradient {
+  background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #8B0000 0%, #B8860B 100%);
+}
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+}
+
 .bg-mesh-gradient {
   background:
-    radial-gradient(at 27% 37%, rgba(232, 101, 45, 0.06) 0px, transparent 50%),
-    radial-gradient(at 97% 21%, rgba(59, 130, 246, 0.04) 0px, transparent 50%),
-    radial-gradient(at 52% 99%, rgba(232, 101, 45, 0.03) 0px, transparent 50%);
+    radial-gradient(at 27% 37%, rgba(139, 0, 0, 0.15) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, rgba(255, 215, 0, 0.1) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, rgba(139, 0, 0, 0.1) 0px, transparent 50%);
 }
 
 .bg-dot-pattern {
@@ -206,7 +281,7 @@ h6 {
 }
 
 .text-gradient-blue-orange {
-  background: linear-gradient(135deg, #3b82f6 0%, #E8652D 100%);
+  background: linear-gradient(135deg, #FFD700 0%, #8B0000 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -275,10 +350,16 @@ h6 {
   border: 1px solid rgba(232, 101, 45, 0.2);
 }
 
+.badge-gold {
+  background: rgba(255, 215, 0, 0.15);
+  color: #FFD700;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
 .badge-blue {
-  background: rgba(59, 130, 246, 0.12);
-  color: #3b82f6;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(139, 0, 0, 0.2);
+  color: #FFD700;
+  border: 1px solid rgba(184, 134, 11, 0.3);
 }
 
 /* ─── Container ──────────────────────────────────── */

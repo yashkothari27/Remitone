@@ -53,13 +53,13 @@ export default function PartnersPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Our <span className="text-gradient">Partners</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Our <span className="text-cny-gold">Partners</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl md:text-2xl text-white/90">
                             Working with leading financial services to deliver the best transfer experience
                         </p>
                     </div>
@@ -86,8 +86,8 @@ export default function PartnersPage() {
                                 className={`flex flex-col md:flex-row gap-8 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
                             >
                                 <div className="flex-shrink-0">
-                                    <div className="w-24 h-24 bg-gradient-primary rounded-3xl flex items-center justify-center shadow-glow">
-                                        <category.icon className="w-12 h-12 text-white" />
+                                    <div className="w-24 h-24 bg-cny-gold-gradient rounded-3xl flex items-center justify-center shadow-glow">
+                                        <category.icon className="w-12 h-12 text-black" />
                                     </div>
                                 </div>
                                 <div className="flex-1">
@@ -125,7 +125,7 @@ export default function PartnersPage() {
                     </p>
                     <a
                         href="/contact"
-                        className="inline-block bg-gradient-primary text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                        className="inline-block bg-cny-gold-gradient text-black px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
                     >
                         Contact Partnerships Team
                     </a>

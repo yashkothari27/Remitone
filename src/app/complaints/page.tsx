@@ -14,13 +14,13 @@ export default function ComplaintsPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-12 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-12 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Complaints <span className="text-gradient">Procedure</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Complaints <span className="text-cny-gold">Procedure</span>
                         </h1>
-                        <p className="text-xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl text-white/90">
                             We take your concerns seriously and are committed to resolving them
                         </p>
                     </div>

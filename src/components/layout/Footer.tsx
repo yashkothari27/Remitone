@@ -45,8 +45,8 @@ const Footer = () => {
                         {/* Brand Column */}
                         <div className="lg:col-span-1">
                             <Link href="/" className="inline-flex items-center gap-2.5 mb-5">
-                                <div className="w-9 h-9 bg-gradient-orange rounded-lg flex items-center justify-center shadow-glow">
-                                    <span className="text-white font-bold text-lg leading-none">R</span>
+                                <div className="w-9 h-9 bg-cny-gold-gradient rounded-lg flex items-center justify-center shadow-glow">
+                                    <span className="text-black font-bold text-lg leading-none">R</span>
                                 </div>
                                 <span className="text-xl font-bold text-white tracking-tight">
                                     Remitone
@@ -71,7 +71,7 @@ const Footer = () => {
                                         key={label}
                                         href={href}
                                         aria-label={label}
-                                        className="w-9 h-9 rounded-full bg-white/10 hover:bg-orange-500 flex items-center justify-center transition-all hover:scale-110"
+                                        className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#FFD700] hover:text-black flex items-center justify-center transition-all hover:scale-110"
                                     >
                                         <Icon className="w-4 h-4" />
                                     </a>

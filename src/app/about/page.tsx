@@ -37,13 +37,13 @@ export default function AboutPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            About <span className="text-gradient">Remitone</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            About <span className="text-cny-gold">Remitone</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl md:text-2xl text-white/90">
                             Making international money transfers simple, secure, and affordable
                         </p>
                     </div>
@@ -85,9 +85,9 @@ export default function AboutPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         {values.map((value) => (
-                            <div key={value.title} className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg">
-                                <div className="w-16 h-16 mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center">
-                                    <value.icon className="w-8 h-8 text-white" />
+                            <div key={value.title} className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-800 hover:border-cny-gold-secondary transition-colors">
+                                <div className="w-16 h-16 mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
+                                    <value.icon className="w-8 h-8 text-black" />
                                 </div>
                                 <h3 className="text-2xl font-semibold mb-3">{value.title}</h3>
                                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -124,7 +124,7 @@ export default function AboutPage() {
             </section>
 
             {/* Trust Section */}
-            <section className="py-20 bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+            <section className="py-20 bg-cny-red text-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
                         Trusted by Thousands

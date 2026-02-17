@@ -64,13 +64,13 @@ export default function HowItWorksPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            How <span className="text-gradient">Remitone</span> Works
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            How <span className="text-cny-gold">Remitone</span> Works
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+                        <p className="text-xl md:text-2xl text-white/90 mb-8">
                             Send money internationally in 4 simple steps
                         </p>
                     </div>
@@ -87,8 +87,8 @@ export default function HowItWorksPage() {
                                     {/* Icon and Number */}
                                     <div className="flex-shrink-0">
                                         <div className="relative">
-                                            <div className="w-32 h-32 bg-gradient-primary rounded-3xl flex items-center justify-center shadow-glow">
-                                                <step.icon className="w-16 h-16 text-white" />
+                                            <div className="w-32 h-32 bg-cny-gold-gradient rounded-3xl flex items-center justify-center shadow-glow">
+                                                <step.icon className="w-16 h-16 text-black" />
                                             </div>
                                             <div className="absolute -top-3 -right-3 w-12 h-12 bg-accent-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
                                                 {step.number}
@@ -128,7 +128,7 @@ export default function HowItWorksPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-16 bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+            <section className="py-16 bg-cny-red text-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
                         Ready to Send Money?
@@ -138,7 +138,7 @@ export default function HowItWorksPage() {
                     </p>
                     <a
                         href={REMITONE_PLATFORM_URL}
-                        className="inline-flex items-center gap-2 bg-white text-primary-600 px-7 py-3.5 rounded-xl font-semibold hover:bg-slate-100 transition-colors"
+                        className="inline-flex items-center gap-2 bg-cny-gold-gradient text-black px-7 py-3.5 rounded-xl font-semibold hover:bg-slate-100 transition-colors"
                     >
                         Get Started Now
                         <ArrowRight className="w-5 h-5" />

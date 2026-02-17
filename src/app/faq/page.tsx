@@ -66,13 +66,13 @@ export default function FAQPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-20 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Frequently Asked <span className="text-gradient">Questions</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Frequently Asked <span className="text-cny-gold">Questions</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl md:text-2xl text-white/90">
                             Find answers to common questions about Remitone
                         </p>
                     </div>
@@ -95,8 +95,8 @@ export default function FAQPage() {
             {/* Contact CTA */}
             <section className="py-16 bg-gray-50 dark:bg-gray-800">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-2xl flex items-center justify-center">
-                        <MessageCircle className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
+                        <MessageCircle className="w-8 h-8 text-black" />
                     </div>
                     <h2 className="text-3xl font-bold mb-4">
                         Still have questions?
@@ -106,7 +106,7 @@ export default function FAQPage() {
                     </p>
                     <a
                         href="/contact"
-                        className="inline-block bg-gradient-primary text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                        className="inline-block bg-cny-gold-gradient text-black px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity"
                     >
                         Contact Support
                     </a>

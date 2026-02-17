@@ -13,13 +13,13 @@ export default function CookiesPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-12 bg-gradient-to-br from-primary-50 via-accent-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+            <section className="relative pt-32 pb-12 bg-cny-red">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Cookie <span className="text-gradient">Policy</span>
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                            Cookie <span className="text-cny-gold">Policy</span>
                         </h1>
-                        <p className="text-xl text-gray-600 dark:text-gray-300">
+                        <p className="text-xl text-white/90">
                             Last Updated: February 13, 2026
                         </p>
                     </div>
@@ -136,7 +136,7 @@ export default function CookiesPage() {
                             If you have questions about our use of cookies, please contact us at:
                         </p>
                         <p>
-                            Email: <a href="mailto:privacy@remitone.com">privacy@remitone.com</a>
+                            Email: <a href="mailto:privacy@remitone.com" className="text-cny-gold-accent hover:text-cny-gold-primary">privacy@remitone.com</a>
                         </p>
                     </div>
                 </div>

@@ -39,7 +39,7 @@ const FeaturesSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-sm font-semibold text-orange-500 uppercase tracking-wider mb-3"
+                        className="text-sm font-semibold text-[#FFD700] uppercase tracking-wider mb-3"
                     >
                         Why Remitone
                     </motion.p>
@@ -50,7 +50,7 @@ const FeaturesSection = () => {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-5xl font-bold text-white mb-4"
                     >
-                        We Take Your <span className="text-gradient">Transfer Experience</span>
+                        We Take Your <span className="text-cny-gold">Transfer Experience</span>
                         <br />
                         To The Next Level
                     </motion.h2>
@@ -79,8 +79,8 @@ const FeaturesSection = () => {
                             }}
                             className="group relative bg-dark-500 border border-dark-300 rounded-xl p-6 transition-all duration-200 card-hover"
                         >
-                            <div className="w-14 h-14 rounded-xl bg-orange-500/10 flex items-center justify-center mb-5">
-                                <feature.icon className="w-7 h-7 text-orange-500" />
+                            <div className="w-14 h-14 rounded-xl bg-[#FFD700]/10 flex items-center justify-center mb-5">
+                                <feature.icon className="w-7 h-7 text-[#FFD700]" />
                             </div>
                             <h3 className="text-lg font-semibold text-white mb-3">
                                 {feature.title}
@@ -101,7 +101,7 @@ const FeaturesSection = () => {
                 >
                     <a
                         href="/pricing"
-                        className="inline-flex items-center gap-2 text-base font-semibold text-white bg-gradient-orange px-6 py-3 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
+                        className="inline-flex items-center gap-2 text-base font-semibold text-black bg-cny-gold-gradient px-6 py-3 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
                     >
                         Learn More
                         <ArrowRight className="w-5 h-5" />
