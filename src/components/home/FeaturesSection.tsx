@@ -1,112 +1,113 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Zap, Shield, Globe, CreditCard, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 const FeaturesSection = () => {
-    const features = [
-        {
-            icon: Zap,
-            title: 'Lightning Fast Transfers',
-            description:
-                'Most transfers arrive within minutes. No more waiting days for your money to clear.',
-        },
-        {
-            icon: Shield,
-            title: 'Bank-Level Security',
-            description:
-                '256-bit encryption protects every transaction. Your money and data are always safe.',
-        },
-        {
-            icon: Globe,
-            title: 'Global Coverage',
-            description:
-                'Send to 200+ countries with competitive exchange rates. Your money goes further.',
-        },
-        {
-            icon: CreditCard,
-            title: 'Transparent Pricing',
-            description:
-                'Low fees from $0. No hidden charges — what you see is what you pay.',
-        },
-    ]
-
     return (
-        <section className="py-24 bg-dark-600 relative">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-sm font-semibold text-[#FFD700] uppercase tracking-wider mb-3"
-                    >
-                        Why Remitone
-                    </motion.p>
+        <section className="py-24 bg-white relative">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="text-center max-w-2xl mx-auto mb-16">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-bold text-white mb-4"
+                        className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
                     >
-                        We Take Your <span className="text-cny-gold">Transfer Experience</span>
-                        <br />
-                        To The Next Level
+                        One platform, endless possibilities
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg text-white/70 max-w-2xl mx-auto"
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 text-lg text-slate-600"
                     >
-                        Every feature designed to make international transfers simple, safe, and affordable.
+                        Whether you are an individual sending money home or a business paying suppliers, we have you covered.
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                    {features.map((feature, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{
-                                delay: index * 0.08,
-                                duration: 0.4,
-                                ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="group relative bg-dark-500 border border-dark-300 rounded-xl p-6 transition-all duration-200 card-hover"
-                        >
-                            <div className="w-14 h-14 rounded-xl bg-[#FFD700]/10 flex items-center justify-center mb-5">
-                                <feature.icon className="w-7 h-7 text-[#FFD700]" />
-                            </div>
-                            <h3 className="text-lg font-semibold text-white mb-3">
-                                {feature.title}
-                            </h3>
-                            <p className="text-sm text-white/60 leading-relaxed">
-                                {feature.description}
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center"
-                >
-                    <a
-                        href="/pricing"
-                        className="inline-flex items-center gap-2 text-base font-semibold text-black bg-cny-gold-gradient px-6 py-3 rounded-lg hover:shadow-glow transition-all hover:scale-[1.02]"
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Personal Card */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
                     >
-                        Learn More
-                        <ArrowRight className="w-5 h-5" />
-                    </a>
-                </motion.div>
+                        <Link href="/personal" className="group relative overflow-hidden rounded-3xl bg-deep-red border border-transparent p-8 transition-all hover:shadow-2xl hover:shadow-brand-red/20 block h-full">
+                            <div className="absolute top-0 right-0 p-8 opacity-10 transition-transform group-hover:scale-110 group-hover:opacity-20">
+                                <span className="material-symbols-outlined text-[150px] text-white">person</span>
+                            </div>
+                            <div className="relative z-10 flex flex-col h-full">
+                                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-white">
+                                    <span className="material-symbols-outlined text-3xl">person</span>
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-2">KogoPay Personal</h3>
+                                <p className="text-white/70 mb-8 flex-grow">
+                                    Send money home to family, pay for tuition, or spend abroad with low fees and real-time rates.
+                                </p>
+                                <ul className="space-y-3 mb-8 text-white/80">
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Instant transfers
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Multi-currency wallet
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Virtual & Physical cards
+                                    </li>
+                                </ul>
+                                <span className="inline-flex items-center text-white font-bold hover:text-gold transition-colors group-hover:text-gold">
+                                    Get Started <span className="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
+                                </span>
+                            </div>
+                        </Link>
+                    </motion.div>
+
+                    {/* Business Card */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        <Link href="/business" className="group relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 transition-all hover:shadow-2xl block h-full">
+                            <div className="absolute top-0 right-0 p-8 opacity-10 transition-transform group-hover:scale-110 group-hover:opacity-20">
+                                <span className="material-symbols-outlined text-[150px] text-gold">business_center</span>
+                            </div>
+                            <div className="relative z-10 flex flex-col h-full">
+                                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 text-gold">
+                                    <span className="material-symbols-outlined text-3xl">business_center</span>
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-2">KogoPay Business</h3>
+                                <p className="text-slate-400 mb-8 flex-grow">
+                                    Empower your business with global accounts, bulk payments, and seamless payroll management.
+                                </p>
+                                <ul className="space-y-3 mb-8 text-slate-300">
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Batch payments API
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Dedicated account manager
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                        Forward contracts
+                                    </li>
+                                </ul>
+                                <span className="inline-flex items-center text-gold font-bold hover:text-yellow-200 transition-colors group-hover:text-yellow-200">
+                                    Contact Sales <span className="material-symbols-outlined ml-2 text-sm">arrow_forward</span>
+                                </span>
+                            </div>
+                        </Link>
+                    </motion.div>
+                </div>
             </div>
         </section>
     )

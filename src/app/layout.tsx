@@ -2,23 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Remitone — Send Money Worldwide, Instantly",
+  title: "KogoPay — Global Payments Made Simple",
   description:
-    "Fast, secure, and affordable international money transfers to over 200 countries. Trusted by millions for competitive exchange rates and low fees.",
+    "Fast, transparent and secure cross-border payments for individuals and businesses. Send money globally with competitive rates and low fees.",
   keywords:
-    "money transfer, international transfer, send money, remittance, exchange rates, Remitone",
+    "KogoPay, cross-border payments, international money transfer, send money, remittance, exchange rates, global payments",
   openGraph: {
-    title: "Remitone — Send Money Worldwide, Instantly",
+    title: "KogoPay — Global Payments Made Simple",
     description:
-      "Fast, secure, and affordable international money transfers to over 200 countries.",
+      "Fast, transparent and secure cross-border payments for individuals and businesses.",
     type: "website",
-    siteName: "Remitone",
+    siteName: "KogoPay",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Remitone — Send Money Worldwide, Instantly",
+    title: "KogoPay — Global Payments Made Simple",
     description:
-      "Fast, secure, and affordable international money transfers to over 200 countries.",
+      "Fast, transparent and secure cross-border payments for individuals and businesses.",
   },
 };
 
@@ -37,11 +37,17 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased font-sans selection:bg-gold/30 selection:text-brand-red-deep">
+        {children}
+      </body>
     </html>
   );
 }

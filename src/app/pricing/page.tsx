@@ -1,186 +1,192 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { motion } from 'framer-motion'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import Button from '@/components/ui/Button'
-import { ArrowRight, DollarSign, TrendingDown, Calculator } from 'lucide-react'
 
-export const metadata: Metadata = {
-    title: 'Pricing & Fees - Remitone | Transparent Exchange Rates',
-    description: 'Send money globally with competitive exchange rates and low fees. No hidden charges. See exactly what you pay.',
-}
+const tiers = [
+    {
+        name: 'Personal',
+        description: 'For individuals sending money globally',
+        price: 'Free',
+        priceNote: 'No monthly fees',
+        features: [
+            'Send up to £25,000 per transfer',
+            'Competitive mid-market rates',
+            'Transfers from £0.99',
+            'Multi-currency wallet',
+            'Virtual debit card',
+            'Real-time tracking',
+            'Email & chat support',
+        ],
+        cta: 'Open Free Account',
+        popular: false,
+        variant: 'light' as const,
+    },
+    {
+        name: 'Business',
+        description: 'For companies with global payment needs',
+        price: '£29',
+        priceNote: '/month',
+        features: [
+            'Unlimited transfer amounts',
+            'Best available rates',
+            'Batch payments API',
+            'Dedicated account manager',
+            'Forward contracts',
+            'Multi-user access',
+            'Priority phone support',
+            'Custom integrations',
+        ],
+        cta: 'Contact Sales',
+        popular: true,
+        variant: 'dark' as const,
+    },
+    {
+        name: 'Enterprise',
+        description: 'Custom solutions for large organisations',
+        price: 'Custom',
+        priceNote: 'tailored pricing',
+        features: [
+            'Everything in Business',
+            'Volume-based pricing',
+            'SLA guarantees',
+            'Dedicated infrastructure',
+            'Custom API limits',
+            'On-premise deployment options',
+            'Compliance & audit support',
+            '24/7 dedicated support',
+        ],
+        cta: 'Get in Touch',
+        popular: false,
+        variant: 'light' as const,
+    },
+]
+
+const corridorPricing = [
+    { route: 'GBP → INR', rate: '₹106.50', fee: '£0.99', time: '< 30 min' },
+    { route: 'GBP → CNY', rate: '¥9.25', fee: '£0.99', time: '< 1 hour' },
+    { route: 'GBP → AED', rate: 'د.إ4.65', fee: '£0.99', time: '< 30 min' },
+    { route: 'GBP → SGD', rate: 'S$1.69', fee: '£0.99', time: '< 1 hour' },
+    { route: 'USD → INR', rate: '₹84.20', fee: '$1.49', time: '< 30 min' },
+    { route: 'EUR → GBP', rate: '£0.85', fee: '€0.99', time: '< 30 min' },
+]
 
 export default function PricingPage() {
-    // TODO: Replace with actual Remitone platform URL
-    const REMITONE_PLATFORM_URL = 'https://app.remitone.com'
-
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen bg-white">
             <Header />
 
-            {/* Hero Section */}
-            <section className="relative pt-32 pb-20 bg-cny-red">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-                            Transparent <span className="text-cny-gold">Pricing</span>
+            {/* Hero */}
+            <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 bg-deep-red overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-red-deep to-brand-red-deep/80" />
+                <div className="absolute -top-32 -right-32 h-[500px] w-[500px] rounded-full bg-gold/10 blur-[120px]" />
+                <div className="mx-auto max-w-7xl px-6 lg:px-8 relative text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl leading-[1.1] mb-6">
+                            Transparent <span className="text-gradient-gold">pricing</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-white/90 mb-8">
-                            No hidden fees. No surprises. Just honest, competitive rates.
+                        <p className="text-lg text-white/80 max-w-2xl mx-auto">
+                            No hidden fees. No surprises. Just honest, competitive pricing for every transfer.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Pricing Tiers */}
+            <section className="py-24 bg-white">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {tiers.map((tier, index) => (
+                            <motion.div
+                                key={tier.name}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                                className={`relative rounded-3xl p-8 transition-all ${tier.popular
+                                        ? 'bg-slate-900 text-white border-2 border-gold shadow-2xl scale-105'
+                                        : 'bg-white text-slate-900 border border-slate-200 hover:shadow-lg'
+                                    }`}
+                            >
+                                {tier.popular && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-brand-red-deep text-xs font-bold px-4 py-1 rounded-full">
+                                        Most Popular
+                                    </div>
+                                )}
+                                <h3 className="text-2xl font-bold mb-1">{tier.name}</h3>
+                                <p className={`text-sm mb-6 ${tier.popular ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    {tier.description}
+                                </p>
+                                <div className="mb-8">
+                                    <span className="text-4xl font-extrabold">{tier.price}</span>
+                                    <span className={`text-sm ml-1 ${tier.popular ? 'text-slate-400' : 'text-slate-500'}`}>
+                                        {tier.priceNote}
+                                    </span>
+                                </div>
+                                <ul className="space-y-3 mb-8">
+                                    {tier.features.map((feature) => (
+                                        <li key={feature} className="flex items-center gap-3 text-sm">
+                                            <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
+                                            <span className={tier.popular ? 'text-slate-300' : 'text-slate-600'}>
+                                                {feature}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <button
+                                    className={`w-full h-12 rounded-xl font-bold transition-all ${tier.popular
+                                            ? 'bg-gold text-brand-red-deep hover:bg-white'
+                                            : 'bg-brand-red text-white hover:bg-brand-red-light'
+                                        }`}
+                                >
+                                    {tier.cta}
+                                </button>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Corridor Pricing Table */}
+            <section className="py-24 bg-slate-50">
+                <div className="mx-auto max-w-4xl px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+                            Popular corridor rates
+                        </h2>
+                        <p className="mt-4 text-lg text-slate-600">
+                            Indicative rates for our most popular transfer routes.
                         </p>
                     </div>
-                </div>
-            </section>
 
-            {/* Key Benefits */}
-            <section className="py-16 bg-white dark:bg-gray-900">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
-                                <DollarSign className="w-8 h-8 text-black" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Low Fees</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                Starting from just $2.99 per transfer
-                            </p>
+                    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                        <div className="grid grid-cols-4 gap-4 px-6 py-4 bg-slate-50 border-b border-slate-200 text-sm font-bold text-slate-500">
+                            <span>Route</span>
+                            <span>Rate</span>
+                            <span>Fee</span>
+                            <span>Speed</span>
                         </div>
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
-                                <TrendingDown className="w-8 h-8 text-black" />
+                        {corridorPricing.map((corridor) => (
+                            <div
+                                key={corridor.route}
+                                className="grid grid-cols-4 gap-4 px-6 py-4 border-b border-slate-100 last:border-0 text-sm hover:bg-slate-50 transition-colors"
+                            >
+                                <span className="font-medium text-slate-900">{corridor.route}</span>
+                                <span className="text-brand-red font-bold">{corridor.rate}</span>
+                                <span className="text-slate-600">{corridor.fee}</span>
+                                <span className="text-slate-600">{corridor.time}</span>
                             </div>
-                            <h3 className="text-xl font-semibold mb-2">Best Rates</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                Competitive exchange rates, updated in real-time
-                            </p>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-cny-gold-gradient rounded-2xl flex items-center justify-center">
-                                <Calculator className="w-8 h-8 text-black" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-2">Easy Calculation</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                Know exactly what you'll pay before you send
-                            </p>
-                        </div>
+                        ))}
                     </div>
-                </div>
-            </section>
 
-            {/* Fee Structure */}
-            <section className="py-16 bg-gray-50 dark:bg-gray-800">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                            Fee Structure
-                        </h2>
-
-                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 mb-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h3 className="text-xl font-semibold mb-4">Transfer Fees</h3>
-                                    <ul className="space-y-3">
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">$0 - $500</span>
-                                            <span className="font-semibold">$2.99</span>
-                                        </li>
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">$501 - $2,000</span>
-                                            <span className="font-semibold">$4.99</span>
-                                        </li>
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">$2,001 - $10,000</span>
-                                            <span className="font-semibold">$9.99</span>
-                                        </li>
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">$10,001+</span>
-                                            <span className="font-semibold">$14.99</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold mb-4">Delivery Speed</h3>
-                                    <ul className="space-y-3">
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">Instant (minutes)</span>
-                                            <span className="font-semibold">Standard fee</span>
-                                        </li>
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">Same day</span>
-                                            <span className="font-semibold">Standard fee</span>
-                                        </li>
-                                        <li className="flex justify-between">
-                                            <span className="text-gray-600 dark:text-gray-400">Bank transfer (1-3 days)</span>
-                                            <span className="font-semibold">Standard fee</span>
-                                        </li>
-                                    </ul>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                                        * Delivery speed may vary by destination country
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Example Transfer */}
-                        <div className="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-8">
-                            <h3 className="text-2xl font-semibold mb-4 text-center">Example Transfer</h3>
-                            <div className="max-w-md mx-auto">
-                                <div className="space-y-4">
-                                    <div className="flex justify-between text-lg">
-                                        <span>You send</span>
-                                        <span className="font-semibold">$1,000.00 USD</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600 dark:text-gray-400">Transfer fee</span>
-                                        <span>- $4.99</span>
-                                    </div>
-                                    <div className="border-t border-gray-300 dark:border-gray-600 my-4"></div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600 dark:text-gray-400">Amount we&apos;ll convert</span>
-                                        <span>$995.01</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
-                                        <span>Exchange rate</span>
-                                        <span>1 USD = 83.12 INR</span>
-                                    </div>
-                                    <div className="border-t border-gray-300 dark:border-gray-600 my-4"></div>
-                                    <div className="flex justify-between text-xl font-bold text-cny-red-primary">
-                                        <span>Recipient gets</span>
-                                        <span>₹82,712.63 INR</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Live Calculator Placeholder */}
-            <section className="py-16 bg-white dark:bg-gray-900">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Calculate Your Transfer
-                        </h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-                            Use our live calculator to see exactly how much your recipient will receive
-                        </p>
-                        {/* TODO: Integrate actual Remitone API for FX calculator */}
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-12 mb-8">
-                            <p className="text-gray-500 dark:text-gray-400">
-                                Live FX Calculator - Coming Soon
-                            </p>
-                            <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">
-                                This will integrate with the Remitone API for real-time exchange rates
-                            </p>
-                        </div>
-                        <a
-                            href={REMITONE_PLATFORM_URL}
-                            className="inline-flex items-center gap-2 bg-cny-gold-gradient text-black px-7 py-3.5 rounded-xl font-semibold hover:shadow-glow transition-all"
-                        >
-                            Start Sending Money
-                            <ArrowRight className="w-5 h-5" />
-                        </a>
-                    </div>
+                    <p className="mt-6 text-xs text-slate-400 text-center">
+                        * Rates are indicative and may vary at the time of transfer. Fees shown are for standard personal transfers.
+                    </p>
                 </div>
             </section>
 

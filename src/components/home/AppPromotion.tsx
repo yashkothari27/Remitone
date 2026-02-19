@@ -1,146 +1,135 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Check, Smartphone } from 'lucide-react'
 
 const AppPromotion = () => {
-    const features = [
-        'Send money on the go',
-        'Track transfers in real-time',
-        'Biometric security',
-        'Instant notifications',
-        'Save favorite recipients',
-        'Multi-currency support',
-    ]
-
     return (
-        <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 bg-white relative overflow-hidden">
+            <div className="absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-brand-red/5 blur-[100px]" />
+
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    {/* Content */}
+                    {/* Left — Content */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.6 }}
                     >
-                        <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-3">
-                            Mobile Experience
-                        </p>
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-5">
-                            Transfer Money from{' '}
-                            <span className="text-gradient">Your Pocket</span>
+                        <div className="badge badge-red mb-6">
+                            <span className="material-symbols-outlined text-sm">smartphone</span>
+                            Mobile App
+                        </div>
+                        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-6">
+                            Your money, always <span className="text-brand-red">at hand</span>
                         </h2>
-                        <p className="text-lg text-slate-500 dark:text-slate-400 mb-8 max-w-md leading-relaxed">
-                            Download the Remitone app for seamless transfers anywhere, anytime.
-                            Available for iOS and Android.
+                        <p className="text-lg text-slate-600 mb-8 max-w-lg">
+                            Download the KogoPay app and manage your international transfers on the go.
+                            Track rates, send money, and receive notifications — all from your pocket.
                         </p>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
-                            {features.map((feature, index) => (
-                                <div key={index} className="flex items-center gap-2.5">
-                                    <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                                        <Check className="w-3 h-3 text-emerald-600" />
+                        <div className="space-y-4 mb-10">
+                            {[
+                                { icon: 'speed', text: 'Instant transfers with live rate alerts' },
+                                { icon: 'fingerprint', text: 'Biometric security for every transaction' },
+                                { icon: 'notifications', text: 'Real-time push notifications' },
+                            ].map((feature) => (
+                                <div key={feature.text} className="flex items-center gap-3">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red/10 text-brand-red">
+                                        <span className="material-symbols-outlined">{feature.icon}</span>
                                     </div>
-                                    <span className="text-sm text-slate-600 dark:text-slate-300">
-                                        {feature}
-                                    </span>
+                                    <span className="text-slate-700 font-medium">{feature.text}</span>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="flex flex-wrap gap-3">
+                        {/* Store Buttons */}
+                        <div className="flex flex-wrap gap-4">
                             <a
                                 href="#"
-                                className="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-semibold hover:bg-slate-800 transition-colors dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                                className="inline-flex items-center gap-3 bg-slate-900 text-white rounded-xl px-6 py-3 hover:bg-slate-800 transition-colors"
                             >
-                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                                </svg>
-                                App Store
+                                <span className="material-symbols-outlined text-2xl">phone_iphone</span>
+                                <div className="text-left">
+                                    <div className="text-[10px] text-white/60 uppercase tracking-wider">Download on the</div>
+                                    <div className="text-sm font-bold">App Store</div>
+                                </div>
                             </a>
                             <a
                                 href="#"
-                                className="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-3 rounded-xl text-sm font-semibold hover:bg-slate-800 transition-colors dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                                className="inline-flex items-center gap-3 bg-slate-900 text-white rounded-xl px-6 py-3 hover:bg-slate-800 transition-colors"
                             >
-                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-1.4l2.857 1.652a1 1 0 010 1.73L17.7 16.34l-2.514-2.514 2.512-2.52zM5.864 2.658L16.8 8.99l-2.303 2.303-8.633-8.636z" />
-                                </svg>
-                                Google Play
+                                <span className="material-symbols-outlined text-2xl">android</span>
+                                <div className="text-left">
+                                    <div className="text-[10px] text-white/60 uppercase tracking-wider">Get it on</div>
+                                    <div className="text-sm font-bold">Google Play</div>
+                                </div>
                             </a>
                         </div>
                     </motion.div>
 
-                    {/* Phone Mockup */}
+                    {/* Right — App Mockup */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
                         className="relative flex justify-center"
                     >
                         <div className="relative">
                             {/* Phone frame */}
-                            <div className="w-[280px] h-[560px] bg-slate-900 rounded-[40px] p-3 shadow-elevated">
-                                {/* Notch */}
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[28px] bg-slate-900 rounded-b-2xl z-20" />
-
-                                {/* Screen */}
-                                <div className="w-full h-full bg-white rounded-[32px] overflow-hidden relative">
+                            <div className="w-[280px] h-[560px] bg-slate-900 rounded-[40px] border-4 border-slate-700 p-3 shadow-2xl">
+                                <div className="w-full h-full bg-deep-red rounded-[30px] overflow-hidden flex flex-col">
                                     {/* Status bar */}
-                                    <div className="flex items-center justify-between px-6 pt-10 pb-2">
-                                        <span className="text-[11px] font-semibold text-slate-900">9:41</span>
+                                    <div className="flex items-center justify-between px-6 pt-4 pb-2">
+                                        <span className="text-white text-xs font-medium">9:41</span>
                                         <div className="flex items-center gap-1">
-                                            <div className="w-4 h-2 border border-slate-400 rounded-sm relative">
-                                                <div className="absolute inset-0.5 bg-slate-900 rounded-[1px]" style={{ width: '70%' }} />
-                                            </div>
+                                            <span className="material-symbols-outlined text-white text-sm">signal_cellular_alt</span>
+                                            <span className="material-symbols-outlined text-white text-sm">battery_full</span>
                                         </div>
                                     </div>
-
-                                    {/* App content mockup */}
-                                    <div className="px-5 pt-4">
+                                    {/* App content */}
+                                    <div className="flex-1 px-5 py-4">
                                         <div className="flex items-center gap-2 mb-6">
-                                            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                                                <span className="text-white text-xs font-bold">R</span>
+                                            <div className="h-6 w-6 rounded-md bg-white flex items-center justify-center">
+                                                <span className="material-symbols-outlined text-brand-red text-xs">payments</span>
                                             </div>
-                                            <span className="text-sm font-bold text-slate-900">Remitone</span>
+                                            <span className="text-white text-sm font-bold">KogoPay</span>
+                                        </div>
+                                        <p className="text-white/60 text-xs mb-2">Your balance</p>
+                                        <p className="text-white text-2xl font-bold mb-6">£12,450.00</p>
+
+                                        <div className="flex gap-3 mb-6">
+                                            <button className="flex-1 bg-gold text-brand-red-deep text-xs font-bold py-2.5 rounded-lg">Send</button>
+                                            <button className="flex-1 bg-white/10 text-white text-xs font-bold py-2.5 rounded-lg border border-white/10">Receive</button>
                                         </div>
 
-                                        <p className="text-[11px] text-slate-400 mb-1">Available balance</p>
-                                        <p className="text-2xl font-bold text-slate-900 mb-6">$12,450.00</p>
-
-                                        <div className="flex gap-2 mb-6">
-                                            <div className="flex-1 bg-primary-600 text-white text-[11px] font-semibold py-2.5 rounded-lg text-center">
-                                                Send Money
-                                            </div>
-                                            <div className="flex-1 bg-slate-100 text-slate-700 text-[11px] font-semibold py-2.5 rounded-lg text-center">
-                                                Request
-                                            </div>
-                                        </div>
-
-                                        <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                                            Recent Transfers
-                                        </p>
-
+                                        <p className="text-white/60 text-xs mb-3">Recent</p>
                                         {[
-                                            { name: 'Sarah K.', amount: '-$500.00', flag: '🇬🇧' },
-                                            { name: 'James O.', amount: '-$1,200.00', flag: '🇳🇬' },
-                                            { name: 'Priya S.', amount: '-$800.00', flag: '🇮🇳' },
-                                        ].map((txn) => (
-                                            <div key={txn.name} className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
+                                            { name: 'Sarah K.', amount: '-£250.00', cur: 'INR' },
+                                            { name: 'Chen W.', amount: '-£1,000.00', cur: 'CNY' },
+                                            { name: 'Top Up', amount: '+£5,000.00', cur: 'GBP' },
+                                        ].map((tx) => (
+                                            <div key={tx.name} className="flex items-center justify-between py-2.5 border-b border-white/5">
                                                 <div className="flex items-center gap-2.5">
-                                                    <span className="text-lg">{txn.flag}</span>
-                                                    <span className="text-xs font-medium text-slate-700">{txn.name}</span>
+                                                    <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white text-xs font-bold">
+                                                        {tx.name[0]}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-white text-xs font-medium">{tx.name}</p>
+                                                        <p className="text-white/40 text-[10px]">{tx.cur}</p>
+                                                    </div>
                                                 </div>
-                                                <span className="text-xs font-semibold text-slate-900">{txn.amount}</span>
+                                                <span className={`text-xs font-bold ${tx.amount.startsWith('+') ? 'text-emerald-400' : 'text-white/80'}`}>
+                                                    {tx.amount}
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Subtle glow behind phone */}
-                            <div className="absolute -inset-8 bg-primary-400/10 rounded-full blur-3xl -z-10" />
+                            {/* Glow behind phone */}
+                            <div className="absolute -inset-8 bg-gradient-to-tr from-brand-red/20 to-gold/10 blur-2xl rounded-full -z-10" />
                         </div>
                     </motion.div>
                 </div>

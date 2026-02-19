@@ -1,105 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark-first theme inspired by aimsfx.com */
-  --background: #000000;
-  --background-secondary: #0D0D0D;
-  --background-card: #111111;
-  --background-elevated: #1A1A1A;
-  --foreground: #FFFFFF;
-  --foreground-secondary: #A0A0A0;
-  --foreground-muted: #888888;
+  /* KogoPay Brand Palette */
+  --brand-red: #C8102E;
+  --brand-red-deep: #980B21;
+  --brand-gold: #D4AF37;
+  --brand-gold-light: #F3E5AB;
+  --brand-black: #0B0B0B;
+  --brand-card-dark: #161616;
+  --brand-surface: #1C1C1C;
 
-  /* Border and dividers */
-  --border-subtle: #2A2A2A;
-  --border-accent: #E8652D;
-
-  /* Chinese New Year Theme */
-  --cny-red-primary: #8B0000;
-  --cny-red-secondary: #4A0000;
-  --cny-gold-primary: #FFD700;
-  --cny-gold-secondary: #FDB931;
-  --cny-gold-accent: #B8860B;
+  --background: #FFFFFF;
+  --background-dark: #0B0B0B;
+  --foreground: #0f172a;
+  --foreground-dark: #f1f5f9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
 
-  /* Orange Accent — Primary CTA color */
-  --color-orange-50: #fff7ed;
-  --color-orange-100: #ffedd5;
-  --color-orange-200: #fed7aa;
-  --color-orange-300: #fdba74;
-  --color-orange-400: #fb923c;
-  --color-orange-500: #E8652D;
-  --color-orange-600: #ea580c;
-  --color-orange-700: #c2410c;
-  --color-orange-800: #9a3412;
-  --color-orange-900: #7c2d12;
+  /* Brand Red scale */
+  --color-brand-red: #C8102E;
+  --color-brand-red-deep: #980B21;
+  --color-brand-red-light: #E8253F;
+  --color-brand-red-50: #FFF1F2;
+  --color-brand-red-100: #FFE4E6;
+  --color-brand-red-900: #4A0000;
 
-  /* Dark theme grays */
-  --color-dark-50: #f8f9fa;
-  --color-dark-100: #e9ecef;
-  --color-dark-200: #dee2e6;
-  --color-dark-300: #2A2A2A;
-  --color-dark-400: #1A1A1A;
-  --color-dark-500: #111111;
-  --color-dark-600: #0D0D0D;
-  --color-dark-700: #0A0A0A;
-  --color-dark-800: #050505;
-  --color-dark-900: #000000;
+  /* Gold scale */
+  --color-gold: #D4AF37;
+  --color-gold-light: #F3E5AB;
+  --color-gold-dark: #B8962E;
 
-  /* Blue accent for gradients */
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-  --color-blue-800: #1e3a8a;
-
-  /* Success */
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
+  /* Neutrals */
+  --color-surface-dark: #161616;
+  --color-surface-elevated: #1C1C1C;
 
   /* Animations */
   --animate-fade-in: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-slide-up: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-float: float 6s ease-in-out infinite;
   --animate-scale-up: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* CNY Theme Colors */
-  --color-cny-red-primary: var(--cny-red-primary);
-  --color-cny-red-secondary: var(--cny-red-secondary);
-  --color-cny-gold-primary: var(--cny-gold-primary);
-  --color-cny-gold-secondary: var(--cny-gold-secondary);
-  --color-cny-gold-accent: var(--cny-gold-accent);
-
-  /* Override Primary/Accent with CNY Theme */
-  --color-primary-50: #FFF5F5;
-  --color-primary-100: #FFE3E3;
-  --color-primary-200: #FFC9C9;
-  --color-primary-300: #FFA8A8;
-  --color-primary-400: #FF6B6B;
-  --color-primary-500: #8B0000;
-  /* Red Primary */
-  --color-primary-600: #700000;
-  --color-primary-700: #550000;
-  --color-primary-800: #3A0000;
-  --color-primary-900: #1F0000;
-
-  --color-accent-50: #FFFAEB;
-  --color-accent-100: #FFF0C2;
-  --color-accent-200: #FFE699;
-  --color-accent-300: #FFD700;
-  /* Gold */
-  --color-accent-400: #E6C200;
-  --color-accent-500: #B8860B;
-  /* Gold Accent */
-  --color-accent-600: #996F00;
-  --color-accent-700: #7A5900;
-  --color-accent-800: #5C4200;
-  --color-accent-900: #3D2C00;
 }
 
 @keyframes fadeIn {
@@ -128,11 +72,23 @@
 
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 
   50% {
     transform: translateY(-6px);
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -158,15 +114,13 @@
   }
 }
 
-@keyframes scaleUp {
+@keyframes scroll {
   0% {
-    transform: scale(0.98);
-    opacity: 0;
+    transform: translateX(0);
   }
 
   100% {
-    transform: scale(1);
-    opacity: 1;
+    transform: translateX(-50%);
   }
 }
 
@@ -174,10 +128,9 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   letter-spacing: -0.011em;
 }
 
@@ -193,14 +146,24 @@ h5,
 h6 {
   letter-spacing: -0.025em;
   font-weight: 700;
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+/* ─── KogoPay Deep Red Background ───────────────── */
+.bg-deep-red {
+  background-color: #980B21;
+}
+
+.bg-kogopay-dark {
+  background-color: #0B0B0B;
 }
 
 /* ─── Glass Effects ──────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .glass-dark {
@@ -210,81 +173,24 @@ h6 {
   border: 1px solid rgba(51, 65, 85, 0.4);
 }
 
+/* ─── Gold Gradient Text ─────────────────────────── */
+.text-gradient-gold {
+  background: linear-gradient(to right, #F3E5AB, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* ─── Gradient Utilities ─────────────────────────── */
-.bg-gradient-orange {
-  background: linear-gradient(135deg, #E8652D 0%, #FF8C42 100%);
-}
-
-.bg-gradient-section-divider {
-  background: linear-gradient(to right, #1e3a8a 0%, #E8652D 100%);
-}
-
 .bg-gradient-hero {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(232, 101, 45, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-    linear-gradient(to bottom, #000000, #0D0D0D);
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(200, 16, 46, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+    linear-gradient(to bottom, #FFFFFF, #f8f6f6);
 }
 
-.bg-cny-red {
-  background:
-    radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
-    repeating-radial-gradient(circle at 50% 100%,
-      rgba(139, 0, 0, 0.1) 0,
-      rgba(139, 0, 0, 0.1) 10px,
-      transparent 10px,
-      transparent 20px),
-    linear-gradient(to bottom, #8B0000, #4A0000);
-}
-
-.text-cny-gold {
-  background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #B8860B 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.border-cny-gold {
-  border-color: #FDB931;
-}
-
-.bg-cny-gold-gradient {
-  background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
-}
-
-.bg-gradient-primary {
-  background: linear-gradient(135deg, #8B0000 0%, #B8860B 100%);
-}
-
-.bg-gradient-accent {
-  background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
-}
-
-.bg-mesh-gradient {
-  background:
-    radial-gradient(at 27% 37%, rgba(139, 0, 0, 0.15) 0px, transparent 50%),
-    radial-gradient(at 97% 21%, rgba(255, 215, 0, 0.1) 0px, transparent 50%),
-    radial-gradient(at 52% 99%, rgba(139, 0, 0, 0.1) 0px, transparent 50%);
-}
-
-.bg-dot-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #E8652D 0%, #FF8C42 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-blue-orange {
-  background: linear-gradient(135deg, #FFD700 0%, #8B0000 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.bg-gradient-red-gold {
+  background: linear-gradient(135deg, #980B21 0%, #B8962E 100%);
 }
 
 /* ─── Shadow System ─────────────────────────── */
@@ -302,12 +208,12 @@ h6 {
     0 20px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
-.shadow-glow {
-  box-shadow: 0 0 24px rgba(232, 101, 45, 0.25);
+.shadow-glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
-.shadow-glow-blue {
-  box-shadow: 0 0 24px rgba(59, 130, 246, 0.2);
+.shadow-glow-red {
+  box-shadow: 0 0 20px rgba(200, 16, 46, 0.25);
 }
 
 /* ─── Card System ─────────────────────────── */
@@ -318,18 +224,9 @@ h6 {
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(232, 101, 45, 0.1),
-    0 12px 40px -8px rgba(232, 101, 45, 0.2),
-    0 0 20px rgba(232, 101, 45, 0.15);
-}
-
-/* ─── Section Dividers ───────────────────────────── */
-.section-divider {
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.section-divider-dark {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+    0 0 0 1px rgba(200, 16, 46, 0.1),
+    0 12px 40px -8px rgba(200, 16, 46, 0.2),
+    0 0 20px rgba(200, 16, 46, 0.15);
 }
 
 /* ─── Badge / Pill ─────────────────────────── */
@@ -341,25 +238,18 @@ h6 {
   border-radius: 9999px;
   font-size: 0.8125rem;
   font-weight: 500;
-  letter-spacing: 0;
-}
-
-.badge-orange {
-  background: rgba(232, 101, 45, 0.12);
-  color: #E8652D;
-  border: 1px solid rgba(232, 101, 45, 0.2);
 }
 
 .badge-gold {
-  background: rgba(255, 215, 0, 0.15);
-  color: #FFD700;
-  border: 1px solid rgba(255, 215, 0, 0.4);
+  background: rgba(212, 175, 55, 0.12);
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-.badge-blue {
-  background: rgba(139, 0, 0, 0.2);
-  color: #FFD700;
-  border: 1px solid rgba(184, 134, 11, 0.3);
+.badge-red {
+  background: rgba(200, 16, 46, 0.08);
+  color: #C8102E;
+  border: 1px solid rgba(200, 16, 46, 0.15);
 }
 
 /* ─── Container ──────────────────────────────────── */
@@ -390,13 +280,18 @@ h6 {
 
 /* ─── Focus States ─────────────────────────── */
 *:focus-visible {
-  outline: 2px solid #E8652D;
+  outline: 2px solid #D4AF37;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* ─── Selection ─────────────────────────── */
 ::selection {
-  background: rgba(232, 101, 45, 0.2);
-  color: #FFFFFF;
+  background: rgba(212, 175, 55, 0.3);
+  color: #980B21;
+}
+
+/* ─── Section Dividers ───────────────────────────── */
+.section-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
