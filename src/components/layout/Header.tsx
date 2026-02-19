@@ -36,11 +36,13 @@ const Header = () => {
         >
             <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2.5 group">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-brand-red shadow-lg transition-transform group-hover:scale-105">
-                        <span className="material-symbols-outlined text-2xl">payments</span>
-                    </div>
-                    <span className="text-xl font-bold tracking-tight text-white">KogoPay</span>
+                <Link href="/" className="flex items-center gap-3 group">
+                    <img
+                        src="/Kogo Flower.jpeg"
+                        alt="KogoPay Logo"
+                        className="h-10 w-10 object-contain transition-transform group-hover:scale-105"
+                    />
+                    <span className="text-xl font-bold tracking-tight text-white uppercase italic">KogoPay</span>
                 </Link>
 
                 {/* Desktop Nav */}

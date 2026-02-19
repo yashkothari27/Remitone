@@ -7,11 +7,13 @@ const Footer = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
                     {/* Brand */}
                     <div className="col-span-2 lg:col-span-2">
-                        <div className="flex items-center gap-2 mb-6">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-red">
-                                <span className="material-symbols-outlined text-lg">payments</span>
-                            </div>
-                            <span className="text-xl font-bold text-white">KogoPay</span>
+                        <div className="flex items-center gap-3 mb-6">
+                            <img
+                                src="/Kogo Flower.jpeg"
+                                alt="KogoPay Logo"
+                                className="h-10 w-10 object-contain"
+                            />
+                            <span className="text-xl font-bold text-white uppercase italic">KogoPay</span>
                         </div>
                         <p className="text-white/70 text-sm mb-6 max-w-sm">
                             KogoPay Group offers a socially conscious mobile payments platform, enabling instant,

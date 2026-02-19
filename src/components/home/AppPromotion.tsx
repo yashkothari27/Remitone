@@ -91,9 +91,7 @@ const AppPromotion = () => {
                                     {/* App content */}
                                     <div className="flex-1 px-5 py-4">
                                         <div className="flex items-center gap-2 mb-6">
-                                            <div className="h-6 w-6 rounded-md bg-white flex items-center justify-center">
-                                                <span className="material-symbols-outlined text-brand-red text-xs">payments</span>
-                                            </div>
+                                            <img src="/Kogo Flower.jpeg" alt="Logo" className="h-6 w-6 object-contain bg-white rounded-md p-0.5" />
                                             <span className="text-white text-sm font-bold">KogoPay</span>
                                         </div>
                                         <p className="text-white/60 text-xs mb-2">Your balance</p>
