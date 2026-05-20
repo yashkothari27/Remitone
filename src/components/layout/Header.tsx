@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, LogOut, LayoutDashboard } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@/contexts/AuthContext'
 
 const navigation = [
     { name: 'Personal', href: '/personal' },
@@ -18,12 +20,20 @@ const navigation = [
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const { isLoggedIn, auth, logout } = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10)
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    async function handleLogout() {
+        setIsMobileMenuOpen(false)
+        await logout()
+        router.push('/')
+    }
 
     return (
         <header
@@ -60,18 +70,42 @@ const Header = () => {
 
                 {/* CTA */}
                 <div className="flex items-center gap-4">
-                    <Link
-                        href="/contact"
-                        className="hidden text-sm font-semibold text-white transition-colors hover:text-gold sm:block"
-                    >
-                        Log in
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className="hidden sm:flex h-10 items-center justify-center rounded-lg bg-gold px-5 text-sm font-bold text-brand-red-deep transition-all hover:bg-white hover:shadow-lg hover:shadow-gold/20"
-                    >
-                        Sign Up
-                    </Link>
+                    {isLoggedIn ? (
+                        <>
+                            <span className="hidden text-sm text-white/60 sm:block">
+                                {auth?.username}
+                            </span>
+                            <Link
+                                href="/dashboard"
+                                className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-gold"
+                            >
+                                <LayoutDashboard className="h-4 w-4" />
+                                Dashboard
+                            </Link>
+                            <button
+                                onClick={handleLogout}
+                                className="hidden sm:flex h-10 items-center justify-center gap-1.5 rounded-lg border border-white/30 px-4 text-sm font-bold text-white transition-all hover:bg-white/10"
+                            >
+                                <LogOut className="h-4 w-4" />
+                                Sign out
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/login"
+                                className="hidden text-sm font-semibold text-white transition-colors hover:text-gold sm:block"
+                            >
+                                Log in
+                            </Link>
+                            <Link
+                                href="/register"
+                                className="hidden sm:flex h-10 items-center justify-center rounded-lg bg-gold px-5 text-sm font-bold text-brand-red-deep transition-all hover:bg-white hover:shadow-lg hover:shadow-gold/20"
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    )}
 
                     {/* Mobile Menu Button */}
                     <button
@@ -105,20 +139,42 @@ const Header = () => {
                                 </Link>
                             ))}
                             <div className="pt-4 border-t border-white/10 space-y-3">
-                                <Link
-                                    href="/contact"
-                                    className="block text-base font-medium text-white hover:text-gold"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    Log in
-                                </Link>
-                                <Link
-                                    href="/contact"
-                                    className="flex h-12 items-center justify-center rounded-lg bg-gold px-6 text-base font-bold text-brand-red-deep"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    Sign Up
-                                </Link>
+                                {isLoggedIn ? (
+                                    <>
+                                        <Link
+                                            href="/dashboard"
+                                            className="flex items-center gap-2 text-base font-medium text-white hover:text-gold"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                            <LayoutDashboard className="h-4 w-4" />
+                                            Dashboard
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="flex items-center gap-2 text-base font-medium text-white/70 hover:text-white transition-colors"
+                                        >
+                                            <LogOut className="h-4 w-4" />
+                                            Sign out ({auth?.username})
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href="/login"
+                                            className="block text-base font-medium text-white hover:text-gold"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                            Log in
+                                        </Link>
+                                        <Link
+                                            href="/contact"
+                                            className="flex h-12 items-center justify-center rounded-lg bg-gold px-6 text-base font-bold text-brand-red-deep"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                            Sign Up
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </motion.div>

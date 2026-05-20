@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o php-java-rsa.zip -d php-java-rsa)",
+      "Bash(npm install *)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)",
+      "WebFetch(domain:test.remit.by)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs -I{} sh -c 'kill {} 2>/dev/null; echo killed {}')",
+      "Bash(lsof -ti:3099 -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(unzip -o /Users/yashkothari/Downloads/Reltime/Remitone/remitterws-sdk-master.zip -d remitterws-sdk)"
+    ]
+  }
+}

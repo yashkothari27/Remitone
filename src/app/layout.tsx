@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "KogoPay — Global Payments Made Simple",
@@ -50,7 +51,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased font-sans selection:bg-gold/30 selection:text-brand-red-deep">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
