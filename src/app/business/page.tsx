@@ -79,13 +79,10 @@ export default function BusinessPage() {
                             Everything your business needs to move money across borders.
                         </p>
                         <div className="flex flex-wrap gap-4">
-                            <a href="#contact-sales" className="flex h-14 items-center gap-2 rounded-xl bg-gold px-8 text-base font-bold text-brand-red-deep transition-all hover:bg-white hover:scale-105 shadow-lg">
-                                Contact Sales
+                            <a href="mailto:alex.f@kogox.com" className="flex h-14 items-center gap-2 rounded-xl bg-gold px-8 text-base font-bold text-brand-red-deep transition-all hover:bg-white hover:scale-105 shadow-lg">
+                                Contact Us
                                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
                             </a>
-                            <button className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
-                                View API Docs
-                            </button>
                         </div>
                     </motion.div>
                 </div>

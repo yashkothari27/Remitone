@@ -41,7 +41,7 @@ export default function LoginPage() {
       {/* Left panel — branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-brand-red-deep flex-col justify-between p-12">
         <Link href="/" className="flex items-center gap-3">
-          <img src="/Kogo Flower.jpeg" alt="KogoPay" className="h-10 w-10 object-contain rounded-full" />
+          <img src="/kogo-logo.png" alt="KogoPay" className="h-10 w-10 object-contain rounded-full" />
           <span className="text-xl font-bold text-white uppercase italic tracking-tight">KogoPay</span>
         </Link>
 
@@ -78,7 +78,7 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col justify-center px-6 py-12 lg:px-16 bg-white">
         {/* Mobile logo */}
         <div className="mb-10 flex items-center gap-3 lg:hidden">
-          <img src="/Kogo Flower.jpeg" alt="KogoPay" className="h-9 w-9 object-contain rounded-full" />
+          <img src="/kogo-logo.png" alt="KogoPay" className="h-9 w-9 object-contain rounded-full" />
           <span className="text-lg font-bold text-brand-red-deep uppercase italic tracking-tight">KogoPay</span>
         </div>
 
