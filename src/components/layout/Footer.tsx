@@ -11,9 +11,8 @@ const Footer = () => {
                             <img
                                 src="/kogo-logo.png"
                                 alt="KogoPay Logo"
-                                className="h-10 w-10 object-contain"
+                                className="h-10 object-contain"
                             />
-                            <span className="text-xl font-bold text-white uppercase italic">KogoPay</span>
                         </div>
                         <p className="text-white/70 text-sm mb-6 max-w-sm">
                             KogoPay Group offers a socially conscious mobile payments platform, enabling instant,

@@ -33,9 +33,8 @@ export default function DashboardPage() {
       {/* Top bar */}
       <header className="bg-brand-red-deep shadow-sm">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/kogo-logo.png" alt="KogoPay" className="h-8 w-8 object-contain rounded-full" />
-            <span className="font-bold text-white uppercase italic tracking-tight">KogoPay</span>
+          <Link href="/" className="flex items-center">
+            <img src="/kogo-logo.png" alt="KogoPay" className="h-10 object-contain" />
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-white/70 text-sm hidden sm:block">

@@ -46,13 +46,12 @@ const Header = () => {
         >
             <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-3 group">
+                <Link href="/" className="flex items-center group">
                     <img
                         src="/kogo-logo.png"
                         alt="KogoPay Logo"
-                        className="h-10 w-10 object-contain transition-transform group-hover:scale-105"
+                        className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
                     />
-                    <span className="text-xl font-bold tracking-tight text-white uppercase italic">KogoPay</span>
                 </Link>
 
                 {/* Desktop Nav */}
