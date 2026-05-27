@@ -19,7 +19,7 @@ const benefits = [
     {
         icon: 'credit_card',
         title: 'Virtual & Physical Cards',
-        description: 'Spend abroad or online with KogoPay cards. No hidden fees, real exchange rates.',
+        description: 'Spend abroad or online with KogoPAY cards. No hidden fees, real exchange rates.',
     },
     {
         icon: 'savings',
@@ -117,7 +117,7 @@ export default function PersonalPage() {
                         Ready to start sending?
                     </h2>
                     <p className="text-lg text-slate-600 mb-10">
-                        Join 50,000+ users who trust KogoPay for their international payments.
+                        Join 50,000+ users who trust KogoPAY for their international payments.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">

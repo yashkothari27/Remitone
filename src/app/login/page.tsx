@@ -41,7 +41,7 @@ export default function LoginPage() {
       {/* Left panel — branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-brand-red-deep flex-col justify-between p-12">
         <Link href="/" className="flex justify-center">
-          <img src="/kogo-logo.png" alt="KogoPay" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
+          <img src="/kogo-logo-black.png" alt="KogoPAY" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
         </Link>
 
         <div className="space-y-6">
@@ -69,7 +69,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-white/40 text-sm">
-          © {new Date().getFullYear()} KogoPay. All rights reserved.
+          © {new Date().getFullYear()} KogoPAY. All rights reserved.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col justify-center px-6 py-12 lg:px-16 bg-white">
         {/* Mobile logo */}
         <div className="mb-10 flex items-center gap-3 lg:hidden">
-          <img src="/kogo-logo.png" alt="KogoPay" className="h-16 w-auto object-contain" />
+          <img src="/kogo-logo-black.png" alt="KogoPAY" className="h-16 w-auto object-contain" />
         </div>
 
         <div className="w-full max-w-md mx-auto">

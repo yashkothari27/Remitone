@@ -13,7 +13,7 @@ const securityFeatures = [
     {
         icon: 'verified_user',
         title: 'FCA Regulated',
-        description: 'KogoPay is authorised and regulated by the Financial Conduct Authority (FCA). We maintain the highest standards of compliance and governance.',
+        description: 'KogoPAY is authorised and regulated by the Financial Conduct Authority (FCA). We maintain the highest standards of compliance and governance.',
     },
     {
         icon: 'lock',

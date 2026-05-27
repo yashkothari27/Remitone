@@ -24,7 +24,7 @@ const AppPromotion = () => {
                             Your money, always <span className="text-brand-red">at hand</span>
                         </h2>
                         <p className="text-lg text-slate-600 mb-8 max-w-lg">
-                            Download the KogoPay app and manage your international transfers on the go.
+                            Download the KogoPAY app and manage your international transfers on the go.
                             Track rates, send money, and receive notifications — all from your pocket.
                         </p>
 
@@ -91,8 +91,8 @@ const AppPromotion = () => {
                                     {/* App content */}
                                     <div className="flex-1 px-5 py-4">
                                         <div className="flex items-center gap-2 mb-6">
-                                            <img src="/kogo-logo.png" alt="Logo" className="h-6 w-6 object-contain bg-white rounded-md p-0.5" />
-                                            <span className="text-white text-sm font-bold">KogoPay</span>
+                                            <img src="/kogo-logo-black.png" alt="Logo" className="h-6 w-6 object-contain bg-white rounded-md p-0.5" />
+                                            <span className="text-white text-sm font-bold">KogoPAY</span>
                                         </div>
                                         <p className="text-white/60 text-xs mb-2">Your balance</p>
                                         <p className="text-white text-2xl font-bold mb-6">£12,450.00</p>

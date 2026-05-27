@@ -14,7 +14,7 @@ const useCases = [
     {
         icon: 'api',
         title: 'Payment API',
-        description: 'Integrate KogoPay directly into your platform with our RESTful API. Full documentation included.',
+        description: 'Integrate KogoPAY directly into your platform with our RESTful API. Full documentation included.',
     },
     {
         icon: 'account_balance',
@@ -72,7 +72,7 @@ export default function BusinessPage() {
                             Business Account
                         </div>
                         <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl leading-[1.1] mb-6">
-                            Scale globally with <span className="text-gradient-gold">KogoPay Business</span>
+                            Scale globally with <span className="text-gradient-gold">KogoPAY Business</span>
                         </h1>
                         <p className="text-lg text-slate-300 max-w-2xl mb-10">
                             Mass payouts, global treasury management, and seamless API integration.
@@ -96,7 +96,7 @@ export default function BusinessPage() {
                             Built for modern businesses
                         </h2>
                         <p className="mt-4 text-lg text-slate-600">
-                            From startups to enterprises, KogoPay powers global payments at every scale.
+                            From startups to enterprises, KogoPAY powers global payments at every scale.
                         </p>
                     </div>
 

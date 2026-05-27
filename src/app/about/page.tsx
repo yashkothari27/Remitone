@@ -53,7 +53,7 @@ export default function AboutPage() {
                             Connecting the world through <span className="text-gradient-gold">better payments</span>
                         </h1>
                         <p className="text-lg text-white/80 max-w-2xl">
-                            KogoPay Group is on a mission to make international payments accessible, affordable,
+                            KogoPAY Group is on a mission to make international payments accessible, affordable,
                             and socially conscious for everyone.
                         </p>
                     </motion.div>
@@ -122,7 +122,7 @@ export default function AboutPage() {
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Our Values</h2>
                         <p className="mt-4 text-lg text-slate-600">
-                            The principles that guide everything we do at KogoPay.
+                            The principles that guide everything we do at KogoPAY.
                         </p>
                     </div>
 
@@ -156,13 +156,13 @@ export default function AboutPage() {
                         A global fintech with a <span className="text-brand-red">heart</span>
                     </h2>
                     <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-                        Listed on the Aquis Stock Exchange, KogoPay Group is positioned among the next generation
+                        Listed on the Aquis Stock Exchange, KogoPAY Group is positioned among the next generation
                         of fintech companies reshaping how the world moves money. With operations spanning
                         Europe, Asia, and beyond, we are building the infrastructure for a more connected financial world.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button className="flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
-                            Join KogoPay
+                            Join KogoPAY
                         </button>
                     </div>
                 </div>

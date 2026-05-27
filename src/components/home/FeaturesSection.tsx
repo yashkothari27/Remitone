@@ -43,7 +43,7 @@ const FeaturesSection = () => {
                                 <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-white">
                                     <span className="material-symbols-outlined text-3xl">person</span>
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">KogoPay Personal</h3>
+                                <h3 className="text-2xl font-bold text-white mb-2">KogoPAY Personal</h3>
                                 <p className="text-white/70 mb-8 flex-grow">
                                     Send money home to family, pay for tuition, or spend abroad with low fees and real-time rates.
                                 </p>
@@ -83,7 +83,7 @@ const FeaturesSection = () => {
                                 <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 text-gold">
                                     <span className="material-symbols-outlined text-3xl">business_center</span>
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">KogoPay Business</h3>
+                                <h3 className="text-2xl font-bold text-white mb-2">KogoPAY Business</h3>
                                 <p className="text-slate-400 mb-8 flex-grow">
                                     Empower your business with global accounts, bulk payments, and seamless payroll management.
                                 </p>

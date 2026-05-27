@@ -3,21 +3,21 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
-  title: "KogoPay — Global Payments Made Simple",
+  title: "KogoPAY — Global Payments Made Simple",
   description:
     "Fast, transparent and secure cross-border payments for individuals and businesses. Send money globally with competitive rates and low fees.",
   keywords:
-    "KogoPay, cross-border payments, international money transfer, send money, remittance, exchange rates, global payments",
+    "KogoPAY, cross-border payments, international money transfer, send money, remittance, exchange rates, global payments",
   openGraph: {
-    title: "KogoPay — Global Payments Made Simple",
+    title: "KogoPAY — Global Payments Made Simple",
     description:
       "Fast, transparent and secure cross-border payments for individuals and businesses.",
     type: "website",
-    siteName: "KogoPay",
+    siteName: "KogoPAY",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KogoPay — Global Payments Made Simple",
+    title: "KogoPAY — Global Payments Made Simple",
     description:
       "Fast, transparent and secure cross-border payments for individuals and businesses.",
   },

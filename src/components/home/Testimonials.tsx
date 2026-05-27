@@ -7,19 +7,19 @@ const testimonials = [
     {
         name: 'Priya Sharma',
         role: 'Teacher, London',
-        text: 'KogoPay makes sending money to my family in India so easy. The rates are always better than my bank and transfers arrive within minutes.',
+        text: 'KogoPAY makes sending money to my family in India so easy. The rates are always better than my bank and transfers arrive within minutes.',
         rating: 5,
     },
     {
         name: 'Chen Wei',
         role: 'Student, Manchester',
-        text: 'I use KogoPay to receive tuition payments from China. The fees are incredibly low and the process is seamless.',
+        text: 'I use KogoPAY to receive tuition payments from China. The fees are incredibly low and the process is seamless.',
         rating: 5,
     },
     {
         name: 'Ahmed Al-Rashid',
         role: 'Business Owner, Dubai',
-        text: 'As a business owner, I rely on KogoPay for supplier payments. Their batch payment API saved us hours every month.',
+        text: 'As a business owner, I rely on KogoPAY for supplier payments. Their batch payment API saved us hours every month.',
         rating: 5,
     },
     {
@@ -31,13 +31,13 @@ const testimonials = [
     {
         name: 'David Okonkwo',
         role: 'Engineer, Lagos',
-        text: 'Fast, reliable, and transparent. KogoPay is the best service I have found for sending money back home to my family.',
+        text: 'Fast, reliable, and transparent. KogoPAY is the best service I have found for sending money back home to my family.',
         rating: 5,
     },
     {
         name: 'Maria Garcia',
         role: 'Nurse, Birmingham',
-        text: 'I switched from Western Union to KogoPay and immediately noticed the savings. The app is also beautiful and easy to use.',
+        text: 'I switched from Western Union to KogoPAY and immediately noticed the savings. The app is also beautiful and easy to use.',
         rating: 5,
     },
 ]
@@ -56,7 +56,7 @@ const Testimonials = () => {
                         Loved by <span className="text-brand-red">thousands</span> worldwide
                     </h2>
                     <p className="mt-4 text-lg text-slate-600">
-                        See what our users say about their KogoPay experience.
+                        See what our users say about their KogoPAY experience.
                     </p>
                 </motion.div>
 

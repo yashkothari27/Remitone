@@ -41,7 +41,7 @@ export default function ContactPage() {
                             Get in <span className="text-gradient-gold">touch</span>
                         </h1>
                         <p className="text-lg text-white/80 max-w-2xl mx-auto">
-                            Have questions about KogoPay? We&apos;d love to hear from you.
+                            Have questions about KogoPAY? We&apos;d love to hear from you.
                             Our team is ready to help.
                         </p>
                     </motion.div>

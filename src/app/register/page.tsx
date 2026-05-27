@@ -146,7 +146,7 @@ export default function RegisterPage() {
             <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Account Created!</h2>
-          <p className="text-gray-500 text-sm">Your KogoPay account has been created. You can now sign in with your email and password.</p>
+          <p className="text-gray-500 text-sm">Your KogoPAY account has been created. You can now sign in with your email and password.</p>
           <button onClick={() => router.push('/login')}
             className="w-full h-12 rounded-xl bg-brand-red text-white font-bold hover:bg-brand-red-deep transition-colors">
             Go to Login
@@ -164,11 +164,11 @@ export default function RegisterPage() {
       {/* ── Left brand panel ─────────────────────────────────────────────────── */}
       <div className="hidden lg:flex lg:w-2/5 bg-brand-red-deep flex-col justify-between p-12">
         <Link href="/" className="flex justify-center">
-          <img src="/kogo-logo.png" alt="KogoPay" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
+          <img src="/kogo-logo-black.png" alt="KogoPAY" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
         </Link>
         <div className="space-y-5">
           <h1 className="text-4xl font-bold text-white leading-tight">
-            Join KogoPay<br />
+            Join KogoPAY<br />
             <span className="text-gold">Send money globally.</span>
           </h1>
           <p className="text-white/70 text-lg leading-relaxed">
@@ -188,7 +188,7 @@ export default function RegisterPage() {
             ))}
           </div>
         </div>
-        <p className="text-white/40 text-sm">© {new Date().getFullYear()} KogoPay. All rights reserved.</p>
+        <p className="text-white/40 text-sm">© {new Date().getFullYear()} KogoPAY. All rights reserved.</p>
       </div>
 
       {/* ── Right form panel ──────────────────────────────────────────────────── */}
@@ -196,7 +196,7 @@ export default function RegisterPage() {
 
         {/* Mobile logo */}
         <div className="mb-8 flex items-center gap-3 lg:hidden">
-          <img src="/kogo-logo.png" alt="KogoPay" className="h-16 w-auto object-contain" />
+          <img src="/kogo-logo-black.png" alt="KogoPAY" className="h-16 w-auto object-contain" />
         </div>
 
         <div className="w-full max-w-md mx-auto">
@@ -459,7 +459,7 @@ export default function RegisterPage() {
                 <input type="checkbox" checked={marketingAccepted} onChange={(e) => setMarketingAccepted(e.target.checked)}
                   className="mt-0.5 h-4 w-4 shrink-0 accent-brand-red" />
                 <span className="text-sm text-gray-500">
-                  I&apos;d like to receive occasional offers and updates from KogoPay by email or SMS.
+                  I&apos;d like to receive occasional offers and updates from KogoPAY by email or SMS.
                 </span>
               </label>
             </div>

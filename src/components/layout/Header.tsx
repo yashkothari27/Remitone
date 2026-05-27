@@ -48,8 +48,8 @@ const Header = () => {
                 {/* Logo */}
                 <Link href="/" className="flex items-center group">
                     <img
-                        src="/kogo-logo.png"
-                        alt="KogoPay Logo"
+                        src="/kogo-logo-black.png"
+                        alt="KogoPAY Logo"
                         className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
                     />
                 </Link>
