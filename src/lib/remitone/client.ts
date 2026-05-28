@@ -179,6 +179,41 @@ export async function forgotPassword(
   return buildResponse(xml)
 }
 
+export async function getRemitter(
+  username: string,
+  session_token: string
+): Promise<RemitOneResponse<Record<string, string>>> {
+  const xml = await post('remitterUser', 'getProfile', { username, session_token })
+  if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
+  const resultXml = parseResult(xml)
+  // Log raw XML in dev so we can see actual field names
+  if (process.env.NODE_ENV === 'development') console.log('[getProfile] result XML:', resultXml)
+  const fields = [
+    'firstname','lastname','email','mobile','dob',
+    'nationality','address1','address2','city','postcode','state',
+    'id1_type','id1_details','id1_expiry',
+    'country','country_id','country_iso_code','status','trans_allowed',
+  ]
+  const data: Record<string, string> = {}
+  for (const f of fields) {
+    const val = parseField(resultXml, f)
+    if (val) data[f] = val
+  }
+  // Normalise to fname/lname so the profile form fields work
+  data.fname = data.firstname ?? ''
+  data.lname  = data.lastname  ?? ''
+  return buildResponse(xml, data)
+}
+
+export async function updateRemitter(
+  username: string,
+  session_token: string,
+  updates: Record<string, string>
+): Promise<RemitOneResponse<void>> {
+  const xml = await post('remitterUser', 'updateProfile', { username, session_token, ...updates })
+  return buildResponse(xml)
+}
+
 // ─── Rates ───────────────────────────────────────────────────────────────────
 
 export async function getRates(

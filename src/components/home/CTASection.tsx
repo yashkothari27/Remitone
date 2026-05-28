@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/AuthContext'
 
 const CTASection = () => {
+    const { isLoggedIn } = useAuth()
+
     return (
         <section className="relative py-20 overflow-hidden bg-white">
             <div className="absolute inset-0 bg-slate-50/50" />
@@ -15,7 +18,7 @@ const CTASection = () => {
                     viewport={{ once: true }}
                     className="text-4xl font-extrabold text-slate-900 sm:text-5xl mb-6"
                 >
-                    Start your global payment journey today
+                    {isLoggedIn ? 'Ready to send money?' : 'Start your global payment journey today'}
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -24,7 +27,9 @@ const CTASection = () => {
                     transition={{ delay: 0.1 }}
                     className="text-xl text-slate-600 mb-10"
                 >
-                    Join thousands of users who save on every transfer. Safe, fast, and simple.
+                    {isLoggedIn
+                        ? 'Send funds internationally in minutes with live exchange rates.'
+                        : 'Join thousands of users who save on every transfer. Safe, fast, and simple.'}
                 </motion.p>
 
                 <motion.div
@@ -34,12 +39,25 @@ const CTASection = () => {
                     transition={{ delay: 0.2 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
-                    <Link href="/register" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
-                        Create Free Account
-                    </Link>
-                    <Link href="/contact" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
-                        Contact Sales
-                    </Link>
+                    {isLoggedIn ? (
+                        <>
+                            <Link href="/dashboard/send" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
+                                Send Money Now
+                            </Link>
+                            <Link href="/dashboard" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
+                                Go to Dashboard
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link href="/register" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
+                                Create Free Account
+                            </Link>
+                            <Link href="/contact" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
+                                Contact Sales
+                            </Link>
+                        </>
+                    )}
                 </motion.div>
             </div>
         </section>

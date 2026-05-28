@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { useAuth } from '@/contexts/AuthContext'
 
 const benefits = [
     {
@@ -39,6 +40,7 @@ const benefits = [
 ]
 
 export default function PersonalPage() {
+    const { isLoggedIn } = useAuth()
     return (
         <main className="min-h-screen bg-white">
             <Header />
@@ -65,13 +67,27 @@ export default function PersonalPage() {
                             or manage multiple currencies — all from one beautiful app.
                         </p>
                         <div className="flex flex-wrap gap-4">
-                            <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-brand-red transition-all hover:bg-gray-100 hover:scale-105 shadow-lg">
-                                Open Free Account
-                                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                            </Link>
-                            <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
-                                Send Money
-                            </Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-brand-red transition-all hover:bg-gray-100 hover:scale-105 shadow-lg">
+                                        Send Money
+                                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </Link>
+                                    <Link href="/dashboard" className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
+                                        Go to Dashboard
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-brand-red transition-all hover:bg-gray-100 hover:scale-105 shadow-lg">
+                                        Open Free Account
+                                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </Link>
+                                    <Link href="/login" className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
+                                        Sign In
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </motion.div>
                 </div>
@@ -110,7 +126,8 @@ export default function PersonalPage() {
                 </div>
             </section>
 
-            {/* CTA */}
+            {/* CTA — only shown to logged-out users */}
+            {!isLoggedIn && (
             <section className="py-20 bg-slate-50">
                 <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
                     <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl mb-6">
@@ -120,18 +137,16 @@ export default function PersonalPage() {
                         Join 50,000+ users who trust KogoPAY for their international payments.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
+                        <Link href="/register" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
                             Create Free Account
-                        </button>
-                        <Link
-                            href="/pricing"
-                            className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50"
-                        >
+                        </Link>
+                        <Link href="/pricing" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
                             View Pricing
                         </Link>
                     </div>
                 </div>
             </section>
+            )}
 
             <Footer />
         </main>

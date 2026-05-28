@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Send, Users, Receipt, LogOut, ArrowUpRight, Globe } from 'lucide-react'
+import { Send, Users, Receipt, LogOut, ArrowUpRight, Globe, UserCircle } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function DashboardPage() {
@@ -17,10 +17,11 @@ export default function DashboardPage() {
   if (!auth) return null
 
   const quickActions = [
-    { icon: Send, label: 'Send Money', description: 'Transfer funds internationally', href: '/dashboard/send', color: 'bg-brand-red' },
-    { icon: Users, label: 'Beneficiaries', description: 'Manage your recipients', href: '/dashboard/beneficiaries', color: 'bg-brand-red-deep' },
-    { icon: Receipt, label: 'Transactions', description: 'View transfer history', href: '/dashboard/transactions', color: 'bg-gold' },
-    { icon: Globe, label: 'Exchange Rates', description: 'Live currency rates', href: '/dashboard/exchange-rates', color: 'bg-gray-700' },
+    { icon: Send,        label: 'Send Money',     description: 'Transfer funds internationally', href: '/dashboard/send',          color: 'bg-brand-red' },
+    { icon: Users,       label: 'Beneficiaries',  description: 'Manage your recipients',        href: '/dashboard/beneficiaries', color: 'bg-brand-red-deep' },
+    { icon: Receipt,     label: 'Transactions',   description: 'View transfer history',          href: '/dashboard/transactions',  color: 'bg-gold' },
+    { icon: Globe,       label: 'Exchange Rates', description: 'Live currency rates',            href: '/dashboard/exchange-rates',color: 'bg-gray-700' },
+    { icon: UserCircle,  label: 'My Profile',     description: 'Complete your account details',  href: '/dashboard/profile',       color: 'bg-indigo-600' },
   ]
 
   async function handleLogout() {
@@ -40,6 +41,10 @@ export default function DashboardPage() {
             <span className="text-white/70 text-sm hidden sm:block">
               Signed in as <span className="font-semibold text-white">{auth.username}</span>
             </span>
+            <Link href="/dashboard/profile" className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors">
+              <UserCircle className="h-4 w-4" />
+              <span className="hidden sm:block">Profile</span>
+            </Link>
             <button
               onClick={handleLogout}
               className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
@@ -78,7 +83,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick actions grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {quickActions.map(({ icon: Icon, label, description, href, color }) => (
             <Link
               key={label}

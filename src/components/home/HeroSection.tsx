@@ -1,11 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Download } from 'lucide-react'
+import { ArrowRight, Send } from 'lucide-react'
 import Link from 'next/link'
 import FXCalculator from '@/components/features/FXCalculator'
+import { useAuth } from '@/contexts/AuthContext'
 
 const HeroSection = () => {
+    const { isLoggedIn } = useAuth()
+
     return (
         <section className="relative overflow-hidden pt-12 pb-20 lg:pt-24 lg:pb-32 bg-white">
             {/* Background glows */}
@@ -56,14 +59,28 @@ const HeroSection = () => {
                             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                             className="flex flex-wrap gap-4"
                         >
-                            <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-brand-red px-8 text-base font-bold text-white transition-all hover:bg-brand-red-light hover:scale-105 shadow-lg shadow-brand-red/25">
-                                <span>Open Free Account</span>
-                                <ArrowRight className="w-4 h-4" />
-                            </Link>
-                            <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-base font-bold text-slate-900 transition-all hover:bg-slate-50 hover:border-slate-300">
-                                <Download className="w-5 h-5" />
-                                <span>Send Money</span>
-                            </Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl bg-brand-red px-8 text-base font-bold text-white transition-all hover:bg-brand-red-light hover:scale-105 shadow-lg shadow-brand-red/25">
+                                        <Send className="w-4 h-4" />
+                                        <span>Send Money</span>
+                                    </Link>
+                                    <Link href="/dashboard" className="flex h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-base font-bold text-slate-900 transition-all hover:bg-slate-50 hover:border-slate-300">
+                                        <span>Go to Dashboard</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-brand-red px-8 text-base font-bold text-white transition-all hover:bg-brand-red-light hover:scale-105 shadow-lg shadow-brand-red/25">
+                                        <span>Open Free Account</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </Link>
+                                    <Link href="/login" className="flex h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-base font-bold text-slate-900 transition-all hover:bg-slate-50 hover:border-slate-300">
+                                        <span>Sign In</span>
+                                    </Link>
+                                </>
+                            )}
                         </motion.div>
 
                         <motion.div

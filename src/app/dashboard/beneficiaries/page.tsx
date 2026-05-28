@@ -111,16 +111,23 @@ export default function BeneficiariesPage() {
         body: JSON.stringify({
           username: auth.username,
           session_token: auth.session_token,
-          fname: form.fname, lname: form.lname,
-          email: form.email, mobile: form.mobile,
-          address1: form.address1, city: form.city, country_id: form.country_id,
-          ...(form.bank_account_number1 ? { bank_account_number1: form.bank_account_number1 } : {}),
-          ...(form.bank1 ? { bank1: form.bank1 } : {}),
-          ...(form.bank_iban1 ? { bank_iban1: form.bank_iban1 } : {}),
-          ...(form.bank_swift_code1 ? { bank_swift_code1: form.bank_swift_code1 } : {}),
-          ...(form.mobile_transfer_number ? { mobile_transfer_number: form.mobile_transfer_number } : {}),
-          ...(form.mobile_transfer_network ? { mobile_transfer_network: form.mobile_transfer_network } : {}),
-          ...(form.card_number ? { card_number: form.card_number } : {}),
+          fname: form.fname.trim(), lname: form.lname.trim(),
+          ...(form.email.trim() ? { email: form.email.trim() } : {}),
+          // Sanitise mobile — strip spaces so RemitONE accepts it
+          ...(form.mobile.trim() ? { mobile: form.mobile.replace(/\s+/g, '') } : {}),
+          address1: form.address1.trim(), city: form.city.trim(), country_id: form.country_id,
+          // Account Transfer — only if section open
+          ...(openSections.account && form.bank_account_number1 ? { bank_account_number1: form.bank_account_number1 } : {}),
+          ...(openSections.account && form.bank1 ? { bank1: form.bank1 } : {}),
+          ...(openSections.account && form.bank_iban1 ? { bank_iban1: form.bank_iban1 } : {}),
+          ...(openSections.account && form.bank_swift_code1 ? { bank_swift_code1: form.bank_swift_code1 } : {}),
+          // Mobile Transfer — only if section open AND field filled
+          ...(openSections.mobile && form.mobile_transfer_number.trim()
+            ? { mobile_transfer_number: form.mobile_transfer_number.replace(/\s+/g, '') } : {}),
+          ...(openSections.mobile && form.mobile_transfer_network
+            ? { mobile_transfer_network: form.mobile_transfer_network } : {}),
+          // Card Transfer — only if section open
+          ...(openSections.card && form.card_number.trim() ? { card_number: form.card_number.trim() } : {}),
         }),
       })
       const data = await res.json()
@@ -131,7 +138,7 @@ export default function BeneficiariesPage() {
         await fetchBeneficiaries()
         setTimeout(() => setAddedId(null), 3000)
       } else {
-        const msg = data.errors?.map((e: { field: string; messages: string[] }) => `${e.field}: ${e.messages[0]}`).join(', ') ?? data.message ?? 'Failed to add beneficiary'
+        const msg = data.errors?.map((e: { field: string; messages: string[] }) => e.messages[0]).join(' • ') ?? data.message ?? 'Failed to add beneficiary'
         setSubmitError(msg)
       }
     } catch {
