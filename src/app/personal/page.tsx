@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import Link from 'next/link'
 
 const benefits = [
     {
@@ -65,13 +65,13 @@ export default function PersonalPage() {
                             or manage multiple currencies — all from one beautiful app.
                         </p>
                         <div className="flex flex-wrap gap-4">
-                            <button className="flex h-14 items-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-brand-red transition-all hover:bg-gray-100 hover:scale-105 shadow-lg">
+                            <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-brand-red transition-all hover:bg-gray-100 hover:scale-105 shadow-lg">
                                 Open Free Account
                                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                            </button>
-                            <button className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
-                                Download App
-                            </button>
+                            </Link>
+                            <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl border border-white/20 px-8 text-base font-bold text-white transition-all hover:bg-white/5">
+                                Send Money
+                            </Link>
                         </div>
                     </motion.div>
                 </div>

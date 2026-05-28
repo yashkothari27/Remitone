@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -138,14 +139,15 @@ export default function PricingPage() {
                                         </li>
                                     ))}
                                 </ul>
-                                <button
-                                    className={`w-full h-12 rounded-xl font-bold transition-all ${tier.popular
+                                <Link
+                                    href="/register"
+                                    className={`w-full h-12 rounded-xl font-bold transition-all flex items-center justify-center ${tier.popular
                                             ? 'bg-gold text-brand-red-deep hover:bg-white'
                                             : 'bg-brand-red text-white hover:bg-brand-red-light'
                                         }`}
                                 >
                                     {tier.cta}
-                                </button>
+                                </Link>
                             </motion.div>
                         ))}
                     </div>

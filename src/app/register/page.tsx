@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, Eye, EyeOff, AlertCircle, CheckCircle, ArrowRight, Phone, User } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 const SOURCE_COUNTRIES = [
   { source_country_id: '01', name: 'United Kingdom', flag: '🇬🇧', code: '+44' },
@@ -36,6 +37,7 @@ function checkPassword(p: string) {
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { login } = useAuth()
 
   const [country]            = useState(SOURCE_COUNTRIES[0])
   const [username, setUsername]             = useState('')
@@ -115,7 +117,8 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (data.status === 'SUCCESS') {
-        setSuccess(true)
+        await login(username.trim(), password)
+        router.replace('/dashboard')
       } else {
         const msg = data.errors?.length
           ? data.errors.map((err: { messages: string[] }) => err.messages[0]).join(' ')
@@ -348,7 +351,7 @@ export default function RegisterPage() {
                   { v: 'BD', l: '🇧🇩 Bangladeshi' }, { v: 'NG', l: '🇳🇬 Nigerian' },
                   { v: 'GH', l: '🇬🇭 Ghanaian' }, { v: 'PH', l: '🇵🇭 Filipino' },
                   { v: 'KE', l: '🇰🇪 Kenyan' },  { v: 'IE', l: '🇮🇪 Irish' },
-                  { v: 'AU', l: '🇦🇺 Australian' },{ v: 'CA', l: '🇨🇦 Canadian' },
+                  { v: 'AU', l: '🇦🇺 Australian' }, { v: 'CA', l: '🇨🇦 Canadian' },
                   { v: 'ZA', l: '🇿🇦 South African' }, { v: 'OT', l: 'Other' },
                 ].map(({ v, l }) => <option key={v} value={v}>{l}</option>)}
               </select>

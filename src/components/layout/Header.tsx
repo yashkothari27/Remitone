@@ -40,8 +40,8 @@ const Header = () => {
             className={cn(
                 'sticky top-0 z-50 w-full border-b transition-all duration-300',
                 isScrolled
-                    ? 'bg-deep-red/95 backdrop-blur-md border-white/10 shadow-lg'
-                    : 'bg-deep-red border-white/10'
+                    ? 'bg-brand-red-deep/95 backdrop-blur-md border-white/10 shadow-lg'
+                    : 'bg-brand-red-deep border-white/10'
             )}
         >
             <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
@@ -124,7 +124,7 @@ const Header = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-brand-red-deep border-t border-white/10 overflow-hidden"
+                        className="md:hidden bg-brand-red-deep/95 backdrop-blur-md border-t border-white/10 overflow-hidden"
                     >
                         <div className="px-6 py-6 space-y-4">
                             {navigation.map((item) => (

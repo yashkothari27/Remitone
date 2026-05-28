@@ -95,21 +95,21 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
-            {/* Username */}
+            {/* Email */}
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1.5">
-                Username
+                Email
               </label>
               <div className="relative">
                 <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-gray-400 pointer-events-none" />
                 <input
                   id="username"
-                  type="text"
-                  autoComplete="username"
+                  type="email"
+                  autoComplete="email"
                   autoFocus
                   value={username}
                   onChange={(e) => { setUsername(e.target.value); setFieldErrors((p) => ({ ...p, username: undefined })) }}
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                   className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-sm transition-colors outline-none
                     ${fieldErrors.username
                       ? 'border-red-400 focus:border-red-500 bg-red-50'
@@ -184,8 +184,8 @@ export default function LoginPage() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Don&apos;t have an account?{' '}
-            <Link href="/contact" className="font-semibold text-brand-red hover:text-brand-red-deep transition-colors">
-              Contact us to register
+            <Link href="/register" className="font-semibold text-brand-red hover:text-brand-red-deep transition-colors">
+              Sign up
             </Link>
           </p>
         </div>

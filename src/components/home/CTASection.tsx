@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const CTASection = () => {
     return (
@@ -33,12 +34,12 @@ const CTASection = () => {
                     transition={{ delay: 0.2 }}
                     className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
-                    <button className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
+                    <Link href="/register" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-red px-8 text-lg font-bold text-white transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-105">
                         Create Free Account
-                    </button>
-                    <button className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
+                    </Link>
+                    <Link href="/contact" className="w-full sm:w-auto flex h-14 items-center justify-center gap-2 rounded-xl bg-white border border-slate-200 text-slate-900 px-8 text-lg font-bold transition-all hover:bg-slate-50">
                         Contact Sales
-                    </button>
+                    </Link>
                 </motion.div>
             </div>
         </section>

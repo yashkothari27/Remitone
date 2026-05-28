@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, Download } from 'lucide-react'
+import Link from 'next/link'
 import FXCalculator from '@/components/features/FXCalculator'
 
 const HeroSection = () => {
@@ -55,14 +56,14 @@ const HeroSection = () => {
                             transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                             className="flex flex-wrap gap-4"
                         >
-                            <button className="flex h-14 items-center gap-2 rounded-xl bg-brand-red px-8 text-base font-bold text-white transition-all hover:bg-brand-red-light hover:scale-105 shadow-lg shadow-brand-red/25">
+                            <Link href="/register" className="flex h-14 items-center gap-2 rounded-xl bg-brand-red px-8 text-base font-bold text-white transition-all hover:bg-brand-red-light hover:scale-105 shadow-lg shadow-brand-red/25">
                                 <span>Open Free Account</span>
                                 <ArrowRight className="w-4 h-4" />
-                            </button>
-                            <button className="flex h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-base font-bold text-slate-900 transition-all hover:bg-slate-50 hover:border-slate-300">
+                            </Link>
+                            <Link href="/dashboard/send" className="flex h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 text-base font-bold text-slate-900 transition-all hover:bg-slate-50 hover:border-slate-300">
                                 <Download className="w-5 h-5" />
-                                <span>Download App</span>
-                            </button>
+                                <span>Send Money</span>
+                            </Link>
                         </motion.div>
 
                         <motion.div

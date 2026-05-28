@@ -46,7 +46,9 @@ const AppPromotion = () => {
                         {/* Store Buttons */}
                         <div className="flex flex-wrap gap-4">
                             <a
-                                href="#"
+                                href="https://apps.apple.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center gap-3 bg-slate-900 text-white rounded-xl px-6 py-3 hover:bg-slate-800 transition-colors"
                             >
                                 <span className="material-symbols-outlined text-2xl">phone_iphone</span>
@@ -56,7 +58,9 @@ const AppPromotion = () => {
                                 </div>
                             </a>
                             <a
-                                href="#"
+                                href="https://play.google.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center gap-3 bg-slate-900 text-white rounded-xl px-6 py-3 hover:bg-slate-800 transition-colors"
                             >
                                 <span className="material-symbols-outlined text-2xl">android</span>

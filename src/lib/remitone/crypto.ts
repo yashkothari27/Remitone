@@ -10,7 +10,8 @@ import { RemitOneError } from './errors'
  */
 export function encryptPayload(data: Record<string, string>): string {
   const plaintext = JSON.stringify(data)
-  const publicKey = REMITONE_SERVER_PUBLIC_KEY
+  // Normalise escaped \n sequences that some env parsers leave as literals
+  const publicKey = REMITONE_SERVER_PUBLIC_KEY.replace(/\\n/g, '\n')
 
   if (!publicKey || publicKey.includes('PASTE_YOUR')) {
     // Log config problem server-side; surface only a generic message to callers

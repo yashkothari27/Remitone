@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 const currencies = [
     { code: 'GBP', name: 'British Pound', flag: '🇬🇧' },
@@ -149,9 +150,9 @@ const FXCalculator = () => {
                 </div>
 
                 {/* CTA */}
-                <button className="mt-2 w-full rounded-xl bg-white py-4 text-base font-bold text-brand-red shadow-lg shadow-black/10 transition-all hover:bg-gray-100 active:scale-[0.98]">
+                <Link href="/register" className="mt-2 w-full rounded-xl bg-white py-4 text-base font-bold text-brand-red shadow-lg shadow-black/10 transition-all hover:bg-gray-100 active:scale-[0.98] flex items-center justify-center">
                     Send Money Now
-                </button>
+                </Link>
             </div>
         </div>
     )

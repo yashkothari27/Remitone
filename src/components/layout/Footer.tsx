@@ -19,13 +19,13 @@ const Footer = () => {
                             affordable money transfers worldwide.
                         </p>
                         <div className="flex gap-4">
-                            <a className="text-white/60 hover:text-white transition-colors" href="#" aria-label="Website">
+                            <a className="text-white/60 hover:text-white transition-colors" href="https://kogopay.com" target="_blank" rel="noopener noreferrer" aria-label="Website">
                                 <span className="material-symbols-outlined">public</span>
                             </a>
-                            <a className="text-white/60 hover:text-white transition-colors" href="#" aria-label="Email">
+                            <a className="text-white/60 hover:text-white transition-colors" href="mailto:support@kogopay.com" aria-label="Email">
                                 <span className="material-symbols-outlined">alternate_email</span>
                             </a>
-                            <a className="text-white/60 hover:text-white transition-colors" href="#" aria-label="Chat">
+                            <a className="text-white/60 hover:text-white transition-colors" href="/contact" aria-label="Chat">
                                 <span className="material-symbols-outlined">chat</span>
                             </a>
                         </div>
@@ -58,7 +58,7 @@ const Footer = () => {
 
                 {/* Legal disclaimer */}
                 <div className="border-t border-white/10 pt-8 mb-6">
-                    <p className="text-white/40 text-xs leading-relaxed">
+                    <p className="text-white/70 text-sm leading-relaxed">
                         KogoPAY (UK) Limited is a company registered in England and Wales under company number 8439416.
                         KogoPAY is authorised and regulated by the Financial Conduct Authority (FCA) as a Small Payment
                         Institution (SPI) under firm reference number 616300. KogoPAY is also registered with HM Revenue
