@@ -191,7 +191,6 @@ export async function getRemitter(
   const fields = [
     'firstname','lastname','email','mobile','dob',
     'nationality','address1','address2','city','postcode','state',
-    'id1_type','id1_details','id1_expiry',
     'country','country_id','country_iso_code','status','trans_allowed',
   ]
   const data: Record<string, string> = {}
@@ -202,6 +201,21 @@ export async function getRemitter(
   // Normalise to fname/lname so the profile form fields work
   data.fname = data.firstname ?? ''
   data.lname  = data.lastname  ?? ''
+
+  // Parse the first ID document from nested <id_documents><id_document> structure
+  const idDocsXml = parseField(resultXml, 'id_documents')
+  if (idDocsXml) {
+    const firstDoc = parseField(idDocsXml, 'id_document')
+    if (firstDoc) {
+      const idType    = parseField(firstDoc, 'id_type')
+      const idDetails = parseField(firstDoc, 'id_details')
+      const idExpiry  = parseField(firstDoc, 'id_expiry')
+      if (idType)    data.id1_type    = idType
+      if (idDetails) data.id1_details = idDetails
+      if (idExpiry)  data.id1_expiry  = idExpiry
+    }
+  }
+
   return buildResponse(xml, data)
 }
 
@@ -270,10 +284,18 @@ export async function createBeneficiary(
 export async function getCharges(
   input: GetChargesInput
 ): Promise<RemitOneResponse<ReturnType<typeof parseCharges>>> {
-  const params: Record<string, string> = {}
-  for (const [k, v] of Object.entries(input)) {
-    if (v !== undefined) params[k] = v
+  // RemitONE getCharges expects these specific parameter names
+  const params: Record<string, string> = {
+    username:            input.username,
+    session_token:       input.session_token,
+    destination_country: input.destination_country_id,
+    payment_method:      input.payment_method_code,
+    service_level:       input.service_level_code,
+    amount_type:         'send',
   }
+  if (input.send_amount)    params.amount_to_send    = input.send_amount
+  if (input.receive_amount) params.amount_to_receive = input.receive_amount
+  if (input.promotion_code) params.promotion_code    = input.promotion_code
 
   const xml = await post('transaction', 'getCharges', params)
   if (parseStatus(xml) === 'FAIL') return buildResponse(xml)

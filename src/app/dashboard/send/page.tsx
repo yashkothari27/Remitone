@@ -10,6 +10,16 @@ import {
 import { useAuth } from '@/contexts/AuthContext'
 
 interface DestCountry { id: string; name: string; iso_code: string }
+
+// Map ISO country code → currency code for FX rate fallback
+const ISO_TO_CURRENCY: Record<string, string> = {
+  IN: 'INR', TH: 'THB', PH: 'PHP', PK: 'PKR', BD: 'BDT',
+  NG: 'NGN', GH: 'GHS', KE: 'KES', LK: 'LKR', NP: 'NPR',
+  US: 'USD', EU: 'EUR', GB: 'GBP', AU: 'AUD', CA: 'CAD',
+  ZA: 'ZAR', MY: 'MYR', ID: 'IDR', SG: 'SGD', AE: 'AED',
+  CN: 'CNY', JP: 'JPY', MX: 'MXN', BR: 'BRL', EG: 'EGP',
+  MA: 'MAD', ET: 'ETB', TZ: 'TZS', UG: 'UGX', ZM: 'ZMW',
+}
 interface Beneficiary { id: string; fname: string; lname: string; country_name?: string; country_id?: string }
 interface RateInfo {
   destination_country_id: string
@@ -54,6 +64,8 @@ export default function SendMoneyPage() {
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([])
   const [rateInfo, setRateInfo]         = useState<RateInfo | null>(null)
   const [charges, setCharges]           = useState<Charges | null>(null)
+  const [fxRate, setFxRate]             = useState<number | null>(null)
+  const [fxCurrency, setFxCurrency]     = useState<string>('')
 
   // Form
   const [countryId, setCountryId]       = useState('')
@@ -136,7 +148,23 @@ export default function SendMoneyPage() {
 
   useEffect(() => { if (countryId) fetchRates() }, [countryId])
 
-  // Fetch charges whenever amount / country / transfer type changes
+  // Always keep FX rate updated when amount or country changes
+  useEffect(() => {
+    if (selectedCountry) doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency)
+  }, [amount, countryId, rateInfo?.destination_currency])
+
+  // Helper — call inline so it always has fresh values
+  async function doFetchFxRate(country: DestCountry | undefined, amt: string, destCurrency?: string) {
+    if (!country) return
+    const currencyCode = destCurrency || ISO_TO_CURRENCY[country.iso_code] || country.iso_code
+    try {
+      const res = await fetch(`/api/exchange-rates?from=GBP&to=${currencyCode}&amount=${parseFloat(amt) || 100}`)
+      const data = await res.json()
+      if (data.rate) { setFxRate(data.rate); setFxCurrency(currencyCode) }
+    } catch { /* keep */ }
+  }
+
+  // Fetch charges — fall back to FX rates if charges API unavailable
   const fetchCharges = useCallback(async () => {
     if (!auth || !countryId || !amount || parseFloat(amount) <= 0) {
       setCharges(null); return
@@ -152,11 +180,13 @@ export default function SendMoneyPage() {
       if (data.status === 'SUCCESS' && data.data) {
         setCharges(data.data)
         setAccountPending(false)
+        setFxRate(null)
       } else {
         setCharges(null)
         if (/verif|pending|await|approved/i.test(data.message ?? '')) setAccountPending(true)
+        doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency)
       }
-    } catch { setCharges(null) }
+    } catch { setCharges(null); doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency) }
     finally { setLoadingCharges(false) }
   }, [auth, countryId, amount, transferType, rateInfo])
 
@@ -213,7 +243,13 @@ export default function SendMoneyPage() {
         })
         setStep('confirmed')
       } else {
-        setError(data.message ?? 'Failed to create transfer. Please try again.')
+        const msg = data.message ?? 'Failed to create transfer. Please try again.'
+        if (/verif|pending|await|approved|blocked/i.test(msg)) {
+          setAccountPending(true)
+          setError(null)
+        } else {
+          setError(msg)
+        }
         setStep('details')
       }
     } catch {
@@ -377,7 +413,9 @@ export default function SendMoneyPage() {
                     ? <span className="text-white/40 text-2xl animate-pulse">…</span>
                     : charges?.receive_amount
                       ? parseFloat(charges.receive_amount).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                      : '—'}
+                      : fxRate !== null
+                        ? (parseFloat(amount || '0') * fxRate).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                        : '—'}
                 </p>
 
                 {/* Destination country selector */}
@@ -400,8 +438,11 @@ export default function SendMoneyPage() {
                   </div>
                 )}
               </div>
-              {charges?.destination_currency && (
-                <p className="text-white/40 text-xs mt-1">{charges.destination_currency} • {selectedCountry?.name}</p>
+              {(charges?.destination_currency || fxCurrency) && (
+                <p className="text-white/40 text-xs mt-1">
+                  {charges?.destination_currency || fxCurrency} • {selectedCountry?.name}
+                  {!charges && fxRate && <span className="ml-1">(est.)</span>}
+                </p>
               )}
             </div>
 
@@ -443,13 +484,23 @@ export default function SendMoneyPage() {
               <div className="flex items-center justify-between px-4 py-3">
                 <span className="flex items-center gap-2 text-white/60 text-sm"><TrendingUp className="h-4 w-4" /> Rate</span>
                 <span className="text-white text-sm font-semibold">
-                  {charges?.rate ? `1 GBP = ${parseFloat(charges.rate).toFixed(4)} ${charges.destination_currency}` : loadingCharges ? '…' : '—'}
+                  {charges?.rate
+                    ? `1 GBP = ${parseFloat(charges.rate).toFixed(4)} ${charges.destination_currency}`
+                    : fxRate !== null
+                      ? `1 GBP ≈ ${fxRate.toFixed(4)} ${fxCurrency}`
+                      : loadingCharges ? '…' : '—'}
                 </span>
               </div>
               <div className="flex items-center justify-between px-4 py-3">
                 <span className="flex items-center gap-2 text-white/60 text-sm"><Tag className="h-4 w-4" /> Fee</span>
                 <span className="text-gold text-sm font-semibold">
-                  {charges?.commission ? `£${charges.commission}` : loadingCharges ? '…' : 'From £0.00'}
+                  {loadingCharges
+                    ? '…'
+                    : charges?.commission
+                      ? `£${charges.commission}`
+                      : fxRate !== null
+                        ? '£0.00'
+                        : '—'}
                 </span>
               </div>
               <div className="flex items-center justify-between px-4 py-3">
