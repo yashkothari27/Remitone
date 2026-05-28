@@ -36,6 +36,9 @@ export async function POST(request: NextRequest) {
         safe[field] = updates[field].trim().slice(0, 200)
       }
     }
+    // RemitONE updateProfile uses firstname/lastname — send both variants
+    if (safe.fname)  { safe.firstname = safe.fname;  delete safe.fname }
+    if (safe.lname)  { safe.lastname  = safe.lname;  delete safe.lname }
     const result = await updateRemitter(username, session_token, safe)
     return NextResponse.json(result)
   } catch (error) {
