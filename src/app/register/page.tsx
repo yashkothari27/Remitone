@@ -50,12 +50,6 @@ export default function RegisterPage() {
   const [phoneCode, setPhoneCode]           = useState('+44')
   const [phoneNumber, setPhoneNumber]       = useState('')
   const [dob, setDob]                       = useState('')
-  const [nationality, setNationality]       = useState('GB')
-  const [address1, setAddress1]             = useState('')
-  const [postcode, setPostcode]             = useState('')
-  const [id1Type, setId1Type]               = useState('')
-  const [id1Details, setId1Details]         = useState('')
-  const [id1Expiry, setId1Expiry]           = useState('')
   const [agentCode, setAgentCode]           = useState('')
   const [termsAccepted, setTermsAccepted]   = useState(false)
   const [marketingAccepted, setMarketingAccepted] = useState(false)
@@ -75,12 +69,6 @@ export default function RegisterPage() {
     if (!fname.trim()) e.fname = 'Required'
     if (!lname.trim()) e.lname = 'Required'
     if (!dob) e.dob = 'Date of birth is required'
-    if (!nationality) e.nationality = 'Nationality is required'
-    if (!address1.trim()) e.address1 = 'Address is required'
-    if (!postcode.trim()) e.postcode = 'Postcode is required'
-    if (!id1Type) e.id1Type = 'ID type is required'
-    if (!id1Details.trim()) e.id1Details = 'ID number is required'
-    if (!id1Expiry) e.id1Expiry = 'Expiry date is required'
     if (!phoneNumber.trim() || phoneNumber.trim().length < 5) e.mobile = 'Mobile number is required'
     if (!termsAccepted) e.terms = 'You must agree to the Terms and Conditions'
     return e
@@ -105,12 +93,6 @@ export default function RegisterPage() {
           mobile: `${phoneCode}${phoneNumber.trim()}`,
           source_country_id: country.source_country_id,
           dob,
-          nationality,
-          address1: address1.trim(),
-          postcode: postcode.trim(),
-          id1_type: id1Type,
-          id1_details: id1Details.trim(),
-          id1_expiry: id1Expiry,
           receive_marketing: marketingAccepted,
           ...(agentCode.trim() ? { referral_code: agentCode.trim() } : {}),
         }),
@@ -334,81 +316,6 @@ export default function RegisterPage() {
                 max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
                 className={inputCls('dob')} />
               {errors.dob && <p className="mt-1.5 text-xs text-red-600">{errors.dob}</p>}
-            </div>
-
-            {/* ── Address & Identity ── */}
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider pt-2">Address & Identity</p>
-
-            {/* Nationality */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Nationality <span className="text-brand-red">*</span></label>
-              <select value={nationality}
-                onChange={(e) => { setNationality(e.target.value); setErrors((p) => ({ ...p, nationality: undefined as unknown as string })) }}
-                className={inputCls('nationality')}>
-                {[
-                  { v: 'GB', l: '🇬🇧 British' }, { v: 'US', l: '🇺🇸 American' },
-                  { v: 'IN', l: '🇮🇳 Indian' },  { v: 'PK', l: '🇵🇰 Pakistani' },
-                  { v: 'BD', l: '🇧🇩 Bangladeshi' }, { v: 'NG', l: '🇳🇬 Nigerian' },
-                  { v: 'GH', l: '🇬🇭 Ghanaian' }, { v: 'PH', l: '🇵🇭 Filipino' },
-                  { v: 'KE', l: '🇰🇪 Kenyan' },  { v: 'IE', l: '🇮🇪 Irish' },
-                  { v: 'AU', l: '🇦🇺 Australian' }, { v: 'CA', l: '🇨🇦 Canadian' },
-                  { v: 'ZA', l: '🇿🇦 South African' }, { v: 'OT', l: 'Other' },
-                ].map(({ v, l }) => <option key={v} value={v}>{l}</option>)}
-              </select>
-              {errors.nationality && <p className="mt-1.5 text-xs text-red-600">{errors.nationality}</p>}
-            </div>
-
-            {/* Address & Postcode */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Address <span className="text-brand-red">*</span></label>
-                <input type="text" value={address1} placeholder="Street address"
-                  onChange={(e) => { setAddress1(e.target.value); setErrors((p) => ({ ...p, address1: undefined as unknown as string })) }}
-                  className={inputCls('address1')} />
-                {errors.address1 && <p className="mt-1.5 text-xs text-red-600">{errors.address1}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Postcode <span className="text-brand-red">*</span></label>
-                <input type="text" value={postcode} placeholder="SW1A 2AA"
-                  onChange={(e) => { setPostcode(e.target.value); setErrors((p) => ({ ...p, postcode: undefined as unknown as string })) }}
-                  className={inputCls('postcode')} />
-                {errors.postcode && <p className="mt-1.5 text-xs text-red-600">{errors.postcode}</p>}
-              </div>
-            </div>
-
-            {/* ID Type + Number */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">ID Type <span className="text-brand-red">*</span></label>
-                <select value={id1Type}
-                  onChange={(e) => { setId1Type(e.target.value); setErrors((p) => ({ ...p, id1Type: undefined as unknown as string })) }}
-                  className={inputCls('id1Type')}>
-                  <option value="">Select type</option>
-                  <option value="Passport">Passport</option>
-                  <option value="Driving_License">Driving Licence</option>
-                  <option value="National_ID">National ID</option>
-                  <option value="National_Insurance">National Insurance</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.id1Type && <p className="mt-1.5 text-xs text-red-600">{errors.id1Type}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">ID Number <span className="text-brand-red">*</span></label>
-                <input type="text" value={id1Details} placeholder="Document number"
-                  onChange={(e) => { setId1Details(e.target.value); setErrors((p) => ({ ...p, id1Details: undefined as unknown as string })) }}
-                  className={inputCls('id1Details')} />
-                {errors.id1Details && <p className="mt-1.5 text-xs text-red-600">{errors.id1Details}</p>}
-              </div>
-            </div>
-
-            {/* ID Expiry */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">ID Expiry Date <span className="text-brand-red">*</span></label>
-              <input type="date" value={id1Expiry}
-                min={new Date().toISOString().split('T')[0]}
-                onChange={(e) => { setId1Expiry(e.target.value); setErrors((p) => ({ ...p, id1Expiry: undefined as unknown as string })) }}
-                className={inputCls('id1Expiry')} />
-              {errors.id1Expiry && <p className="mt-1.5 text-xs text-red-600">{errors.id1Expiry}</p>}
             </div>
 
             {/* Mobile */}

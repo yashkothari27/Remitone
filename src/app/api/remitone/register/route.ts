@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       mobile,
       dob,
       toc: 'true',
-      registration_type: 'registered',
+      registration_type: 'quickregistered',
       ...(nationality ? { nationality: String(nationality) } : {}),
       ...(address1 ? { address1: String(address1).trim() } : {}),
       ...(address2 ? { address2: String(address2).trim() } : {}),
