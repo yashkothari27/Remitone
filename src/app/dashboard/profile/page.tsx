@@ -105,11 +105,12 @@ export default function ProfilePage() {
 
   function validate(): Partial<ProfileForm> {
     const e: Partial<ProfileForm> = {}
-    if (!form.nationality)    e.nationality  = 'Nationality is required'
-    if (!form.address1.trim()) e.address1    = 'Street address is required'
-    if (!form.postcode.trim()) e.postcode    = 'Postcode is required'
-    if (!form.id1_type)        e.id1_type    = 'ID type is required'
+    if (!form.nationality)       e.nationality  = 'Nationality is required'
+    if (!form.address1.trim())   e.address1     = 'Street address is required'
+    if (!form.postcode.trim())   e.postcode     = 'Postcode is required'
+    if (!form.id1_type)          e.id1_type     = 'ID type is required'
     if (!form.id1_details.trim()) e.id1_details = 'ID number is required'
+    if (!form.id1_expiry)        e.id1_expiry   = 'ID expiry date is required'
     return e
   }
 
@@ -130,10 +131,12 @@ export default function ProfilePage() {
     setSaveError(null)
     setSuccess(false)
     try {
+      // fname and lname cannot be changed via updateProfile — exclude them
+      const { fname: _f, lname: _l, ...updatableFields } = form
       const res = await fetch('/api/remitone/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: auth.username, session_token: auth.session_token, ...form }),
+        body: JSON.stringify({ username: auth.username, session_token: auth.session_token, ...updatableFields }),
       })
       const data = await res.json()
       if (data.status === 'SUCCESS') {
@@ -273,15 +276,16 @@ export default function ProfilePage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">First Name</label>
-                  <input type="text" value={form.fname} onChange={set('fname')}
-                    className={inputCls()} placeholder="First name" />
+                  <input type="text" value={form.fname} readOnly
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 text-sm bg-gray-50 text-gray-500 cursor-not-allowed" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">Last Name</label>
-                  <input type="text" value={form.lname} onChange={set('lname')}
-                    className={inputCls()} placeholder="Last name" />
+                  <input type="text" value={form.lname} readOnly
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 text-sm bg-gray-50 text-gray-500 cursor-not-allowed" />
                 </div>
               </div>
+              <p className="text-xs text-gray-400">Name cannot be changed. Contact support if incorrect.</p>
 
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1.5">Mobile</label>
@@ -369,9 +373,12 @@ export default function ProfilePage() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1.5">ID Expiry Date</label>
-                <input type="date" value={form.id1_expiry} onChange={set('id1_expiry')} className={inputCls()}
+                <label className="block text-xs font-medium text-gray-600 mb-1.5">
+                  ID Expiry Date <span className="text-brand-red">*</span>
+                </label>
+                <input type="date" value={form.id1_expiry} onChange={set('id1_expiry')} className={inputCls('id1_expiry')}
                   min={new Date().toISOString().split('T')[0]} />
+                {fieldErrors.id1_expiry && <p className="mt-1 text-xs text-red-600">{fieldErrors.id1_expiry}</p>}
               </div>
             </div>
 

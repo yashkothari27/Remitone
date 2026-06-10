@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { register, confirmRegistration } from '@/lib/remitone/client'
 import { buildRegisterEncryptedData } from '@/lib/remitone/crypto'
-import { REMITONE_SECURITY_HASH } from '@/lib/remitone/config'
 import { safeErrorMessage } from '@/lib/remitone/errors'
 
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{1,63}$/
@@ -72,7 +71,6 @@ export async function POST(request: NextRequest) {
       ...(id1_expiry && DATE_RE.test(id1_expiry) ? { id1_expiry: String(id1_expiry) } : {}),
       ...(referral_code ? { referral_code: String(referral_code).trim() } : {}),
       receive_marketing: receive_marketing === true ? 't' : 'f',
-      ...(REMITONE_SECURITY_HASH ? { security_hash: REMITONE_SECURITY_HASH } : {}),
     })
 
     return NextResponse.json({ ...result, username })

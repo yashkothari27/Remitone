@@ -129,20 +129,29 @@ export interface Transaction {
 export interface CreateTransactionInput {
   username: string
   session_token: string
+  trans_type: string
   beneficiary_id: string
-  amount?: string
-  amount_type?: string          // 'source' or 'destination'
-  source_currency?: string
-  destination_currency?: string
+  source_currency: string
+  destination_currency: string
+  amount_type: string           // SOURCE / DESTINATION / TOTAL
+  amount: string
   payment_method: string
   service_level: string
-  trans_type?: string
-  destination_country?: string
-  card_number?: string
+  account_item_number?: string
   purpose?: string
   source_of_income?: string
-  discount_code?: string
-  account_item_number?: string
+  promotion_code?: string
+  loyalty_points?: string
+  sms_confirmation?: string     // t / f
+  sms_notification?: string     // t / f
+  sms_mobile?: string
+  sms_benef_confirmation?: string
+  sms_benef_mobile?: string
+  payment_token?: string
+  remitter_wallet_currency?: string
+  utility_bill_invoice?: string
+  utility_bill_description?: string
+  comments_to_beneficiary?: string
 }
 
 export interface ConfirmTransactionInput {
@@ -183,7 +192,6 @@ export interface CreateRemitterInput {
   id1_expiry?: string      // YYYY-MM-DD
   receive_marketing?: 't' | 'f'
   referral_code?: string
-  security_hash?: string
 }
 
 export interface ConfirmRegistrationInput {
@@ -195,10 +203,23 @@ export interface ConfirmRegistrationInput {
 export interface GetChargesInput {
   username: string
   session_token: string
-  destination_country_id: string
-  payment_method_code: string
-  service_level_code: string
-  send_amount?: string
-  receive_amount?: string
+  destination_country: string   // country name per getDestinationCountries
+  trans_type: string            // Account / Cash Collection / Card Transfer / Home Delivery / Mobile Transfer
+  payment_method: string        // code per Appendix B
+  service_level: string         // code per Appendix C
+  amount_type: string           // SOURCE / DESTINATION / TOTAL
+  amount_to_send: string
+  source_currency?: string
+  destination_currency?: string
+  sms_confirmation?: string     // t / f
+  sms_notification?: string     // t / f
+  sms_benef_confirmation?: string
+  collection_point_id?: string
+  benef_branch_id?: string
+  benef_bank?: string
+  utility_company?: string
   promotion_code?: string
+  loyalty_points?: string
+  loyalty_points_monetary_value?: string
+  loyalty_points_discount?: string
 }

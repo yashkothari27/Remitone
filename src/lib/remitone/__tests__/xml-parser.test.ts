@@ -71,17 +71,17 @@ const RATES_XML = `<?xml version="1.0" encoding="utf-8"?>
   <result>
     <rates>
       <rate>
-        <destination_country_id>001</destination_country_id>
-        <destination_country_name>India</destination_country_name>
+        <destination_country>India</destination_country>
         <destination_country_iso_code>IN</destination_country_iso_code>
         <source_currency>GBP</source_currency>
         <destination_currency>INR</destination_currency>
-        <rate>105.50</rate>
-        <payment_method>Bank Transfer</payment_method>
+        <account>105.50</account>
+        <cash_collection>104.80</cash_collection>
+        <card>104.00</card>
+        <home_delivery>103.50</home_delivery>
+        <mobile_transfer>105.20</mobile_transfer>
         <payment_method_code>3</payment_method_code>
-        <service_level>Immediate</service_level>
         <service_level_code>3</service_level_code>
-        <source_country_iso_code>GB</source_country_iso_code>
       </rate>
     </rates>
   </result>
@@ -91,14 +91,20 @@ const CHARGES_XML = `<?xml version="1.0" encoding="utf-8"?>
 <response>
   <status>SUCCESS</status>
   <result>
-    <send_amount>100.00</send_amount>
-    <receive_amount>10550.00</receive_amount>
-    <commission>2.50</commission>
-    <total_to_pay>102.50</total_to_pay>
+    <source_country_iso_code>GB</source_country_iso_code>
     <source_currency>GBP</source_currency>
-    <destination_currency>INR</destination_currency>
+    <source_amount>100.00</source_amount>
     <rate>105.50</rate>
+    <destination_country_iso_code>IN</destination_country_iso_code>
+    <destination_currency>INR</destination_currency>
+    <destination_amount>10550.00</destination_amount>
+    <commission>2.50</commission>
+    <agent_fee>0.00</agent_fee>
+    <hq_fee>0.50</hq_fee>
+    <total_charges>3.00</total_charges>
+    <tax>0.40</tax>
     <remitt_pay>102.50</remitt_pay>
+    <commission_before_promotion>2.50</commission_before_promotion>
   </result>
 </response>`
 
@@ -125,19 +131,24 @@ const TRANSACTION_XML = `<?xml version="1.0" encoding="utf-8"?>
 <response>
   <status>SUCCESS</status>
   <result>
-    <id>9999</id>
-    <ref>TXN-ABC123</ref>
-    <status>ENTERED</status>
-    <send_amount>100.00</send_amount>
-    <receive_amount>10550.00</receive_amount>
-    <commission>2.50</commission>
-    <total_to_pay>102.50</total_to_pay>
-    <source_currency>GBP</source_currency>
-    <destination_currency>INR</destination_currency>
-    <rate>105.50</rate>
-    <created_date>2024-01-15</created_date>
-    <beneficiary_fname>John</beneficiary_fname>
-    <beneficiary_lname>Doe</beneficiary_lname>
+    <transaction>
+      <trans_ref>TXN-ABC123</trans_ref>
+      <status>ENTERED</status>
+      <trans_type>Account</trans_type>
+      <send_currency>GBP</send_currency>
+      <send_amount>100.00</send_amount>
+      <receive_currency>INR</receive_currency>
+      <receive_amount>10550.00</receive_amount>
+      <commission>2.50</commission>
+      <fees>0</fees>
+      <tax>0</tax>
+      <remitter_pay>102.50</remitter_pay>
+      <rate>105.50</rate>
+      <creation_date>2024-01-15</creation_date>
+      <benef_name>John Doe</benef_name>
+    </transaction>
+    <sms_confirmation_code>true</sms_confirmation_code>
+    <email_confirmation_code>false</email_confirmation_code>
   </result>
 </response>`
 
@@ -229,6 +240,8 @@ describe('parseRates', () => {
     expect(rates).toHaveLength(1)
     expect(rates[0].source_currency).toBe('GBP')
     expect(rates[0].destination_currency).toBe('INR')
+    expect(rates[0].rate_account).toBe('105.50')
+    expect(rates[0].rate_cash_collection).toBe('104.80')
     expect(rates[0].rate).toBe('105.50')
     expect(rates[0].payment_method_code).toBe('3')
     expect(rates[0].service_level_code).toBe('3')
@@ -246,13 +259,16 @@ describe('parseRates', () => {
 describe('parseCharges', () => {
   it('parses all charge fields', () => {
     const charges = parseCharges(CHARGES_XML)
-    expect(charges.send_amount).toBe('100.00')
-    expect(charges.receive_amount).toBe('10550.00')
-    expect(charges.commission).toBe('2.50')
-    expect(charges.total_to_pay).toBe('102.50')
     expect(charges.source_currency).toBe('GBP')
+    expect(charges.source_amount).toBe('100.00')
     expect(charges.destination_currency).toBe('INR')
+    expect(charges.destination_amount).toBe('10550.00')
+    expect(charges.commission).toBe('2.50')
     expect(charges.rate).toBe('105.50')
+    expect(charges.remitt_pay).toBe('102.50')
+    expect(charges.tax).toBe('0.40')
+    expect(charges.source_country_iso_code).toBe('GB')
+    expect(charges.destination_country_iso_code).toBe('IN')
   })
 })
 
@@ -279,17 +295,20 @@ describe('parseBeneficiaries', () => {
 describe('parseTransaction', () => {
   it('parses all transaction fields', () => {
     const tx = parseTransaction(TRANSACTION_XML)
-    expect(tx.id).toBe('9999')
-    expect(tx.ref).toBe('TXN-ABC123')
+    expect(tx.trans_ref).toBe('TXN-ABC123')
     expect(tx.status).toBe('ENTERED')
+    expect(tx.trans_type).toBe('Account')
+    expect(tx.send_currency).toBe('GBP')
     expect(tx.send_amount).toBe('100.00')
+    expect(tx.receive_currency).toBe('INR')
     expect(tx.receive_amount).toBe('10550.00')
     expect(tx.commission).toBe('2.50')
-    expect(tx.total_to_pay).toBe('102.50')
-    expect(tx.source_currency).toBe('GBP')
-    expect(tx.destination_currency).toBe('INR')
-    expect(tx.beneficiary_fname).toBe('John')
-    expect(tx.beneficiary_lname).toBe('Doe')
+    expect(tx.remitter_pay).toBe('102.50')
+    expect(tx.rate).toBe('105.50')
+    expect(tx.creation_date).toBe('2024-01-15')
+    expect(tx.benef_name).toBe('John Doe')
+    expect(tx.sms_confirmation_code).toBe('true')
+    expect(tx.email_confirmation_code).toBe('false')
   })
 })
 
@@ -302,30 +321,34 @@ describe('parseTransactions', () => {
   <result>
     <transactions>
       <transaction>
-        <id>1</id>
-        <ref>TXN-001</ref>
-        <status>PROCESSED</status>
-        <send_amount>50.00</send_amount>
-        <receive_amount>5275.00</receive_amount>
-        <commission>1.25</commission>
-        <total_to_pay>51.25</total_to_pay>
+        <trans_ref>RA001</trans_ref>
+        <trans_type>Account</trans_type>
+        <status>HQ_OK</status>
+        <creation_date>2024-01-10</creation_date>
+        <originating_country>GB</originating_country>
+        <destination_country>India</destination_country>
         <source_currency>GBP</source_currency>
-        <destination_currency>INR</destination_currency>
-        <rate>105.50</rate>
-        <created_date>2024-01-10</created_date>
+        <source_amount>50.00</source_amount>
+        <dest_currency>INR</dest_currency>
+        <dest_amount>5275.00</dest_amount>
+        <payment_method>1</payment_method>
+        <benef_id>42</benef_id>
+        <benef_name>John Doe</benef_name>
       </transaction>
       <transaction>
-        <id>2</id>
-        <ref>TXN-002</ref>
+        <trans_ref>RA002</trans_ref>
+        <trans_type>Account</trans_type>
         <status>ENTERED</status>
-        <send_amount>100.00</send_amount>
-        <receive_amount>10550.00</receive_amount>
-        <commission>2.50</commission>
-        <total_to_pay>102.50</total_to_pay>
+        <creation_date>2024-01-15</creation_date>
+        <originating_country>GB</originating_country>
+        <destination_country>India</destination_country>
         <source_currency>GBP</source_currency>
-        <destination_currency>INR</destination_currency>
-        <rate>105.50</rate>
-        <created_date>2024-01-15</created_date>
+        <source_amount>100.00</source_amount>
+        <dest_currency>INR</dest_currency>
+        <dest_amount>10550.00</dest_amount>
+        <payment_method>1</payment_method>
+        <benef_id>42</benef_id>
+        <benef_name>Jane Smith</benef_name>
       </transaction>
     </transactions>
   </result>
@@ -334,9 +357,13 @@ describe('parseTransactions', () => {
   it('parses a list of transactions', () => {
     const txs = parseTransactions(LIST_XML)
     expect(txs).toHaveLength(2)
-    expect(txs[0].id).toBe('1')
-    expect(txs[0].status).toBe('PROCESSED')
-    expect(txs[1].id).toBe('2')
+    expect(txs[0].ref).toBe('RA001')
+    expect(txs[0].status).toBe('HQ_OK')
+    expect(txs[0].source_amount).toBe('50.00')
+    expect(txs[0].destination_currency).toBe('INR')
+    expect(txs[0].destination_amount).toBe('5275.00')
+    expect(txs[0].benef_name).toBe('John Doe')
+    expect(txs[1].ref).toBe('RA002')
     expect(txs[1].status).toBe('ENTERED')
   })
 })

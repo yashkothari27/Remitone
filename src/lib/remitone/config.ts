@@ -1,5 +1,5 @@
 export const REMITONE_BASE_URL =
-  process.env.REMITONE_BASE_URL ?? 'https://test.remit.by/kogopaytest/remitterws/'
+  process.env.REMITONE_BASE_URL ?? 'https://arm.kogopay.com/remitterws/'
 
 export const REMITONE_SERVER_PUBLIC_KEY =
   process.env.REMITONE_SERVER_PUBLIC_KEY ?? ''

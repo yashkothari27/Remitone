@@ -22,31 +22,34 @@ const ISO_TO_CURRENCY: Record<string, string> = {
 }
 interface Beneficiary { id: string; fname: string; lname: string; country_name?: string; country_id?: string }
 interface RateInfo {
-  destination_country_id: string
+  destination_country_name: string
   destination_currency: string
   rate_account: string
   rate_cash_collection: string
   rate_card: string
   rate_home_delivery: string
   rate_mobile_transfer: string
-  payment_method_code: string
-  service_level_code: string
 }
 interface Charges {
-  send_amount: string; receive_amount: string; commission: string
-  total_to_pay: string; source_currency: string; destination_currency: string; rate: string
+  source_amount: string; destination_amount: string; commission: string
+  remitt_pay: string; source_currency: string; destination_currency: string; rate: string
 }
-interface TxResult extends Charges {
-  trans_session_id: string; ref: string; status: string
-  trans_type: string; beneficiary_name: string
+interface TxResult {
+  trans_session_id: string; trans_ref: string; status: string; trans_type: string
+  send_amount: string; send_currency: string
+  receive_amount: string; receive_currency: string
+  remitter_pay: string; commission: string; rate: string
+  beneficiary_name: string
 }
 
+// pmCode = payment_method ID, slCode = service_level ID (from UISettings/getTransactionUISettings)
+// 8 = Bank Transfer, 6 = Credit/Debit Card, 1 = Instant
 const TRANSFER_TYPES = [
-  { label: 'Account',         trans_type: 'Account',         pmCode: 'BT',  slCode: 'STD' },
-  { label: 'Cash Collection', trans_type: 'Cash Collection', pmCode: 'CC',  slCode: 'STD' },
-  { label: 'Card Transfer',   trans_type: 'Card Transfer',   pmCode: 'CT',  slCode: 'STD' },
-  { label: 'Home Delivery',   trans_type: 'Home Delivery',   pmCode: 'HD',  slCode: 'STD' },
-  { label: 'Mobile Transfer', trans_type: 'Mobile Transfer', pmCode: 'MW',  slCode: 'STD' },
+  { label: 'Account',         trans_type: 'Account',         pmCode: '8', slCode: '1' },
+  { label: 'Cash Collection', trans_type: 'Cash Collection', pmCode: '8', slCode: '1' },
+  { label: 'Card Transfer',   trans_type: 'Card Transfer',   pmCode: '6', slCode: '1' },
+  { label: 'Home Delivery',   trans_type: 'Home Delivery',   pmCode: '8', slCode: '1' },
+  { label: 'Mobile Transfer', trans_type: 'Mobile Transfer', pmCode: '8', slCode: '1' },
 ]
 
 type Step = 'details' | 'review' | 'confirmed'
@@ -132,19 +135,21 @@ export default function SendMoneyPage() {
     finally { setLoadingBeneficiaries(false) }
   }
 
-  // Fetch rates for selected country to get payment_method_code / service_level_code
+  // Fetch rates for selected country
   const fetchRates = useCallback(async () => {
     if (!auth || !countryId) return
+    const countryName = countries.find(c => c.id === countryId)?.name
+    if (!countryName) return
     try {
       const res = await fetch(
-        `/api/remitone/rates?username=${encodeURIComponent(auth.username)}&session_token=${encodeURIComponent(auth.session_token)}&destination_country_id=${countryId}`
+        `/api/remitone/rates?username=${encodeURIComponent(auth.username)}&session_token=${encodeURIComponent(auth.session_token)}&destination_country=${encodeURIComponent(countryName)}`
       )
       const data = await res.json()
       if (data.status === 'SUCCESS' && Array.isArray(data.data) && data.data.length > 0) {
         setRateInfo(data.data[0])
       }
     } catch { /* keep existing */ }
-  }, [auth, countryId])
+  }, [auth, countryId, countries])
 
   useEffect(() => { if (countryId) fetchRates() }, [countryId])
 
@@ -169,12 +174,12 @@ export default function SendMoneyPage() {
     if (!auth || !countryId || !amount || parseFloat(amount) <= 0) {
       setCharges(null); return
     }
+    const countryName = countries.find(c => c.id === countryId)?.name
+    if (!countryName) { setCharges(null); return }
     setLoadingCharges(true)
     try {
-      const pmCode = rateInfo?.payment_method_code || transferType.pmCode
-      const slCode = rateInfo?.service_level_code  || transferType.slCode
       const res = await fetch(
-        `/api/remitone/charges?username=${encodeURIComponent(auth.username)}&session_token=${encodeURIComponent(auth.session_token)}&destination_country_id=${countryId}&payment_method_code=${pmCode}&service_level_code=${slCode}&send_amount=${amount}`
+        `/api/remitone/charges?username=${encodeURIComponent(auth.username)}&session_token=${encodeURIComponent(auth.session_token)}&destination_country=${encodeURIComponent(countryName)}&trans_type=${encodeURIComponent(transferType.trans_type)}&payment_method=${encodeURIComponent(transferType.pmCode)}&service_level=${encodeURIComponent(transferType.slCode)}&amount_type=SOURCE&amount_to_send=${amount}`
       )
       const data = await res.json()
       if (data.status === 'SUCCESS' && data.data) {
@@ -188,7 +193,7 @@ export default function SendMoneyPage() {
       }
     } catch { setCharges(null); doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency) }
     finally { setLoadingCharges(false) }
-  }, [auth, countryId, amount, transferType, rateInfo])
+  }, [auth, countryId, amount, transferType, rateInfo, countries])
 
   useEffect(() => {
     const t = setTimeout(() => { if (countryId) fetchCharges() }, 600)
@@ -209,8 +214,6 @@ export default function SendMoneyPage() {
     setIsSubmitting(true)
     setError(null)
     try {
-      const pmCode = rateInfo?.payment_method_code || transferType.pmCode
-      const slCode = rateInfo?.service_level_code  || transferType.slCode
       const destCurrency = charges?.destination_currency || rateInfo?.destination_currency || ''
 
       const body: Record<string, string> = {
@@ -219,15 +222,13 @@ export default function SendMoneyPage() {
         session_token: auth.session_token,
         beneficiary_id: beneficiaryId,
         amount,
-        amount_type: 'source',
+        amount_type: 'SOURCE',
         source_currency: 'GBP',
         destination_currency: destCurrency,
-        destination_country: countryId,
         trans_type: transferType.trans_type,
-        payment_method: pmCode,
-        service_level: slCode,
+        payment_method: transferType.pmCode,
+        service_level: transferType.slCode,
       }
-      if (isCardTransfer && cardNumber.trim()) body.card_number = cardNumber.trim()
 
       const res = await fetch('/api/remitone/transaction', {
         method: 'POST',
@@ -314,13 +315,13 @@ export default function SendMoneyPage() {
                 <div className="flex justify-between"><span className="text-gray-500">Recipient</span><span className="font-semibold">{pendingTx.beneficiary_name}</span></div>
               )}
               <div className="flex justify-between"><span className="text-gray-500">Transfer type</span><span className="font-semibold">{pendingTx.trans_type || transferType.label}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">You send</span><span className="font-semibold">{pendingTx.send_amount} {pendingTx.source_currency}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">You send</span><span className="font-semibold">{pendingTx.send_amount} {pendingTx.send_currency}</span></div>
               <div className="flex justify-between"><span className="text-gray-500">Fee</span><span className="font-semibold">£{pendingTx.commission}</span></div>
-              <div className="flex justify-between border-t pt-2"><span className="text-gray-500">Total to pay</span><span className="font-bold text-brand-red">£{pendingTx.total_to_pay}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Recipient gets</span><span className="font-bold text-green-600">{parseFloat(pendingTx.receive_amount || '0').toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {pendingTx.destination_currency}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500">Rate</span><span className="text-gray-700">1 GBP = {parseFloat(pendingTx.rate || '0').toFixed(4)} {pendingTx.destination_currency}</span></div>
-              {pendingTx.ref && (
-                <div className="flex justify-between border-t pt-2"><span className="text-gray-500">Reference</span><span className="font-bold font-mono text-xs">{pendingTx.ref}</span></div>
+              <div className="flex justify-between border-t pt-2"><span className="text-gray-500">Total to pay</span><span className="font-bold text-brand-red">£{pendingTx.remitter_pay}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">Recipient gets</span><span className="font-bold text-green-600">{parseFloat(pendingTx.receive_amount || '0').toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {pendingTx.receive_currency}</span></div>
+              <div className="flex justify-between"><span className="text-gray-500">Rate</span><span className="text-gray-700">1 GBP = {parseFloat(pendingTx.rate || '0').toFixed(4)} {pendingTx.receive_currency}</span></div>
+              {pendingTx.trans_ref && (
+                <div className="flex justify-between border-t pt-2"><span className="text-gray-500">Reference</span><span className="font-bold font-mono text-xs">{pendingTx.trans_ref}</span></div>
               )}
             </div>
 
@@ -411,8 +412,8 @@ export default function SendMoneyPage() {
                 <p className="flex-1 text-gold text-3xl font-bold">
                   {loadingCharges
                     ? <span className="text-white/40 text-2xl animate-pulse">…</span>
-                    : charges?.receive_amount
-                      ? parseFloat(charges.receive_amount).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    : charges?.destination_amount
+                      ? parseFloat(charges.destination_amount).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                       : fxRate !== null
                         ? (parseFloat(amount || '0') * fxRate).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                         : '—'}

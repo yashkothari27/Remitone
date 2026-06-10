@@ -233,10 +233,14 @@ export async function updateRemitter(
 export async function getRates(
   username: string,
   session_token: string,
-  destination_country_id?: string
+  destination_country?: string,
+  source_currency?: string,
+  destination_currency?: string
 ): Promise<RemitOneResponse<ReturnType<typeof parseRates>>> {
   const params: Record<string, string> = { username, session_token }
-  if (destination_country_id) params.destination_country_id = destination_country_id
+  if (destination_country) params.destination_country = destination_country
+  if (source_currency) params.source_currency = source_currency
+  if (destination_currency) params.destination_currency = destination_currency
 
   const xml = await post('rate', 'getRates', params)
   if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
@@ -284,18 +288,29 @@ export async function createBeneficiary(
 export async function getCharges(
   input: GetChargesInput
 ): Promise<RemitOneResponse<ReturnType<typeof parseCharges>>> {
-  // RemitONE getCharges expects these specific parameter names
   const params: Record<string, string> = {
     username:            input.username,
     session_token:       input.session_token,
-    destination_country: input.destination_country_id,
-    payment_method:      input.payment_method_code,
-    service_level:       input.service_level_code,
-    amount_type:         'send',
+    destination_country: input.destination_country,
+    trans_type:          input.trans_type,
+    payment_method:      input.payment_method,
+    service_level:       input.service_level,
+    amount_type:         input.amount_type,
+    amount_to_send:      input.amount_to_send,
   }
-  if (input.send_amount)    params.amount_to_send    = input.send_amount
-  if (input.receive_amount) params.amount_to_receive = input.receive_amount
-  if (input.promotion_code) params.promotion_code    = input.promotion_code
+  if (input.source_currency)          params.source_currency          = input.source_currency
+  if (input.destination_currency)     params.destination_currency     = input.destination_currency
+  if (input.sms_confirmation)         params.sms_confirmation         = input.sms_confirmation
+  if (input.sms_notification)         params.sms_notification         = input.sms_notification
+  if (input.sms_benef_confirmation)   params.sms_benef_confirmation   = input.sms_benef_confirmation
+  if (input.collection_point_id)      params.collection_point_id      = input.collection_point_id
+  if (input.benef_branch_id)          params.benef_branch_id          = input.benef_branch_id
+  if (input.benef_bank)               params.benef_bank               = input.benef_bank
+  if (input.utility_company)          params.utility_company          = input.utility_company
+  if (input.promotion_code)           params.promotion_code           = input.promotion_code
+  if (input.loyalty_points)           params.loyalty_points           = input.loyalty_points
+  if (input.loyalty_points_monetary_value) params.loyalty_points_monetary_value = input.loyalty_points_monetary_value
+  if (input.loyalty_points_discount)  params.loyalty_points_discount  = input.loyalty_points_discount
 
   const xml = await post('transaction', 'getCharges', params)
   if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
@@ -319,12 +334,19 @@ export async function confirmTransaction(
   username: string,
   session_token: string,
   trans_session_id: string,
-  opts?: { email_confirmation_code?: string; sms_confirmation_code?: string; confirmation_pin?: string }
+  opts?: {
+    confirmation_code?: string
+    confirmation_pin?: string
+    email_confirmation_code?: string
+    sms_confirmation_code?: string
+  }
 ): Promise<RemitOneResponse<ReturnType<typeof parseTransaction>>> {
   const params: Record<string, string> = { username, session_token, trans_session_id }
+  if (opts?.confirmation_code) params.confirmation_code = opts.confirmation_code
+  if (opts?.confirmation_pin) params.confirmation_pin = opts.confirmation_pin
+  // Legacy fields — DEPRECATED by spec, kept for backward compatibility
   if (opts?.email_confirmation_code) params.email_confirmation_code = opts.email_confirmation_code
   if (opts?.sms_confirmation_code) params.sms_confirmation_code = opts.sms_confirmation_code
-  if (opts?.confirmation_pin) params.confirmation_pin = opts.confirmation_pin
   const xml = await post('transaction', 'confirmTransaction', params)
   if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
   return buildResponse(xml, parseTransaction(xml))
@@ -348,13 +370,31 @@ export async function listTransactions(
 export async function getTransaction(
   username: string,
   session_token: string,
-  transaction_id: string
+  trans_ref: string
 ): Promise<RemitOneResponse<ReturnType<typeof parseTransaction>>> {
   const xml = await post('transaction', 'getTransaction', {
     username,
     session_token,
-    transaction_id,
+    trans_ref,
   })
   if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
   return buildResponse(xml, parseTransaction(xml))
+}
+
+export async function requestTransactionConfirmationCode(
+  username: string,
+  session_token: string,
+  trans_session_id: string
+): Promise<RemitOneResponse<{ sms_confirmation_code: boolean; email_confirmation_code: boolean }>> {
+  const xml = await post('transaction', 'requestTransactionConfirmationCode', {
+    username,
+    session_token,
+    trans_session_id,
+  })
+  if (parseStatus(xml) === 'FAIL') return buildResponse(xml)
+  const resultXml = parseResult(xml)
+  return buildResponse(xml, {
+    sms_confirmation_code: parseField(resultXml, 'sms_confirmation_code') === 'true',
+    email_confirmation_code: parseField(resultXml, 'email_confirmation_code') === 'true',
+  })
 }

@@ -7,7 +7,9 @@ export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl
     const username = searchParams.get('username')
     const session_token = searchParams.get('session_token')
-    const destination_country_id = searchParams.get('destination_country_id') ?? undefined
+    const destination_country = searchParams.get('destination_country') ?? undefined
+    const source_currency = searchParams.get('source_currency') ?? undefined
+    const destination_currency = searchParams.get('destination_currency') ?? undefined
 
     if (!username || !session_token) {
       return NextResponse.json(
@@ -16,11 +18,7 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    if (destination_country_id && !/^\d{1,10}$/.test(destination_country_id)) {
-      return NextResponse.json({ status: 'FAIL', message: 'Invalid destination_country_id' }, { status: 400 })
-    }
-
-    const result = await getRates(username, session_token, destination_country_id)
+    const result = await getRates(username, session_token, destination_country, source_currency, destination_currency)
     return NextResponse.json(result)
   } catch (error) {
     return NextResponse.json({ status: 'FAIL', message: safeErrorMessage(error) }, { status: 500 })

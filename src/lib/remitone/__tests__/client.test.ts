@@ -222,13 +222,15 @@ describe('getCharges', () => {
 
   it('returns parsed charges on success', async () => {
     const chargesXml = successXml(`
-      <send_amount>100.00</send_amount>
-      <receive_amount>10550.00</receive_amount>
-      <commission>2.50</commission>
-      <total_to_pay>102.50</total_to_pay>
+      <source_country_iso_code>GB</source_country_iso_code>
       <source_currency>GBP</source_currency>
-      <destination_currency>INR</destination_currency>
+      <source_amount>100.00</source_amount>
       <rate>105.50</rate>
+      <destination_country_iso_code>IN</destination_country_iso_code>
+      <destination_currency>INR</destination_currency>
+      <destination_amount>10550.00</destination_amount>
+      <commission>2.50</commission>
+      <remitt_pay>102.50</remitt_pay>
     `)
 
     global.fetch = vi.fn().mockResolvedValue({
@@ -240,14 +242,16 @@ describe('getCharges', () => {
     const result = await getCharges({
       username: 'user',
       session_token: 'tok',
-      destination_country_id: '1',
-      payment_method_code: '3',
-      service_level_code: '3',
-      send_amount: '100',
+      destination_country: 'India',
+      trans_type: 'Account',
+      payment_method: '3',
+      service_level: '3',
+      amount_type: 'SOURCE',
+      amount_to_send: '100',
     })
 
     expect(result.status).toBe('SUCCESS')
-    expect(result.data?.send_amount).toBe('100.00')
+    expect(result.data?.source_amount).toBe('100.00')
     expect(result.data?.commission).toBe('2.50')
     expect(result.data?.rate).toBe('105.50')
   })

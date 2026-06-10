@@ -58,10 +58,10 @@ export function useAuth() {
 
 // ─── Rates ───────────────────────────────────────────────────────────────────
 
-export function useRemitOneRates(username?: string, session_token?: string, destination_country_id?: string) {
+export function useRemitOneRates(username?: string, session_token?: string, destination_country?: string) {
   const key =
     username && session_token
-      ? `/api/remitone/rates?username=${encodeURIComponent(username)}&session_token=${encodeURIComponent(session_token)}${destination_country_id ? `&destination_country_id=${destination_country_id}` : ''}`
+      ? `/api/remitone/rates?username=${encodeURIComponent(username)}&session_token=${encodeURIComponent(session_token)}${destination_country ? `&destination_country=${encodeURIComponent(destination_country)}` : ''}`
       : null
 
   const { data, error, mutate } = useSWR(
@@ -154,38 +154,52 @@ export function useBeneficiaries(username?: string, session_token?: string) {
 interface ChargesParams {
   username?: string
   session_token?: string
-  destination_country_id?: string
-  payment_method_code?: string
-  service_level_code?: string
-  send_amount?: string
-  receive_amount?: string
+  destination_country?: string   // country name, not ID
+  trans_type?: string
+  payment_method?: string
+  service_level?: string
+  amount_type?: string           // SOURCE / DESTINATION / TOTAL
+  amount_to_send?: string
+  source_currency?: string
+  destination_currency?: string
+  promotion_code?: string
 }
 
 export function useCharges({
   username,
   session_token,
-  destination_country_id,
-  payment_method_code,
-  service_level_code,
-  send_amount,
-  receive_amount,
+  destination_country,
+  trans_type,
+  payment_method,
+  service_level,
+  amount_type,
+  amount_to_send,
+  source_currency,
+  destination_currency,
+  promotion_code,
 }: ChargesParams) {
   const ready =
     username &&
     session_token &&
-    destination_country_id &&
-    payment_method_code &&
-    service_level_code &&
-    (send_amount || receive_amount)
+    destination_country &&
+    trans_type &&
+    payment_method &&
+    service_level &&
+    amount_type &&
+    amount_to_send
 
   const params = new URLSearchParams()
   if (username) params.set('username', username)
   if (session_token) params.set('session_token', session_token)
-  if (destination_country_id) params.set('destination_country_id', destination_country_id)
-  if (payment_method_code) params.set('payment_method_code', payment_method_code)
-  if (service_level_code) params.set('service_level_code', service_level_code)
-  if (send_amount) params.set('send_amount', send_amount)
-  if (receive_amount) params.set('receive_amount', receive_amount)
+  if (destination_country) params.set('destination_country', destination_country)
+  if (trans_type) params.set('trans_type', trans_type)
+  if (payment_method) params.set('payment_method', payment_method)
+  if (service_level) params.set('service_level', service_level)
+  if (amount_type) params.set('amount_type', amount_type)
+  if (amount_to_send) params.set('amount_to_send', amount_to_send)
+  if (source_currency) params.set('source_currency', source_currency)
+  if (destination_currency) params.set('destination_currency', destination_currency)
+  if (promotion_code) params.set('promotion_code', promotion_code)
 
   const { data, error, mutate } = useSWR(
     ready ? `/api/remitone/charges?${params.toString()}` : null,
@@ -237,7 +251,7 @@ export function useTransactions(username?: string, session_token?: string) {
   )
 
   const confirmTransaction = useCallback(
-    async (transaction_id: string, payment_method_code: string) => {
+    async (trans_session_id: string, confirmation_code?: string) => {
       if (!username || !session_token) return { status: 'FAIL', message: 'Not authenticated' }
       const res = await fetch('/api/remitone/transaction', {
         method: 'POST',
@@ -246,8 +260,8 @@ export function useTransactions(username?: string, session_token?: string) {
           action: 'confirm',
           username,
           session_token,
-          transaction_id,
-          payment_method_code,
+          trans_session_id,
+          ...(confirmation_code ? { confirmation_code } : {}),
         }),
       })
       const result = await res.json()

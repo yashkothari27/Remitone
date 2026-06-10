@@ -7,10 +7,10 @@ import { ArrowLeft, Loader2, Receipt, TrendingUp, Clock, CheckCircle, XCircle, A
 import { useAuth } from '@/contexts/AuthContext'
 
 interface Transaction {
-  id: string; ref: string; status: string
-  send_amount: string; receive_amount: string; commission: string; total_to_pay: string
+  ref: string; status: string; trans_type: string
+  source_amount: string; destination_amount: string; commission: string
   source_currency: string; destination_currency: string; rate: string
-  created_date: string; beneficiary_fname?: string; beneficiary_lname?: string
+  created_date: string; benef_name?: string
 }
 
 function StatusBadge({ status }: { status: string }) {
@@ -69,7 +69,7 @@ export default function TransactionsPage() {
   }
 
   // Summary stats
-  const totalSent = transactions.reduce((sum, t) => sum + parseFloat(t.total_to_pay || '0'), 0)
+  const totalSent = transactions.reduce((sum, t) => sum + parseFloat(t.source_amount || '0'), 0)
   const processed = transactions.filter((t) => ['PROCESSED', 'PAID'].includes(t.status.toUpperCase())).length
   const pending = transactions.filter((t) => ['ENTERED', 'PENDING'].includes(t.status.toUpperCase())).length
 
@@ -130,8 +130,8 @@ export default function TransactionsPage() {
           <div className="space-y-3">
             {transactions.map((tx) => (
               <button
-                key={tx.id}
-                onClick={() => setSelectedTx(selectedTx?.id === tx.id ? null : tx)}
+                key={tx.ref}
+                onClick={() => setSelectedTx(selectedTx?.ref === tx.ref ? null : tx)}
                 className="w-full text-left bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between">
@@ -142,7 +142,7 @@ export default function TransactionsPage() {
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="font-semibold text-gray-900 text-sm">
-                          {tx.beneficiary_fname} {tx.beneficiary_lname}
+                          {tx.benef_name || '—'}
                         </p>
                         <StatusBadge status={tx.status} />
                       </div>
@@ -152,19 +152,19 @@ export default function TransactionsPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-gray-900 text-sm">{tx.total_to_pay} {tx.source_currency}</p>
-                    <p className="text-xs text-green-600 font-medium mt-0.5">→ {tx.receive_amount} {tx.destination_currency}</p>
+                    <p className="font-bold text-gray-900 text-sm">{tx.source_amount} {tx.source_currency}</p>
+                    <p className="text-xs text-green-600 font-medium mt-0.5">→ {tx.destination_amount} {tx.destination_currency}</p>
                   </div>
                 </div>
 
                 {/* Expanded detail */}
-                {selectedTx?.id === tx.id && (
+                {selectedTx?.ref === tx.ref && (
                   <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-2 text-xs">
                     {[
-                      ['Amount sent', `${tx.send_amount} ${tx.source_currency}`],
+                      ['Amount sent', `${tx.source_amount} ${tx.source_currency}`],
                       ['Transfer fee', `${tx.commission} ${tx.source_currency}`],
                       ['Exchange rate', `${tx.rate}`],
-                      ['Recipient gets', `${tx.receive_amount} ${tx.destination_currency}`],
+                      ['Recipient gets', `${tx.destination_amount} ${tx.destination_currency}`],
                     ].map(([label, value]) => (
                       <div key={label} className="flex flex-col gap-0.5">
                         <span className="text-gray-400">{label}</span>
