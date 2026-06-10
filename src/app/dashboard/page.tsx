@@ -102,13 +102,6 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Help note */}
-        <div className="mt-8 rounded-xl bg-gold/10 border border-gold/30 px-5 py-4">
-          <p className="text-sm text-gray-700">
-            <span className="font-semibold text-brand-red-deep">Test environment:</span>{' '}
-            You are connected to the KogoPAY TEST environment. Transfers will not move real funds.
-          </p>
-        </div>
       </main>
     </div>
   )

@@ -355,7 +355,7 @@ export default function RegisterPage() {
                   className="mt-0.5 h-4 w-4 shrink-0 accent-brand-red" />
                 <span className="text-sm text-gray-600">
                   I agree with the{' '}
-                  <a href="https://test.remit.by/kogopayonlinetest/images/terms_and_conditions.pdf"
+                  <a href="https://kogopay.com/terms"
                     target="_blank" rel="noopener noreferrer"
                     className="text-brand-red font-medium underline hover:text-brand-red-deep">
                     Terms and Conditions

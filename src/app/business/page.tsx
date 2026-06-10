@@ -131,10 +131,10 @@ export default function BusinessPage() {
                             </h2>
                             <p className="text-lg text-slate-600 mb-8">
                                 Integrate cross-border payments into your platform with our well-documented RESTful API.
-                                Webhook support, sandbox environment, and dedicated developer support.
+                                Webhook support, and dedicated developer support.
                             </p>
                             <div className="space-y-4">
-                                {['RESTful API with full documentation', 'Sandbox testing environment', 'Webhook notifications', 'SDKs for Node.js, Python, PHP'].map((item) => (
+                                {['RESTful API with full documentation', 'Webhook notifications', 'SDKs for Node.js, Python, PHP', 'Dedicated developer support'].map((item) => (
                                     <div key={item} className="flex items-center gap-3">
                                         <span className="material-symbols-outlined text-gold text-sm">check_circle</span>
                                         <span className="text-slate-700 font-medium">{item}</span>
