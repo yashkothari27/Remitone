@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -10,16 +10,6 @@ import {
 import { useAuth } from '@/contexts/AuthContext'
 
 interface DestCountry { id: string; name: string; iso_code: string }
-
-// Map ISO country code → currency code for FX rate fallback
-const ISO_TO_CURRENCY: Record<string, string> = {
-  IN: 'INR', TH: 'THB', PH: 'PHP', PK: 'PKR', BD: 'BDT',
-  NG: 'NGN', GH: 'GHS', KE: 'KES', LK: 'LKR', NP: 'NPR',
-  US: 'USD', EU: 'EUR', GB: 'GBP', AU: 'AUD', CA: 'CAD',
-  ZA: 'ZAR', MY: 'MYR', ID: 'IDR', SG: 'SGD', AE: 'AED',
-  CN: 'CNY', JP: 'JPY', MX: 'MXN', BR: 'BRL', EG: 'EGP',
-  MA: 'MAD', ET: 'ETB', TZ: 'TZS', UG: 'UGX', ZM: 'ZMW',
-}
 interface Beneficiary { id: string; fname: string; lname: string; country_name?: string; country_id?: string }
 interface RateInfo {
   destination_country_name: string
@@ -63,33 +53,46 @@ export default function SendMoneyPage() {
   const prefillName           = params.get('name') ?? ''
 
   // Loaded data
-  const [countries, setCountries]       = useState<DestCountry[]>([])
+  const [countries, setCountries]         = useState<DestCountry[]>([])
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([])
-  const [rateInfo, setRateInfo]         = useState<RateInfo | null>(null)
-  const [charges, setCharges]           = useState<Charges | null>(null)
-  const [fxRate, setFxRate]             = useState<number | null>(null)
-  const [fxCurrency, setFxCurrency]     = useState<string>('')
+  const [rateInfo, setRateInfo]           = useState<RateInfo | null>(null)
+  const [charges, setCharges]             = useState<Charges | null>(null)
 
   // Form
-  const [countryId, setCountryId]       = useState('')
-  const [amount, setAmount]             = useState('100')
-  const [transferType, setTransferType] = useState(TRANSFER_TYPES[0])
-  const [beneficiaryId, setBeneficiaryId] = useState(prefillBeneficiaryId)
-  const [cardNumber, setCardNumber]     = useState('')
-  const [step, setStep]                 = useState<Step>('details')
+  const [countryId, setCountryId]           = useState('')
+  const [amount, setAmount]                 = useState('100')
+  const [transferType, setTransferType]     = useState(TRANSFER_TYPES[0])
+  const [beneficiaryId, setBeneficiaryId]   = useState(prefillBeneficiaryId)
+  const [cardNumber, setCardNumber]         = useState('')
+  const [step, setStep]                     = useState<Step>('details')
 
   // State
-  const [loadingCountries, setLoadingCountries] = useState(true)
+  const [loadingCountries, setLoadingCountries]   = useState(true)
   const [loadingBeneficiaries, setLoadingBeneficiaries] = useState(true)
-  const [loadingCharges, setLoadingCharges]     = useState(false)
-  const [isSubmitting, setIsSubmitting]         = useState(false)
-  const [isConfirming, setIsConfirming]         = useState(false)
-  const [error, setError]                       = useState<string | null>(null)
-  const [pendingTx, setPendingTx]               = useState<TxResult | null>(null)
-  const [accountPending, setAccountPending]     = useState(false)
+  const [loadingCharges, setLoadingCharges]       = useState(false)
+  const [isSubmitting, setIsSubmitting]           = useState(false)
+  const [isConfirming, setIsConfirming]           = useState(false)
+  const [error, setError]                         = useState<string | null>(null)
+  const [pendingTx, setPendingTx]                 = useState<TxResult | null>(null)
+  const [accountPending, setAccountPending]       = useState(false)
 
-  const isCardTransfer = transferType.pmCode === 'CT'
+  const isCardTransfer = transferType.trans_type === 'Card Transfer'
   const selectedCountry = countries.find(c => c.id === countryId)
+
+  // Live rate from RemitONE ARM — used when charges aren't available
+  const remitRate = useMemo(() => {
+    if (!rateInfo) return null
+    const raw = (
+      transferType.trans_type === 'Account'         ? rateInfo.rate_account :
+      transferType.trans_type === 'Cash Collection' ? rateInfo.rate_cash_collection :
+      transferType.trans_type === 'Card Transfer'   ? rateInfo.rate_card :
+      transferType.trans_type === 'Home Delivery'   ? rateInfo.rate_home_delivery :
+      transferType.trans_type === 'Mobile Transfer' ? rateInfo.rate_mobile_transfer :
+      rateInfo.rate_account
+    )
+    const n = parseFloat(raw)
+    return isNaN(n) || n === 0 ? null : n
+  }, [rateInfo, transferType.trans_type])
 
   useEffect(() => {
     if (!isLoggedIn) { router.replace('/login'); return }
@@ -153,23 +156,7 @@ export default function SendMoneyPage() {
 
   useEffect(() => { if (countryId) fetchRates() }, [countryId])
 
-  // Always keep FX rate updated when amount or country changes
-  useEffect(() => {
-    if (selectedCountry) doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency)
-  }, [amount, countryId, rateInfo?.destination_currency])
-
-  // Helper — call inline so it always has fresh values
-  async function doFetchFxRate(country: DestCountry | undefined, amt: string, destCurrency?: string) {
-    if (!country) return
-    const currencyCode = destCurrency || ISO_TO_CURRENCY[country.iso_code] || country.iso_code
-    try {
-      const res = await fetch(`/api/exchange-rates?from=GBP&to=${currencyCode}&amount=${parseFloat(amt) || 100}`)
-      const data = await res.json()
-      if (data.rate) { setFxRate(data.rate); setFxCurrency(currencyCode) }
-    } catch { /* keep */ }
-  }
-
-  // Fetch charges — fall back to FX rates if charges API unavailable
+  // Fetch charges
   const fetchCharges = useCallback(async () => {
     if (!auth || !countryId || !amount || parseFloat(amount) <= 0) {
       setCharges(null); return
@@ -185,15 +172,13 @@ export default function SendMoneyPage() {
       if (data.status === 'SUCCESS' && data.data) {
         setCharges(data.data)
         setAccountPending(false)
-        setFxRate(null)
       } else {
         setCharges(null)
         if (/verif|pending|await|approved/i.test(data.message ?? '')) setAccountPending(true)
-        doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency)
       }
-    } catch { setCharges(null); doFetchFxRate(selectedCountry, amount, rateInfo?.destination_currency) }
+    } catch { setCharges(null) }
     finally { setLoadingCharges(false) }
-  }, [auth, countryId, amount, transferType, rateInfo, countries])
+  }, [auth, countryId, amount, transferType, countries])
 
   useEffect(() => {
     const t = setTimeout(() => { if (countryId) fetchCharges() }, 600)
@@ -414,8 +399,8 @@ export default function SendMoneyPage() {
                     ? <span className="text-white/40 text-2xl animate-pulse">…</span>
                     : charges?.destination_amount
                       ? parseFloat(charges.destination_amount).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                      : fxRate !== null
-                        ? (parseFloat(amount || '0') * fxRate).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                      : remitRate !== null
+                        ? (parseFloat(amount || '0') * remitRate).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                         : '—'}
                 </p>
 
@@ -439,10 +424,10 @@ export default function SendMoneyPage() {
                   </div>
                 )}
               </div>
-              {(charges?.destination_currency || fxCurrency) && (
+              {(charges?.destination_currency || rateInfo?.destination_currency) && (
                 <p className="text-white/40 text-xs mt-1">
-                  {charges?.destination_currency || fxCurrency} • {selectedCountry?.name}
-                  {!charges && fxRate && <span className="ml-1">(est.)</span>}
+                  {charges?.destination_currency || rateInfo?.destination_currency} • {selectedCountry?.name}
+                  {!charges && remitRate && <span className="ml-1">(est.)</span>}
                 </p>
               )}
             </div>
@@ -487,8 +472,8 @@ export default function SendMoneyPage() {
                 <span className="text-white text-sm font-semibold">
                   {charges?.rate
                     ? `1 GBP = ${parseFloat(charges.rate).toFixed(4)} ${charges.destination_currency}`
-                    : fxRate !== null
-                      ? `1 GBP ≈ ${fxRate.toFixed(4)} ${fxCurrency}`
+                    : remitRate !== null
+                      ? `1 GBP = ${remitRate.toFixed(4)} ${rateInfo?.destination_currency ?? ''}`
                       : loadingCharges ? '…' : '—'}
                 </span>
               </div>
@@ -499,8 +484,8 @@ export default function SendMoneyPage() {
                     ? '…'
                     : charges?.commission
                       ? `£${charges.commission}`
-                      : fxRate !== null
-                        ? '£0.00'
+                      : remitRate !== null
+                        ? 'Confirmed at transfer'
                         : '—'}
                 </span>
               </div>
