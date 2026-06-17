@@ -12,18 +12,6 @@ const SOURCE_COUNTRIES = [
 
 const PHONE_CODES = [
   { code: '+44', flag: '🇬🇧' },
-  { code: '+1',  flag: '🇺🇸' },
-  { code: '+61', flag: '🇦🇺' },
-  { code: '+353',flag: '🇮🇪' },
-  { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' },
-  { code: '+91', flag: '🇮🇳' },
-  { code: '+92', flag: '🇵🇰' },
-  { code: '+880',flag: '🇧🇩' },
-  { code: '+63', flag: '🇵🇭' },
-  { code: '+234',flag: '🇳🇬' },
-  { code: '+233',flag: '🇬🇭' },
-  { code: '+254',flag: '🇰🇪' },
 ]
 
 function checkPassword(p: string) {
@@ -58,6 +46,12 @@ export default function RegisterPage() {
   const [apiError, setApiError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess]   = useState(false)
+
+  // Email verification step (RemitONE requires confirmRegistration before login works)
+  const [awaitingVerification, setAwaitingVerification] = useState(false)
+  const [verificationCode, setVerificationCode]         = useState('')
+  const [verifyError, setVerifyError]                   = useState<string | null>(null)
+  const [isVerifying, setIsVerifying]                   = useState(false)
 
   const pwCheck = checkPassword(password)
 
@@ -99,8 +93,13 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (data.status === 'SUCCESS') {
-        await login(username.trim(), password)
-        router.replace('/dashboard')
+        if (data.data?.email_verification_code) {
+          // Account is pending — must confirm with the emailed code before login will work
+          setAwaitingVerification(true)
+        } else {
+          await login(username.trim(), password)
+          router.replace('/dashboard')
+        }
       } else {
         const msg = data.errors?.length
           ? data.errors.map((err: { messages: string[] }) => err.messages[0]).join(' ')
@@ -114,12 +113,102 @@ export default function RegisterPage() {
     }
   }
 
+  async function handleVerify(e: React.FormEvent) {
+    e.preventDefault()
+    if (!verificationCode.trim()) { setVerifyError('Enter the verification code from your email'); return }
+    setVerifyError(null)
+    setIsVerifying(true)
+    try {
+      const res = await fetch('/api/remitone/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'confirm',
+          username: username.trim(),
+          email_verification_code: verificationCode.trim(),
+        }),
+      })
+      const data = await res.json()
+      if (data.status === 'SUCCESS') {
+        const loginResult = await login(username.trim(), password)
+        if (loginResult.status === 'SUCCESS') {
+          router.replace('/dashboard')
+        } else {
+          setAwaitingVerification(false)
+          setSuccess(true)
+        }
+      } else {
+        setVerifyError(data.message ?? 'Invalid verification code. Please try again.')
+      }
+    } catch {
+      setVerifyError('Unable to connect. Please try again.')
+    } finally {
+      setIsVerifying(false)
+    }
+  }
+
   const inputCls = (field: string) =>
     `w-full px-4 py-3 rounded-xl border-2 text-sm transition-colors outline-none ${
       errors[field]
         ? 'border-red-400 bg-red-50 focus:border-red-500'
         : 'border-gray-200 focus:border-brand-red bg-white'
     }`
+
+  // ── Email verification ────────────────────────────────────────────────────
+
+  if (awaitingVerification) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-10 space-y-5">
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-brand-red/10 mx-auto">
+              <Mail className="h-8 w-8 text-brand-red" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Verify your email</h2>
+            <p className="text-gray-500 text-sm">
+              We sent a verification code to <span className="font-semibold text-gray-700">{username}</span>. Enter it below to activate your account.
+            </p>
+          </div>
+
+          {verifyError && (
+            <div role="alert" aria-live="polite" className="flex items-start gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+              <AlertCircle className="mt-0.5 h-5 w-5 text-red-500 shrink-0" />
+              <p className="text-sm text-red-700">{verifyError}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleVerify} className="space-y-4">
+            <div>
+              <label htmlFor="verification-code" className="block text-sm font-medium text-gray-700 mb-1.5">Verification code</label>
+              <input id="verification-code" type="text" autoFocus value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                placeholder="Enter the code from your email"
+                aria-invalid={!!verifyError}
+                aria-describedby={verifyError ? 'verify-error' : undefined}
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-brand-red text-sm outline-none bg-white" />
+            </div>
+            <button type="submit" disabled={isVerifying}
+              className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-brand-red text-white font-bold text-sm hover:bg-brand-red-deep transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+              {isVerifying ? (
+                <><span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />Verifying…</>
+              ) : (
+                <>Verify <ArrowRight className="h-4 w-4" /></>
+              )}
+            </button>
+          </form>
+
+          {/* Fallback: the verification call can report failure even after the account
+              was actually activated server-side — give users a way out instead of a dead end. */}
+          <p className="text-center text-xs text-gray-400">
+            Already verified?{' '}
+            <Link href="/login" className="font-semibold text-brand-red hover:text-brand-red-deep transition-colors">
+              Try signing in
+            </Link>
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   // ── Success ────────────────────────────────────────────────────────────────
 
@@ -191,7 +280,7 @@ export default function RegisterPage() {
           </div>
 
           {apiError && (
-            <div className="mb-5 flex items-start gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+            <div role="alert" aria-live="polite" className="mb-5 flex items-start gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
               <AlertCircle className="mt-0.5 h-5 w-5 text-red-500 shrink-0" />
               <p className="text-sm text-red-700">{apiError}</p>
             </div>
@@ -220,7 +309,7 @@ export default function RegisterPage() {
                   className={`${inputCls('username')} pr-10`} />
                 <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
-              {errors.username && <p className="mt-1.5 text-xs text-red-600">{errors.username}</p>}
+              {errors.username && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.username}</p>}
             </div>
 
             {/* Password */}
@@ -240,7 +329,8 @@ export default function RegisterPage() {
                   placeholder="At least 10 characters"
                   className={`${inputCls('password')} pr-10`} />
                 <button type="button" onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1.5 -m-1.5">
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
@@ -259,7 +349,7 @@ export default function RegisterPage() {
                   ))}
                 </div>
               )}
-              {errors.password && <p className="mt-1.5 text-xs text-red-600">{errors.password}</p>}
+              {errors.password && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.password}</p>}
             </div>
 
             {/* Confirm Password */}
@@ -275,18 +365,19 @@ export default function RegisterPage() {
                   placeholder="Repeat your password"
                   className={`${inputCls('confirmPassword')} pr-10`} />
                 <button type="button" onClick={() => setShowConfirm((v) => !v)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  aria-label={showConfirm ? 'Hide password' : 'Show password'}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1.5 -m-1.5">
                   {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.confirmPassword && <p className="mt-1.5 text-xs text-red-600">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.confirmPassword}</p>}
             </div>
 
             {/* ── Personal details ── */}
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider pt-2">Personal Details</p>
 
             {/* Name */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name <span className="text-brand-red">*</span></label>
                 <div className="relative">
@@ -296,7 +387,7 @@ export default function RegisterPage() {
                     placeholder="First name"
                     className={`${inputCls('fname')} pl-10`} />
                 </div>
-                {errors.fname && <p className="mt-1.5 text-xs text-red-600">{errors.fname}</p>}
+                {errors.fname && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.fname}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name <span className="text-brand-red">*</span></label>
@@ -304,7 +395,7 @@ export default function RegisterPage() {
                   onChange={(e) => { setLname(e.target.value); setErrors((p) => ({ ...p, lname: undefined as unknown as string })) }}
                   placeholder="Last name"
                   className={inputCls('lname')} />
-                {errors.lname && <p className="mt-1.5 text-xs text-red-600">{errors.lname}</p>}
+                {errors.lname && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.lname}</p>}
               </div>
             </div>
 
@@ -315,7 +406,7 @@ export default function RegisterPage() {
                 onChange={(e) => { setDob(e.target.value); setErrors((p) => ({ ...p, dob: undefined as unknown as string })) }}
                 max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
                 className={inputCls('dob')} />
-              {errors.dob && <p className="mt-1.5 text-xs text-red-600">{errors.dob}</p>}
+              {errors.dob && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.dob}</p>}
             </div>
 
             {/* Mobile */}
@@ -336,7 +427,7 @@ export default function RegisterPage() {
                   placeholder="07700 000000"
                   className={inputCls('mobile')} />
               </div>
-              {errors.mobile && <p className="mt-1.5 text-xs text-red-600">{errors.mobile}</p>}
+              {errors.mobile && <p role="alert" className="mt-1.5 text-xs text-red-600">{errors.mobile}</p>}
             </div>
 
             {/* Agent Referral Code */}
@@ -363,7 +454,7 @@ export default function RegisterPage() {
                   of the service.
                 </span>
               </label>
-              {errors.terms && <p className="ml-7 text-xs text-red-600">{errors.terms}</p>}
+              {errors.terms && <p role="alert" className="ml-7 text-xs text-red-600">{errors.terms}</p>}
 
               <label className="flex items-start gap-3 cursor-pointer">
                 <input type="checkbox" checked={marketingAccepted} onChange={(e) => setMarketingAccepted(e.target.checked)}

@@ -347,7 +347,7 @@ export default function SendMoneyPage() {
 
             {/* Account verification banner */}
             {accountPending && (
-              <div className="mb-4 rounded-xl bg-amber-500/20 border border-amber-400/40 px-4 py-3 space-y-2">
+              <div role="alert" aria-live="polite" className="mb-4 rounded-xl bg-amber-500/20 border border-amber-400/40 px-4 py-3 space-y-2">
                 <div className="flex items-center gap-2 text-amber-200 text-sm font-semibold">
                   <AlertCircle className="h-4 w-4 shrink-0" /> Account awaiting verification
                 </div>
@@ -363,7 +363,7 @@ export default function SendMoneyPage() {
             )}
 
             {error && !accountPending && (
-              <div className="mb-4 rounded-xl overflow-hidden">
+              <div role="alert" aria-live="polite" className="mb-4 rounded-xl overflow-hidden">
                 <div className="flex items-start gap-2 bg-red-900/40 border border-red-400/30 px-3 py-2.5 text-sm text-red-200">
                   <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />{error}
                 </div>
@@ -372,9 +372,10 @@ export default function SendMoneyPage() {
 
             {/* You Send */}
             <div className="bg-brand-red/60 border border-white/10 rounded-2xl p-4 mb-3">
-              <p className="text-white/60 text-sm mb-2">You send</p>
+              <label htmlFor="send-amount" className="block text-white/60 text-sm mb-2">You send</label>
               <div className="flex items-center gap-3">
-                <input type="number" min="1" value={amount}
+                <input id="send-amount" type="number" min="1" inputMode="decimal" value={amount}
+                  aria-label="Amount to send in GBP"
                   onChange={e => setAmount(e.target.value)}
                   disabled={step === 'review'}
                   className="flex-1 bg-transparent text-white text-3xl font-bold outline-none w-0 min-w-0 disabled:opacity-70" />
@@ -410,10 +411,11 @@ export default function SendMoneyPage() {
                     <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading…
                   </div>
                 ) : (
-                  <div className="relative shrink-0">
+                  <div className="relative shrink-0 max-w-[45%]">
                     <select value={countryId} onChange={e => setCountryId(e.target.value)}
                       disabled={step === 'review'}
-                      className="appearance-none bg-white/15 border border-white/20 text-white text-sm font-semibold rounded-xl pl-3 pr-7 py-2 outline-none cursor-pointer disabled:opacity-70">
+                      aria-label="Destination country"
+                      className="w-full appearance-none truncate bg-white/15 border border-white/20 text-white text-sm font-semibold rounded-xl pl-3 pr-7 py-2 outline-none cursor-pointer disabled:opacity-70">
                       {countries.map(c => (
                         <option key={c.id} value={c.id} className="text-gray-900 bg-white">
                           {c.name}
@@ -442,6 +444,7 @@ export default function SendMoneyPage() {
                     if (t) { setTransferType(t); setCardNumber('') }
                   }}
                   disabled={step === 'review'}
+                  aria-label="Transfer type"
                   className="w-full appearance-none bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-gold cursor-pointer disabled:opacity-70 pr-8">
                   {TRANSFER_TYPES.map(t => (
                     <option key={t.label} value={t.label} className="text-gray-900 bg-white">{t.label}</option>
@@ -458,9 +461,10 @@ export default function SendMoneyPage() {
                   <CreditCard className="inline h-3.5 w-3.5 mr-1" />
                   Recipient Card Number <span className="text-red-300">*</span>
                 </label>
-                <input type="text" value={cardNumber}
+                <input type="text" inputMode="numeric" autoComplete="cc-number" value={cardNumber}
                   onChange={e => setCardNumber(e.target.value.replace(/\D/g, '').slice(0, 16))}
                   disabled={step === 'review'} placeholder="1234 5678 9012 3456" maxLength={16}
+                  aria-label="Recipient card number"
                   className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-gold placeholder:text-white/30 disabled:opacity-70 font-mono tracking-widest" />
               </div>
             )}
@@ -523,6 +527,7 @@ export default function SendMoneyPage() {
                 <div className="relative">
                   <select value={beneficiaryId} onChange={e => setBeneficiaryId(e.target.value)}
                     disabled={step === 'review'}
+                    aria-label="Select recipient"
                     className="w-full appearance-none bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-gold cursor-pointer disabled:opacity-70 pr-8">
                     <option value="" className="text-gray-900 bg-white">Select recipient…</option>
                     {beneficiaries.map(b => (

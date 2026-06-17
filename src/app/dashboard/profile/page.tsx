@@ -273,7 +273,7 @@ export default function ProfilePage() {
                 <h2 className="font-semibold text-gray-900">Personal Details</h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">First Name</label>
                   <input type="text" value={form.fname} readOnly
@@ -327,7 +327,7 @@ export default function ProfilePage() {
                 {fieldErrors.address1 && <p className="mt-1 text-xs text-red-600">{fieldErrors.address1}</p>}
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">City</label>
                   <input type="text" value={form.city} onChange={set('city')}
@@ -351,7 +351,7 @@ export default function ProfilePage() {
                 <h2 className="font-semibold text-gray-900">Identity Document</h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1.5">
                     ID Type <span className="text-brand-red">*</span>

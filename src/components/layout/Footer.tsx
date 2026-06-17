@@ -18,14 +18,14 @@ const Footer = () => {
                             KogoPAY Group offers a socially conscious mobile payments platform, enabling instant,
                             affordable money transfers worldwide.
                         </p>
-                        <div className="flex gap-4">
-                            <a className="text-white/60 hover:text-white transition-colors" href="https://kogopay.com" target="_blank" rel="noopener noreferrer" aria-label="Website">
+                        <div className="flex gap-1">
+                            <a className="flex items-center justify-center h-11 w-11 text-white/60 hover:text-white transition-colors" href="https://kogopay.com" target="_blank" rel="noopener noreferrer" aria-label="Website">
                                 <span className="material-symbols-outlined">public</span>
                             </a>
-                            <a className="text-white/60 hover:text-white transition-colors" href="mailto:support@kogopay.com" aria-label="Email">
+                            <a className="flex items-center justify-center h-11 w-11 text-white/60 hover:text-white transition-colors" href="mailto:support@kogopay.com" aria-label="Email">
                                 <span className="material-symbols-outlined">alternate_email</span>
                             </a>
-                            <a className="text-white/60 hover:text-white transition-colors" href="/contact" aria-label="Chat">
+                            <a className="flex items-center justify-center h-11 w-11 text-white/60 hover:text-white transition-colors" href="/contact" aria-label="Chat">
                                 <span className="material-symbols-outlined">chat</span>
                             </a>
                         </div>

@@ -60,7 +60,7 @@ const Header = () => {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className="text-sm font-medium text-white/80 transition-colors hover:text-gold"
+                            className="text-sm font-medium text-white/80 transition-colors hover:text-gold py-3 -my-3"
                         >
                             {item.name}
                         </Link>

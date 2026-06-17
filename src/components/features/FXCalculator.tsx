@@ -90,7 +90,8 @@ const FXCalculator = () => {
                 <div className="relative flex h-8 items-center justify-center -my-3 z-10">
                     <button
                         onClick={swapCurrencies}
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-gold text-brand-red-deep shadow-lg shadow-black/20 border-2 border-brand-red-deep hover:scale-110 transition-transform"
+                        aria-label="Swap currencies"
+                        className="flex h-11 w-11 items-center justify-center rounded-full bg-gold text-brand-red-deep shadow-lg shadow-black/20 border-2 border-brand-red-deep hover:scale-110 transition-transform"
                     >
                         <span className="material-symbols-outlined text-lg font-bold">swap_vert</span>
                     </button>

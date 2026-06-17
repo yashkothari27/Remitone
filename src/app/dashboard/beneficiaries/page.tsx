@@ -190,7 +190,7 @@ export default function BeneficiariesPage() {
                 <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" /> {submitError}
               </div>
             )}
-            <form onSubmit={handleAddBeneficiary} noValidate className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleAddBeneficiary} noValidate className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">First Name *</label>
                 <input type="text" value={form.fname} onChange={(e) => setField('fname', e.target.value)} placeholder="First name" className={inputCls('fname')} />
@@ -256,7 +256,7 @@ export default function BeneficiariesPage() {
                       <p className="text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2">
                         Enter Account Transfer information if you wish to make Account Transfer remittances to this beneficiary.
                       </p>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="col-span-2">
                           <label className="block text-xs font-medium text-gray-600 mb-1">Account Number</label>
                           <input type="text" value={form.bank_account_number1}
@@ -365,7 +365,7 @@ export default function BeneficiariesPage() {
                       <p className="text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2">
                         Enter Mobile information if you wish to make Mobile transfer remittances to this beneficiary (where available).
                       </p>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <label className="block text-xs font-medium text-gray-600 mb-1">Mobile Number *</label>
                           <input type="tel" value={form.mobile_transfer_number}

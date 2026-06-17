@@ -88,7 +88,7 @@ export default function LoginPage() {
 
           {/* API-level error banner */}
           {error && (
-            <div className="mb-6 flex items-start gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+            <div role="alert" aria-live="polite" className="mb-6 flex items-start gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
               <AlertCircle className="mt-0.5 h-5 w-5 text-red-500 shrink-0" />
               <p className="text-sm text-red-700">{error}</p>
             </div>
@@ -110,6 +110,8 @@ export default function LoginPage() {
                   value={username}
                   onChange={(e) => { setUsername(e.target.value); setFieldErrors((p) => ({ ...p, username: undefined })) }}
                   placeholder="Enter your email"
+                  aria-invalid={!!fieldErrors.username}
+                  aria-describedby={fieldErrors.username ? 'username-error' : undefined}
                   className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-sm transition-colors outline-none
                     ${fieldErrors.username
                       ? 'border-red-400 focus:border-red-500 bg-red-50'
@@ -118,7 +120,7 @@ export default function LoginPage() {
                 />
               </div>
               {fieldErrors.username && (
-                <p className="mt-1.5 text-xs text-red-600">{fieldErrors.username}</p>
+                <p id="username-error" role="alert" className="mt-1.5 text-xs text-red-600">{fieldErrors.username}</p>
               )}
             </div>
 
@@ -141,6 +143,8 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setFieldErrors((p) => ({ ...p, password: undefined })) }}
                   placeholder="Enter your password"
+                  aria-invalid={!!fieldErrors.password}
+                  aria-describedby={fieldErrors.password ? 'password-error' : undefined}
                   className={`w-full pl-10 pr-12 py-3 rounded-xl border-2 text-sm transition-colors outline-none
                     ${fieldErrors.password
                       ? 'border-red-400 focus:border-red-500 bg-red-50'
@@ -150,14 +154,14 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1.5 -m-1.5"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
                 </button>
               </div>
               {fieldErrors.password && (
-                <p className="mt-1.5 text-xs text-red-600">{fieldErrors.password}</p>
+                <p id="password-error" role="alert" className="mt-1.5 text-xs text-red-600">{fieldErrors.password}</p>
               )}
             </div>
 
