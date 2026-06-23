@@ -238,7 +238,7 @@ export default function RegisterPage() {
       {/* ── Left brand panel ─────────────────────────────────────────────────── */}
       <div className="hidden lg:flex lg:w-2/5 bg-brand-red-deep flex-col justify-between p-12">
         <Link href="/" className="flex justify-center">
-          <img src="/kogo-logo-black.png" alt="KogoPAY" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
+          <img src="/kogopay_white.png" alt="KogoPAY" className="w-4/5 h-auto object-contain drop-shadow-2xl" />
         </Link>
         <div className="space-y-5">
           <h1 className="text-4xl font-bold text-white leading-tight">
@@ -270,7 +270,7 @@ export default function RegisterPage() {
 
         {/* Mobile logo */}
         <div className="mb-8 flex items-center gap-3 lg:hidden">
-          <img src="/kogo-logo-black.png" alt="KogoPAY" className="h-16 w-auto object-contain" />
+          <img src="/kogopay_white.png" alt="KogoPAY" className="h-16 w-auto object-contain" />
         </div>
 
         <div className="w-full max-w-md mx-auto">

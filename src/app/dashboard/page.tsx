@@ -35,7 +35,7 @@ export default function DashboardPage() {
       <header className="bg-brand-red-deep shadow-sm">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center">
-            <img src="/kogo-logo-black.png" alt="KogoPAY" className="h-10 w-auto object-contain" />
+            <img src="/kogopay_white.png" alt="KogoPAY" className="h-10 w-auto object-contain" />
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-white/70 text-sm hidden sm:block">

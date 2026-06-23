@@ -11,7 +11,6 @@ import { useAuth } from '@/contexts/AuthContext'
 const navigation = [
     { name: 'Personal', href: '/personal' },
     { name: 'Business', href: '/business' },
-    { name: 'Pricing', href: '/pricing' },
     { name: 'Security', href: '/security' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
@@ -48,7 +47,7 @@ const Header = () => {
                 {/* Logo */}
                 <Link href="/" className="flex items-center group">
                     <img
-                        src="/kogo-logo-black.png"
+                        src="/kogopay_white.png"
                         alt="KogoPAY Logo"
                         className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
                     />

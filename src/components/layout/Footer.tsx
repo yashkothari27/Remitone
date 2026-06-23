@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="col-span-2 lg:col-span-2">
                         <div className="flex items-center gap-3 mb-6">
                             <img
-                                src="/kogo-logo-black.png"
+                                src="/kogopay_white.png"
                                 alt="KogoPAY Logo"
                                 className="h-14 w-auto object-contain"
                             />
