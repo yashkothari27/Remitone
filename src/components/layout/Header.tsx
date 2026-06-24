@@ -70,19 +70,19 @@ const Header = () => {
                 <div className="flex items-center gap-4">
                     {isLoggedIn ? (
                         <>
-                            <span className="hidden text-sm text-white/60 sm:block">
+                            <span className="hidden text-sm text-white/60 md:block">
                                 {auth?.username}
                             </span>
                             <Link
                                 href="/dashboard"
-                                className="hidden sm:flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-gold"
+                                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-gold"
                             >
                                 <LayoutDashboard className="h-4 w-4" />
                                 Dashboard
                             </Link>
                             <button
                                 onClick={handleLogout}
-                                className="hidden sm:flex h-10 items-center justify-center gap-1.5 rounded-lg border border-white/30 px-4 text-sm font-bold text-white transition-all hover:bg-white/10"
+                                className="hidden md:flex h-10 items-center justify-center gap-1.5 rounded-lg border border-white/30 px-4 text-sm font-bold text-white transition-all hover:bg-white/10"
                             >
                                 <LogOut className="h-4 w-4" />
                                 Sign out
@@ -92,13 +92,13 @@ const Header = () => {
                         <>
                             <Link
                                 href="/login"
-                                className="hidden text-sm font-semibold text-white transition-colors hover:text-gold sm:block"
+                                className="hidden text-sm font-semibold text-white transition-colors hover:text-gold md:block"
                             >
                                 Log in
                             </Link>
                             <Link
                                 href="/register"
-                                className="hidden sm:flex h-10 items-center justify-center rounded-lg bg-gold px-5 text-sm font-bold text-brand-red-deep transition-all hover:bg-white hover:shadow-lg hover:shadow-gold/20"
+                                className="hidden md:flex h-10 items-center justify-center rounded-lg bg-gold px-5 text-sm font-bold text-brand-red-deep transition-all hover:bg-white hover:shadow-lg hover:shadow-gold/20"
                             >
                                 Sign Up
                             </Link>

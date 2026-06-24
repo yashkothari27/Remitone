@@ -130,7 +130,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <Link href="/forgot-password" className="text-xs font-medium text-brand-red hover:text-brand-red-deep transition-colors">
+                <Link href="/forgot-password" className="inline-block py-2.5 -my-2.5 text-xs font-medium text-brand-red hover:text-brand-red-deep transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -154,7 +154,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1.5 -m-1.5"
+                  className="absolute right-0 top-0 flex h-full w-11 items-center justify-center pr-3.5 text-gray-400 hover:text-gray-600 transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
@@ -188,7 +188,7 @@ export default function LoginPage() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Don&apos;t have an account?{' '}
-            <Link href="/register" className="font-semibold text-brand-red hover:text-brand-red-deep transition-colors">
+            <Link href="/register" className="inline-block py-2 -my-2 font-semibold text-brand-red hover:text-brand-red-deep transition-colors">
               Sign up
             </Link>
           </p>

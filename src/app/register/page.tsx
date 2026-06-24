@@ -330,7 +330,7 @@ export default function RegisterPage() {
                   className={`${inputCls('password')} pr-10`} />
                 <button type="button" onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1.5 -m-1.5">
+                  className="absolute right-0 top-0 flex h-full w-11 items-center justify-center pr-3.5 text-gray-400 hover:text-gray-600">
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
@@ -366,7 +366,7 @@ export default function RegisterPage() {
                   className={`${inputCls('confirmPassword')} pr-10`} />
                 <button type="button" onClick={() => setShowConfirm((v) => !v)}
                   aria-label={showConfirm ? 'Hide password' : 'Show password'}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1.5 -m-1.5">
+                  className="absolute right-0 top-0 flex h-full w-11 items-center justify-center pr-3.5 text-gray-400 hover:text-gray-600">
                   {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>

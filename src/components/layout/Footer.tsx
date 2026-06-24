@@ -36,7 +36,6 @@ const Footer = () => {
                         <h4 className="text-white font-bold">Product</h4>
                         <Link className="text-white/70 text-sm hover:text-white transition-colors" href="/personal">Personal Account</Link>
                         <Link className="text-white/70 text-sm hover:text-white transition-colors" href="/business">Business Account</Link>
-                        <Link className="text-white/70 text-sm hover:text-white transition-colors" href="/pricing">Pricing</Link>
                     </div>
 
                     {/* Company */}

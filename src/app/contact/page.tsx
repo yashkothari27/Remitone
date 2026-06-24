@@ -18,10 +18,33 @@ export default function ContactPage() {
         company: '',
         message: '',
     })
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        alert('Thank you for your message! We will get back to you shortly.')
+        setStatus('submitting')
+        setErrorMessage('')
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            })
+            const data = await res.json()
+
+            if (res.ok && data.status === 'SUCCESS') {
+                setStatus('success')
+                setFormData({ name: '', email: '', company: '', message: '' })
+            } else {
+                setStatus('error')
+                setErrorMessage(data.message || 'Something went wrong. Please try again.')
+            }
+        } catch {
+            setStatus('error')
+            setErrorMessage('Unable to connect. Please try again.')
+        }
     }
 
     return (
@@ -149,11 +172,22 @@ export default function ContactPage() {
                                         placeholder="How can we help you?"
                                     />
                                 </div>
+                                {status === 'success' && (
+                                    <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+                                        Thank you for your message! We&apos;ll get back to you soon.
+                                    </div>
+                                )}
+                                {status === 'error' && (
+                                    <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                                        {errorMessage}
+                                    </div>
+                                )}
                                 <button
                                     type="submit"
-                                    className="w-full h-14 rounded-xl bg-brand-red text-white font-bold text-lg transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-[1.02] active:scale-[0.98]"
+                                    disabled={status === 'submitting'}
+                                    className="w-full h-14 rounded-xl bg-brand-red text-white font-bold text-lg transition-all hover:bg-brand-red-light shadow-lg shadow-brand-red/25 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:hover:scale-100"
                                 >
-                                    Send Message
+                                    {status === 'submitting' ? 'Sending...' : 'Send Message'}
                                 </button>
                                 <p className="text-xs text-slate-400 text-center">
                                     We typically respond within 24 hours during business days.

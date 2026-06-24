@@ -41,13 +41,13 @@ export default function DashboardPage() {
             <span className="text-white/70 text-sm hidden sm:block">
               Signed in as <span className="font-semibold text-white">{auth.username}</span>
             </span>
-            <Link href="/dashboard/profile" className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors">
+            <Link href="/dashboard/profile" className="flex h-11 items-center gap-1.5 px-1.5 text-sm text-white/70 hover:text-white transition-colors">
               <UserCircle className="h-4 w-4" />
               <span className="hidden sm:block">Profile</span>
             </Link>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
+              className="flex h-11 items-center gap-1.5 px-1.5 text-sm text-white/70 hover:text-white transition-colors"
             >
               <LogOut className="h-4 w-4" />
               <span>Sign out</span>
