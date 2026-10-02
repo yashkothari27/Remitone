@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KogoPAY — Important notice: Payment services</title>
+<meta name="description" content="KogoPAY (UK) Ltd has temporarily ceased providing payment services. We will inform customers when we resume our services.">
+<style>
+  :root{--red:#980b21;--red-dark:#6d0818;--amber-bg:#fffbeb;--amber-bd:#fcd34d;--ink:#1e293b;--muted:#64748b}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{min-height:100vh;display:flex;flex-direction:column;font-family:Manrope,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);
+    background:#fdf6f7 url("background.png") center/cover no-repeat fixed}
+  header{padding:20px 24px}
+  .brand{display:inline-flex;align-items:center;background:#fff;border-radius:14px;padding:8px 16px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+  .brand img{height:44px;display:block}
+  main{flex:1;display:grid;grid-template-columns:1fr;align-items:center;gap:40px;max-width:1100px;width:100%;margin:0 auto;padding:24px}
+  .copy{max-width:600px}
+  .notice{background:var(--amber-bg);border:1px solid var(--amber-bd);border-left:6px solid #f59e0b;border-radius:16px;padding:22px 26px;box-shadow:0 12px 40px rgba(0,0,0,.12)}
+  .notice h1{margin:0 0 10px;font-size:22px;line-height:1.25;font-weight:800;color:#78350f}
+  .notice p{margin:10px 0 0;font-size:15px;line-height:1.65;color:#451a03}
+  .notice a{color:var(--red);font-weight:700}
+  .phone{display:none;justify-self:center}
+  .phone img{max-height:520px;max-width:100%;height:auto;display:block;filter:drop-shadow(0 20px 40px rgba(0,0,0,.25))}
+  footer{padding:20px 24px;text-align:center;font-size:13px;color:var(--muted);background:rgba(255,255,255,.75)}
+  footer a{color:var(--ink);text-decoration:none;margin:0 10px;font-weight:600}
+  footer a:hover{text-decoration:underline}
+  footer p{margin:8px 0 0}
+  @media (min-width:860px){
+    main{grid-template-columns:1.1fr .9fr}
+    .phone{display:block}
+    .notice h1{font-size:26px}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/" aria-label="KogoPAY home"><img src="KogoPay.svg" alt="KogoPAY"></a>
+  </header>
+
+  <main>
+    <section class="copy">
+      <div class="notice" role="alert">
+        <h1>Important notice: Payment services</h1>
+        <p>KogoPAY (UK) Ltd has temporarily ceased providing payment services. We will inform customers when we resume our services.</p>
+        <p>If you have any queries, please contact us at <a href="mailto:info@kogopay.com">info@kogopay.com</a>.</p>
+      </div>
+    </section>
+    <div class="phone"><img src="phone_mockup.png" alt="" loading="lazy"></div>
+  </main>
+
+  <footer>
+    <nav><a href="privacy.html">Privacy Policy</a>|<a href="terms.html">Terms &amp; Conditions</a>|<a href="mailto:info@kogopay.com">Contact</a></nav>
+    <p>&copy; KogoPAY (UK) Ltd</p>
+  </footer>
+</body>
+</html>

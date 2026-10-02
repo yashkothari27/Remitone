@@ -24,12 +24,21 @@ const HeroSection = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-red/10 bg-brand-red/5 px-3 py-1 text-xs font-medium text-brand-red backdrop-blur-sm">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-red" />
+                            <div className="flex w-fit max-w-xl items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-950 sm:text-sm">
+                                <span className="relative mt-1 flex h-2 w-2 shrink-0">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
                                 </span>
-                                New: Instant transfers to Asia
+                                <div>
+                                    <p className="font-bold">Important notice: Payment services</p>
+                                    <p className="mt-1">
+                                        KogoPAY (UK) Ltd has temporarily ceased providing payment services. We will inform customers when we resume our services.
+                                    </p>
+                                    <p className="mt-1">
+                                        If you have any queries, please contact us at{' '}
+                                        <a href="mailto:info@kogopay.com" className="font-semibold underline">info@kogopay.com</a>.
+                                    </p>
+                                </div>
                             </div>
                         </motion.div>
 
